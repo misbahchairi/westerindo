@@ -43,4 +43,10 @@ class mkuratif extends CI_Model {
         $this->db->where('nik',$nik);
         return $this->db->get('m_pasien');
     }
+
+    function addKuratif($data)
+    {
+        $query = $this->db->insert('kuratif',$data);
+        return $query;
+    }
 }

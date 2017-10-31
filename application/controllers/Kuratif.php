@@ -124,7 +124,8 @@ class kuratif extends MY_Controller {
             $pasien[]     = array(
                 'label' => $d->nik." ( ".ucfirst($d->nama)." )", 
                 'nama' => $d->nik." ( ".ucfirst($d->nama)." )",  
-                'nik' => $d->nik  
+                'nik' => $d->nik  ,
+                'idpasien' => $d->id_pasien 
             );
         }
         echo json_encode($pasien);      //data array yang telah kota deklarasikan dibawa menggunakan json
@@ -138,6 +139,15 @@ class kuratif extends MY_Controller {
             	?> <img src="<?=base_url()?><?=$val->foto?>" alt=""><?php
             }
         }
+    }
+
+    public function ajaxperihal(){
+    	$array = array(
+		'ku_idpasien' => $this ->input->post('idpasien'),
+		'ku_perihal' => $this ->input->post('perihal'),
+		'ku_state' => 'perihal'
+		);
+		$this->mkuratif->addKuratif($array);
     }
 
 }

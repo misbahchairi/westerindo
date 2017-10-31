@@ -16,7 +16,6 @@
   }
 
 </style>
-<form role="form" method="post" class="form-horizontal" action="<?=base_url('kuratif/resume');?>">
   <div class="content-wrapper">
   
   <section class="content-header">
@@ -59,7 +58,8 @@
       <div class="box-header with-border">
         <h3 class="box-title">Pengobatan</h3>
       </div>
-      <div class="box-body">
+      <div class="box-body" style="position: relative;overflow: hidden;">
+        <div id="loader"><img src="<?=base_url('assets/dist/img/AjaxLoader.gif')?>" alt=""></div>
         <div class="wizard">
           <div class="wizard-inner">
               <div class="connecting-line"></div>
@@ -122,16 +122,18 @@
 
               <div class="tab-content">
                   <div class="tab-pane active" role="tabpanel" id="step1">
+                    <form method="post" class="form-perihal">
                       <h3>Perihal</h3>
                       <div class="row">
                         <div class="col-md-2"></div>
                         <div class="col-md-8">
-                          <div class="form-group">
+                          <div class="form-group" style="overflow:hidden;">
                             <label class="control-label col-sm-2">Nama :</label>
                             <div class="col-sm-10">
                               <div class="input-group">
                                 <input type="text" id="nama" class="form-control" placeholder="Isi Dengan Nama atau NIP" name="nama">
                                 <input type="hidden" name="nik" id="nik">
+                                <input type="hidden" name="idpasien" id="idpasien">
                                 <div class="input-group-btn">
                                   <button type="button" class="btn btn-default btn-flat" id="proses-riwayat">Proses</button>
                                 </div>
@@ -158,8 +160,9 @@
                         </div>
                       </div>
                       <div class="ktk-abu">
-                        <button type="button" class="btn btn-primary btn-flat next-step" id="btn-next" disabled="true">Next <i class="fa fa-long-arrow-right"></i></button>
+                        <button type="button" class="btn btn-primary btn-flat next-step perihal-next" id="btn-next" disabled="true">Next <i class="fa fa-long-arrow-right"></i></button>
                       </div>
+                    </form>
                   </div>
                   <div class="tab-pane" role="tabpanel" id="step2">
                       <h3>Riwayat Penyakit</h3>
@@ -533,7 +536,30 @@
   </div>
 </div>
 <?php } ?>
-</form>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+      $("button.perihal-next").click(function(){
+        var data = $('.form-perihal').serialize();
+        var link="<?= base_url('kuratif/ajaxperihal') ?>"
+        $.ajax({
+          type: 'POST',
+          url: link,
+          data: data,
+          beforeSend: function() {
+             $('#loader').show();
+          },
+          complete: function(){
+             $('#loader').hide();
+          },
+          success: function() {
+
+          }
+        });
+      });
+    });
+</script>
+
 <?php
 // diagnosa
 $json='<div class="form-group block-diagnosa"><label class="control-label col-sm-2">Diagnosa :</label><div class="col-sm-8"><div class="row"><div class="col-md-10"><div class=""><select name="diagnosa[]" class="form-control select2" style="margin-bottom: 10px;">';
@@ -718,6 +744,7 @@ $json = $json.'</select></div></div><div class="col-sm-2"><button type="button" 
             select:function(event, ui){
                 $('#nama').val(ui.item.nama);
                 $('#nik').val(ui.item.nik);
+                $('#idpasien').val(ui.item.idpasien);
                 }
             });
         });
