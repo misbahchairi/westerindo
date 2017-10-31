@@ -251,7 +251,7 @@
 									<a href="<?=base_url('master/kategori'); ?>"><i class="fa fa-circle-o"></i> Kategori</a>
 								</li>
 								<li class="">
-									<a href=""><i class="fa fa-circle-o"></i> User</a>
+									<a href="#"><i class="fa fa-circle-o"></i> User</a>
 								</li>
 							</ul>
 						</li>
