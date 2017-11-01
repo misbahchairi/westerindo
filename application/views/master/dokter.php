@@ -39,7 +39,7 @@
               <td><?=$i?></td>
               <td><?=$dt->nama?></td>
               <td><?=$dt->spesialis?></td>
-              <td><?=$dt->unit?></td>
+              <td><?=$dt->nama_unit?></td>
               <td><?=$dt->alamat?></td>
               <td><?=$dt->email?></td>
               <td><?=$dt->no_telp?></td>
