@@ -23,7 +23,6 @@
   
   <section class="content-header">
     <h1>
-      Kuratif
       <small>pengobatan</small>
     </h1>
     <ol class="breadcrumb">
@@ -174,19 +173,19 @@
                         <div class="col-md-2"></div>
                         <div class="col-md-8">
                           <div class="form-group">
+                            <input type="hidden" name="idpasien2" id="idpasien2">
                             <label class="control-label col-sm-2">Status :</label>
                             <div class="col-sm-10">
                               <select class="form-control" name="status">
-                                <option value="">Gawat</option>
-                                <option value="">Tidak</option>
+                                <option value="Gawat">Gawat</option>
+                                <option value="Tidak Gawat">Tidak Gawat</option>
                               </select>
                             </div>
                           </div>
                           <div class="form-group">
                             <label class="control-label col-sm-2">Penjelasan :</label>
                             <div class="col-sm-10">
-                              <textarea name="penjelasan"></textarea>
-                              <input type="hidden" name="idpasien" id="idpasien">
+                              <textarea name="penjelasan" class="form-control"></textarea>
                             </div>
                           </div>
                         </div>
@@ -198,6 +197,7 @@
                     </form>
                   </div>
                   <div class="tab-pane" role="tabpanel" id="step3">
+                    <form method="post" class="form-vital">
                       <h3>Tanda Vital</h3>
                       <div class="row">
                         <div class="col-md-2"></div>
@@ -206,10 +206,10 @@
                             <label class="control-label col-sm-3">Tanda-Tanda Vital :</label>
                             <div class="col-sm-9">
                               <select name="tanda_vital" class="form-control">
-                                <option value="td">TD</option>
-                                <option value="n">N</option>
-                                <option value="s">S</option>
-                                <option value="rr">RR</option>
+                                <option value="TD">TD</option>
+                                <option value="N">N</option>
+                                <option value="S">S</option>
+                                <option value="RR">RR</option>
                               </select>
                             </div>
                           </div>
@@ -259,8 +259,9 @@
                       </div>
                       <div class="ktk-abu">
                         <button type="button" class="btn btn-warning btn-flat pull-left prev-step"><i class="fa fa-long-arrow-left"></i> Previous</button>
-                        <button type="button" class="btn btn-primary btn-flat next-step">Next <i class="fa fa-long-arrow-right"></i></button>
+                        <button type="button" class="btn btn-primary btn-flat next-step vital-next">Next <i class="fa fa-long-arrow-right"></i></button>
                       </div>
+                    </form>
                   </div>
                   <div class="tab-pane" role="tabpanel" id="step4">
                       <h3>Temuan PF</h3>
@@ -597,6 +598,30 @@
     });
 </script>
 
+<script type="text/javascript">
+  $(document).ready(function(){
+      $("button.vital-next").click(function(){
+        var data = $('.form-vital').serialize();
+        var link="<?= base_url('kuratif/ajaxvital') ?>"
+        $.ajax({
+          type: 'POST',
+          url: link,
+          data: data,
+          dataType: 'json',
+          beforeSend: function(){
+            $('#loader').show();
+          },
+          complete: function(){
+            $('#loader').hide();
+          },
+          success: function(){  
+
+          }
+        });
+      });
+    });
+</script>
+
 <?php
 // diagnosa
 $json='<div class="form-group block-diagnosa"><label class="control-label col-sm-2">Diagnosa :</label><div class="col-sm-8"><div class="row"><div class="col-md-10"><div class=""><select name="diagnosa[]" class="form-control select2" style="margin-bottom: 10px;">';
@@ -782,6 +807,7 @@ $json = $json.'</select></div></div><div class="col-sm-2"><button type="button" 
                 $('#nama').val(ui.item.nama);
                 $('#nik').val(ui.item.nik);
                 $('#idpasien').val(ui.item.idpasien);
+                $('#idpasien2').val(ui.item.idpasien);
                 }
             });
         });

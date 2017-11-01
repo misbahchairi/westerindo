@@ -167,7 +167,7 @@
 							if (@$page_name == 'antrian') { echo 'active';
 							}
  ?>">
-							<a href="<?=base_url('antrian'); ?>"> <i class="fa fa-users"></i> <span>Antrian</span> </a>
+							<a href="<?=base_url('kuratif/antrian'); ?>"> <i class="fa fa-users"></i> <span>Antrian</span> </a>
 						</li>
 						<li class="<?php
 							if (@$page_name == 'farmasi') { echo 'active';

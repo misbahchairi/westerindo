@@ -22,6 +22,12 @@ class kuratif extends MY_Controller {
 		$this->data['obat'] = $this->mmaster->getObat();
 		$this->template->load('template_home','kuratif/pengobatan',$this->data);
 	}
+	public function antrian()
+	{
+		$this->data['page_name'] = "antrian";
+		$this->data['antrian'] = $this->mkuratif->getAntrian();
+		$this->template->load('template_home','kuratif/antrian',$this->data);
+	}
 	public function resume(){
 		$this->data['page_name'] = "kuratif";
 
@@ -142,7 +148,16 @@ class kuratif extends MY_Controller {
     }
 
     public function ajaxperihal(){
+    	if ($this->session->userdata('role')=='2') {
+    		$idperawat = $this->session->userdata('user_id');
+    	} elseif ($this->session->userdata('role')=='1') {
+    		$iddokter = $this->session->userdata('user_id');
+    	}
+    	
     	$array = array(
+    		'ku_idperawat' => @$idperawat,
+    		'ku_iddokter' => @$iddokter,
+    		'ku_idunit' => $this->session->userdata('unit'),
 			'ku_idpasien' => $this ->input->post('idpasien'),
 			'ku_perihal' => $this ->input->post('perihal'),
 			'ku_state' => 'perihal'
@@ -157,11 +172,38 @@ class kuratif extends MY_Controller {
     }
     public function ajaxriwayat(){
     	$array = array(
-			'rp_idpasien' => $this ->input->post('idpasien'),
+			'rp_idpasien' => $this ->input->post('idpasien2'),
 			'rp_status' => $this ->input->post('status'),
 			'rp_penjelasan' => $this ->input->post('penjelasan'),
 		);
-		$this->mkuratif->addKuratif($array);
+		$this->mkuratif->addRiwayat($array);
+
+		$idkuratif = $this->session->userdata('s_idkuratif');
+		$array2 = array(
+			'ku_state' => 'riwayat'
+		);
+		$this->mkuratif->updateKuratif($array2,$idkuratif);
+    }
+
+    public function ajaxvital(){
+		$idkuratif = $this->session->userdata('s_idkuratif');
+
+    	$array = array(
+			'tv_idkuratif' => $idkuratif,
+			'tv_tandavital' => $this ->input->post('tanda_vital'),
+			'tv_nadi' => $this ->input->post('nadi'),
+			'tv_suhu' => $this ->input->post('suhu'),
+			'tv_pernafasan' => $this ->input->post('pernafasan'),
+			'tv_kesadarang' => $this ->input->post('kesadaran_g'),
+			'tv_kesadaranc' => $this ->input->post('kesadaran_c'),
+			'tv_kesadarans' => $this ->input->post('kesadaran_s'),
+		);
+		$this->mkuratif->addVital($array);
+
+		$array2 = array(
+			'ku_state' => 'tanda_vital'
+		);
+		$this->mkuratif->updateKuratif($array2,$idkuratif);
     }
 
 }
