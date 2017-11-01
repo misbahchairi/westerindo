@@ -14,6 +14,9 @@
     padding-bottom: 5px !important;
     padding-left: 5px !important;
   }
+  .form-group{
+    overflow: hidden;
+  }
 
 </style>
   <div class="content-wrapper">
@@ -165,6 +168,7 @@
                     </form>
                   </div>
                   <div class="tab-pane" role="tabpanel" id="step2">
+                    <form method="post" class="form-riwayat">
                       <h3>Riwayat Penyakit</h3>
                       <div class="row">
                         <div class="col-md-2"></div>
@@ -172,18 +176,26 @@
                           <div class="form-group">
                             <label class="control-label col-sm-2">Status :</label>
                             <div class="col-sm-10">
-                              <select class="form-control">
+                              <select class="form-control" name="status">
                                 <option value="">Gawat</option>
                                 <option value="">Tidak</option>
                               </select>
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label class="control-label col-sm-2">Penjelasan :</label>
+                            <div class="col-sm-10">
+                              <textarea name="penjelasan"></textarea>
+                              <input type="hidden" name="idpasien" id="idpasien">
                             </div>
                           </div>
                         </div>
                       </div>
                       <div class="ktk-abu">
                         <button type="button" class="btn btn-warning btn-flat pull-left prev-step"><i class="fa fa-long-arrow-left"></i> Previous</button>
-                        <button type="button" class="btn btn-primary btn-flat next-step">Next <i class="fa fa-long-arrow-right"></i></button>
+                        <button type="button" class="btn btn-primary btn-flat next-step riwayat-next">Next <i class="fa fa-long-arrow-right"></i></button>
                       </div>
+                    </form>
                   </div>
                   <div class="tab-pane" role="tabpanel" id="step3">
                       <h3>Tanda Vital</h3>
@@ -546,13 +558,38 @@
           type: 'POST',
           url: link,
           data: data,
-          beforeSend: function() {
-             $('#loader').show();
+          dataType: 'json',
+          beforeSend: function(){
+            $('#loader').show();
           },
           complete: function(){
-             $('#loader').hide();
+            $('#loader').hide();
           },
-          success: function() {
+          success: function(){  
+
+          }
+        });
+      });
+    });
+</script>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+      $("button.riwayat-next").click(function(){
+        var data = $('.form-riwayat').serialize();
+        var link="<?= base_url('kuratif/ajaxriwayat') ?>"
+        $.ajax({
+          type: 'POST',
+          url: link,
+          data: data,
+          dataType: 'json',
+          beforeSend: function(){
+            $('#loader').show();
+          },
+          complete: function(){
+            $('#loader').hide();
+          },
+          success: function(){  
 
           }
         });

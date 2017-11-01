@@ -46,7 +46,7 @@ class mkuratif extends CI_Model {
 
     function addKuratif($data)
     {
-        $query = $this->db->insert('kuratif',$data);
-        return $query;
+        $this->db->insert('kuratif',$data);
+        return $this->db->insert_id();
     }
 }
