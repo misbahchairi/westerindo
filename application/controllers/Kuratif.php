@@ -143,9 +143,23 @@ class kuratif extends MY_Controller {
 
     public function ajaxperihal(){
     	$array = array(
-		'ku_idpasien' => $this ->input->post('idpasien'),
-		'ku_perihal' => $this ->input->post('perihal'),
-		'ku_state' => 'perihal'
+			'ku_idpasien' => $this ->input->post('idpasien'),
+			'ku_perihal' => $this ->input->post('perihal'),
+			'ku_state' => 'perihal'
+		);
+		$getid = $this->mkuratif->addKuratif($array);
+
+		$data = array(
+        's_idkuratif' => $getid
+        );
+        $this->session->set_userdata($data);
+
+    }
+    public function ajaxriwayat(){
+    	$array = array(
+			'rp_idpasien' => $this ->input->post('idpasien'),
+			'rp_status' => $this ->input->post('status'),
+			'rp_penjelasan' => $this ->input->post('penjelasan'),
 		);
 		$this->mkuratif->addKuratif($array);
     }
