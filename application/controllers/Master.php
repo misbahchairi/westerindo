@@ -217,13 +217,13 @@ class master extends MY_Controller {
 		}
 
 		$pass = md5($this->input->post('password'));
-
 		$array = array(
 		'nama' => $this->input->post('nama'),
 		'spesialis' => $this->input->post('spesialis'),
 		'unit' => $this->input->post('unit'),
 		'alamat' => $this->input->post('alamat'),
 		'email' => $this->input->post('email'),
+		'gelar' => $this->input->post('gelar'),
 		'no_telp' => $this->input->post('no_telp'),
 		'is_aktif' => $this->input->post('is_aktif'),
 		'keterangan' => $this->input->post('keterangan'),
@@ -305,13 +305,13 @@ class master extends MY_Controller {
 		} else{
 			$pass = $this->mmaster->getDokterByid($id)->row()->password;
 		}
-		
 
 		$data = array(
 		'nama' => $this->input->post('nama'),
 		'spesialis' => $this->input->post('spesialis'),
 		'unit' => $this->input->post('unit'),
 		'alamat' => $this->input->post('alamat'),
+		'gelar' => $this->input->post('gelar'),
 		'email' => $this->input->post('email'),
 		'no_telp' => $this->input->post('no_telp'),
 		'is_aktif' => $this->input->post('is_aktif'),
