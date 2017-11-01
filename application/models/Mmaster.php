@@ -178,33 +178,65 @@ class mmaster extends CI_Model {
         return $query;
     }
 
-    // diagnosa
+    // dokter
     function getDokter()
     {
-        $query = $this->db->get('m_dokter');
+        $this->db->where('role', 1);
+        $query = $this->db->get('m_user');
         return $query;
     }
     function getDokterByid($id)
     {   
-        $this->db->where('id_dokter',$id);
-        $query = $this->db->get('m_dokter');
+        $this->db->where('user_id',$id);
+        $query = $this->db->get('m_user');
         return $query;
     }
     function AddDokter($data)
     {
-        $query = $this->db->insert('m_dokter',$data);
+        $query = $this->db->insert('m_user',$data);
         return $query;
     }
     function EditDokter($id,$data)
     {
-        $this->db->where('id_dokter',$id);
-        $query = $this->db->update('m_dokter',$data);
+        $this->db->where('user_id',$id);
+        $query = $this->db->update('m_user',$data);
         return $query;
     }
     function DeleteDokter($id)
     {   
-        $this->db->where('id_dokter ',$id);
-        $query = $this->db->delete('m_dokter  ');
+        $this->db->where('user_id ',$id);
+        $query = $this->db->delete('m_user  ');
+        return $query;
+    }
+
+    // dokter
+    function getUser()
+    {
+        $this->db->where('role', 2);
+        $query = $this->db->get('m_user');
+        return $query;
+    }
+    function getUserByid($id)
+    {   
+        $this->db->where('user_id',$id);
+        $query = $this->db->get('m_user');
+        return $query;
+    }
+    function AddUser($data)
+    {
+        $query = $this->db->insert('m_user',$data);
+        return $query;
+    }
+    function EditUser($id,$data)
+    {
+        $this->db->where('user_id',$id);
+        $query = $this->db->update('m_user',$data);
+        return $query;
+    }
+    function DeleteUser($id)
+    {   
+        $this->db->where('user_id ',$id);
+        $query = $this->db->delete('m_user  ');
         return $query;
     }
 
@@ -295,5 +327,12 @@ class mmaster extends CI_Model {
     function getNotifPreventif(){
         $this->db->where('tgl_kegiatan > DATE_SUB(NOW(), INTERVAL 1 WEEK)');
         return $this->db->get('preventif')->result();
+    }
+
+    public function cekUser($usr, $pass) {
+        $pass = md5($pass);
+        $this->db->where('username = "'.$usr.'" and password="'.$pass.'"');
+        $query = $this->db->get('m_user');
+        return $query;
     }
 }

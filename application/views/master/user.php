@@ -2,7 +2,7 @@
   
   <section class="content-header">
     <h1>
-      Dokter
+      User
       <small>master data</small>
     </h1>
     <ol class="breadcrumb">
@@ -34,7 +34,7 @@
             </tr> 
           </thead>
           <tbody>
-            <?php $i=1; foreach ($dokter->result() as $dt): ?>
+            <?php $i=1; foreach ($user->result() as $dt): ?>
             <tr>
               <td><?=$i?></td>
               <td><?=$dt->nama?></td>
@@ -53,7 +53,7 @@
               <td><?=$dt->keterangan?></td>
               <td><a data-toggle="modal" href='#show-<?=$dt->user_id?>' class="btn btn-success btn-xs btn-flat"><i class="fa fa-search-plus"></i> Show</a></td>
               <td>
-                <a href="<?=base_url('master/dokter_delete/').$dt->user_id;?>" class="btn btn-danger btn-xs btn-flat" title="Hapus" onclick="return confirm('Delete <?=$dt->nama;?> ?')"><i class="fa fa-trash"></i></a>
+                <a href="<?=base_url('master/user_delete/').$dt->user_id;?>" class="btn btn-danger btn-xs btn-flat" title="Hapus" onclick="return confirm('Delete <?=$dt->nama;?> ?')"><i class="fa fa-trash"></i></a>
 
                 <a data-toggle="modal" href='#edit-<?=$dt->user_id?>' class="btn btn-info btn-xs btn-flat" title="Edit"><i class="fa fa-edit"></i></a>
               </td>
@@ -83,7 +83,7 @@
 </div><!-- /.content-wrapper -->
 
 
-<?php foreach ($dokter->result() as $dt): ?>
+<?php foreach ($user->result() as $dt): ?>
   <div class="modal fade" id="edit-<?=$dt->user_id?>">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -91,7 +91,7 @@
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
           <h4 class="modal-title">Edit Data</h4>
         </div>
-        <form enctype="multipart/form-data" action="<?=base_url('master/dokter_edit/').$dt->user_id?>" method="post">
+        <form enctype="multipart/form-data" action="<?=base_url('master/user_edit/').$dt->user_id?>" method="post">
           <div class="modal-body">
             <div class="form-group">
               <label>Nama</label>
@@ -176,7 +176,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         <h4 class="modal-title">Tambah Data</h4>
       </div>
-      <form enctype="multipart/form-data" action="<?=base_url('master/dokter_add')?>" method="post">
+      <form enctype="multipart/form-data" action="<?=base_url('master/user_add')?>" method="post">
         <div class="modal-body">
           <div class="form-group">
             <label>Nama</label>

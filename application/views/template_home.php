@@ -81,7 +81,7 @@
 			              </li>
 							<!-- Control Sidebar Toggle Button -->
 							<li>
-								<a href="#"><i class="fa fa-sign-out"></i> Logout</a>
+								<a href="<?=base_url('webadmin/logout')?>"><i class="fa fa-sign-out"></i> Logout</a>
 							</li>
 						</ul>
 					</div>
@@ -250,8 +250,11 @@
  ?>">
 									<a href="<?=base_url('master/kategori'); ?>"><i class="fa fa-circle-o"></i> Kategori</a>
 								</li>
-								<li class="">
-									<a href="#"><i class="fa fa-circle-o"></i> User</a>
+								<li class="<?php
+									if (@$page_name == 'user') { echo 'active';
+									}
+ ?>">
+									<a href="<?=base_url('master/user'); ?>"><i class="fa fa-circle-o"></i> User</a>
 								</li>
 							</ul>
 						</li>
