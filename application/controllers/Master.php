@@ -504,13 +504,114 @@ class master extends MY_Controller {
 	}
 	public function pasien_add()
 	{
+		$this->load->library('upload');
+		$target_dir = "uploads/";
+		$kode=mt_rand(0,999)."".uniqid();
+		if ($_FILES['foto']['name']!=""){
+				$name = $_FILES['foto']['name'];
+				$type=pathinfo(basename($_FILES["foto"]["name"]),PATHINFO_EXTENSION);
+				$uploadOk = 1;
+				if ($type!=""){
+					$target_file = $target_dir.$kode.".".$type;
+				} else {
+					$target_file="";
+				}
+				$imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
+				// Check if image file is a actual image or fake image
+
+				$check = getimagesize($_FILES["foto"]["tmp_name"]);
+				if($check !== false) {
+					$m = "File is an image - " . $check["mime"] . ".";
+					$uploadOk = 1;
+				} else {
+					$m = "File is not an image.";
+					$uploadOk = 0;
+				}
+
+
+				// Check file size
+
+				// Allow certain file formats
+				if($imageFileType != "JPG" &&$imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+					&& $imageFileType != "gif" ) {
+					$m = "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+				$uploadOk = 0;
+			}
+					// Check if $uploadOk is set to 0 by an error
+			if ($uploadOk == 0) {
+				$m = "Sorry, your file was not uploaded.";
+					// if everything is ok, try to upload file
+			} else {
+				if ($_FILES["foto"]["size"] < 400000) {
+					if (move_uploaded_file($_FILES["foto"]["tmp_name"], $target_file)) {
+						$m = "The file ". basename( $_FILES["foto"]["name"]). " has been uploaded.";
+					} else {
+						$m= "Sorry, there was an error uploading your file.";
+					}
+				} else {
+					$d = $this->compress($_FILES["foto"]["tmp_name"], $target_file, 10);
+				}
+			}
+		}
+
 		$data = $this->input->post();
+		$data['foto'] = $target_file;
 		$this->mmaster->AddPasien($data);
 		redirect('master/pasien','refresh');
 	}
 	public function pasien_edit($id)
 	{
+		$this->load->library('upload');
+		$target_dir = "uploads/";
+		$kode=mt_rand(0,999)."".uniqid();
+		if ($_FILES['foto']['name']!=""){
+				$name = $_FILES['foto']['name'];
+				$type=pathinfo(basename($_FILES["foto"]["name"]),PATHINFO_EXTENSION);
+				$uploadOk = 1;
+				if ($type!=""){
+					$target_file = $target_dir.$kode.".".$type;
+				} else {
+					$target_file="";
+				}
+				$imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
+				// Check if image file is a actual image or fake image
+
+				$check = getimagesize($_FILES["foto"]["tmp_name"]);
+				if($check !== false) {
+					$m = "File is an image - " . $check["mime"] . ".";
+					$uploadOk = 1;
+				} else {
+					$m = "File is not an image.";
+					$uploadOk = 0;
+				}
+
+
+				// Check file size
+
+				// Allow certain file formats
+				if($imageFileType != "JPG" &&$imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+					&& $imageFileType != "gif" ) {
+					$m = "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+				$uploadOk = 0;
+			}
+					// Check if $uploadOk is set to 0 by an error
+			if ($uploadOk == 0) {
+				$m = "Sorry, your file was not uploaded.";
+					// if everything is ok, try to upload file
+			} else {
+				if ($_FILES["foto"]["size"] < 400000) {
+					if (move_uploaded_file($_FILES["foto"]["tmp_name"], $target_file)) {
+						$m = "The file ". basename( $_FILES["foto"]["name"]). " has been uploaded.";
+					} else {
+						$m= "Sorry, there was an error uploading your file.";
+					}
+				} else {
+					$d = $this->compress($_FILES["foto"]["tmp_name"], $target_file, 10);
+				}
+			}
+		}
 		$data = $this->input->post();
+		$data['foto'] = $target_file;
 		$this->mmaster->EditPasien($id,$data);
 		redirect('master/pasien','refresh');
 	}
