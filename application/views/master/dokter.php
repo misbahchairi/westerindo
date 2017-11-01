@@ -39,7 +39,7 @@
               <td><?=$i?></td>
               <td><?=$dt->nama?></td>
               <td><?=$dt->spesialis?></td>
-              <td><?=$dt->unit?></td>
+              <td><?=$dt->nama_unit?></td>
               <td><?=$dt->alamat?></td>
               <td><?=$dt->email?></td>
               <td><?=$dt->no_telp?></td>
@@ -133,6 +133,10 @@
               <textarea name="keterangan" class="form-control"><?=$dt->keterangan?></textarea>
             </div>
             <div class="form-group">
+              <label>Gelar</label>
+              <textarea name="gelar" class="form-control"><?=$dt->gelar?></textarea>
+            </div>
+            <div class="form-group">
               <label>Username</label>
               <input type="text" name="username" value="<?=$dt->username?>" placeholder="" class="form-control">
             </div>
@@ -216,6 +220,10 @@
           <div class="form-group">
             <label>Keterangan</label>
             <textarea name="keterangan" class="form-control"></textarea>
+          </div>
+          <div class="form-group">
+            <label>Gelar</label>
+            <textarea name="gelar" class="form-control"></textarea>
           </div>
           <div class="form-group">
             <label>Username</label>

@@ -28,6 +28,7 @@
               <th>Separtment</th>
               <th>Group</th>
               <th>Status</th>
+              <th>Foto</th>
               <th width="90">Aksi</th>
             </tr> 
           </thead>
@@ -54,6 +55,7 @@
                   echo '<span class="label label-primary">Kontrak</span>';
                 } ?>  
               </td>
+              <td><a data-toggle="modal" href='#show-<?=$dt->id_pasien?>' class="btn btn-success btn-xs btn-flat"><i class="fa fa-search-plus"></i> Show</a></td>
               <td>
                 <a href="<?=base_url('master/pasien_delete/').$dt->id_pasien;?>" class="btn btn-danger btn-sm btn-flat" title="Hapus" onclick="return confirm('Delete <?=$dt->nama;?> ?')"><i class="fa fa-trash"></i></a>
 
@@ -72,6 +74,7 @@
               <th>Separtment</th>
               <th>Group</th>
               <th>Status</th>
+              <th>Foto</th>
               <th>Aksi</th>
             </tr>
           </tfoot>
@@ -82,71 +85,6 @@
 
 </div><!-- /.content-wrapper -->
 
-<div class="modal fade" id="tambah">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title">Tambah Data</h4>
-      </div>
-      <form action="<?=base_url('master/pasien_add')?>" method="post">
-        <div class="modal-body">
-          <div class="form-group">
-            <label>NIK</label>
-            <input type="number" name="nik" value="" placeholder="" class="form-control">
-          </div>
-          <div class="form-group">
-            <label>Nama</label>
-            <input type="text" name="nama" value="" placeholder="" class="form-control">
-          </div>
-          <div class="form-group">
-            <label>Umur</label>
-            <input type="text" name="umur" value="" placeholder="" class="form-control">
-          </div>
-          <div class="form-group">
-            <label>Sex</label>
-            <select name="sex" class="form-control">
-              <option value="l">Pria</option>
-              <option value="p">Wanita</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label>Separtment</label>
-            <input type="text" name="separtment" value="" placeholder="" class="form-control">
-          </div>
-          <div class="form-group">
-            <label>Group</label>
-            <input type="text" name="group" value="" placeholder="" class="form-control">
-          </div>
-          <div class="form-group">
-            <label>Status Pegawai</label>
-            <select name="status_pgw" class="form-control">
-              <option value="tetap">Tetap</option>
-              <option value="kontrak">Kontrak</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label>Nama Perusahaan 1</label>
-            <input type="text" name="pers1" value="" placeholder="" class="form-control">
-          </div>
-          <div class="form-group">
-            <label>Nama Perusahaan 2</label>
-            <input type="text" name="pers2" value="" placeholder="" class="form-control">
-          </div>
-          <div class="form-group">
-            <label>Nama Perusahaan 3</label>
-            <input type="text" name="pers3" value="" placeholder="" class="form-control">
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Simpan</button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
-
 <?php foreach ($pasien->result() as $dt): ?>
   <div class="modal fade" id="edit-<?=$dt->id_pasien?>">
     <div class="modal-dialog">
@@ -155,7 +93,7 @@
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
           <h4 class="modal-title">Edit Data</h4>
         </div>
-        <form action="<?=base_url('master/pasien_edit/').$dt->id_pasien?>" method="post">
+        <form action="<?=base_url('master/pasien_edit/').$dt->id_pasien?>" method="post" enctype="multipart/form-data">
           <div class="modal-body">
             <div class="form-group">
               <label>NIK</label>
@@ -203,6 +141,10 @@
               <label>Nama Perusahaan 3</label>
               <input type="text" name="pers3" value="<?=$dt->pers3?>" placeholder="" class="form-control">
             </div>
+            <div class="form-group">
+              <label>foto</label>
+              <input type="file" name="foto" value="" placeholder="" class="form-control">
+            </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
@@ -212,4 +154,88 @@
       </div>
     </div>
   </div>
+
+  <div class="modal fade" id="show-<?=$dt->id_pasien?>">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title"><?=$dt->nama?></h4>
+        </div>
+        <div class="modal-body">
+          <center><img src="<?=base_url().'/'.$dt->foto;?>" alt="" class="img-responsive"></center>
+        </div>
+      </div>
+    </div>
+  </div>
 <?php endforeach ?>
+
+<div class="modal fade" id="tambah">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Tambah Data</h4>
+      </div>
+      <form action="<?=base_url('master/pasien_add')?>" method="post" enctype="multipart/form-data">
+        <div class="modal-body">
+          <div class="form-group">
+            <label>NIK</label>
+            <input type="number" name="nik" value="" placeholder="" class="form-control">
+          </div>
+          <div class="form-group">
+            <label>Nama</label>
+            <input type="text" name="nama" value="" placeholder="" class="form-control">
+          </div>
+          <div class="form-group">
+            <label>Umur</label>
+            <input type="text" name="umur" value="" placeholder="" class="form-control">
+          </div>
+          <div class="form-group">
+            <label>Sex</label>
+            <select name="sex" class="form-control">
+              <option value="l">Pria</option>
+              <option value="p">Wanita</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Separtment</label>
+            <input type="text" name="separtment" value="" placeholder="" class="form-control">
+          </div>
+          <div class="form-group">
+            <label>Group</label>
+            <input type="text" name="group" value="" placeholder="" class="form-control">
+          </div>
+          <div class="form-group">
+            <label>Status Pegawai</label>
+            <select name="status_pgw" class="form-control">
+              <option value="tetap">Tetap</option>
+              <option value="kontrak">Kontrak</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Nama Perusahaan 1</label>
+            <input type="text" name="pers1" value="" placeholder="" class="form-control">
+          </div>
+          <div class="form-group">
+            <label>Nama Perusahaan 2</label>
+            <input type="text" name="pers2" value="" placeholder="" class="form-control">
+          </div>
+          <div class="form-group">
+            <label>Nama Perusahaan 3</label>
+            <input type="text" name="pers3" value="" placeholder="" class="form-control">
+          </div>
+          <div class="form-group">
+            <label>foto</label>
+            <input type="file" name="foto" value="" placeholder="" class="form-control">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Simpan</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+

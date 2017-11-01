@@ -181,6 +181,8 @@ class mmaster extends CI_Model {
     // dokter
     function getDokter()
     {
+        $this->db->select('m_user.*, m_unit.nama as nama_unit');
+        $this->db->join('m_unit','id_unit = unit');
         $this->db->where('role', 1);
         $query = $this->db->get('m_user');
         return $query;
@@ -212,6 +214,8 @@ class mmaster extends CI_Model {
     // dokter
     function getUser()
     {
+        $this->db->select('m_user.*, m_unit.nama as nama_unit');
+        $this->db->join('m_unit','id_unit = unit');
         $this->db->where('role', 2);
         $query = $this->db->get('m_user');
         return $query;
