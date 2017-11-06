@@ -34,6 +34,13 @@
 
 		
 	</head>
+	<style type="text/css">
+		.user {
+		    margin-right: 50px;
+		    margin-top: 15px;
+		    color: #fff;
+		}
+	</style>
 	<body class="hold-transition skin-blue sidebar-mini">
 		<!-- jQuery 2.1.4 -->
 		<script src="<?=base_url('assets'); ?>/plugins/jQuery/jQuery-2.1.4.min.js"></script>
@@ -49,6 +56,12 @@
 					<a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </a>
 					<div class="navbar-custom-menu">
 						<ul class="nav navbar-nav">
+						  <li class="user">
+						  	<span>Nama : <?= $this->session->userdata('nama'); ?></span>
+						  </li>
+						  <li class="user">
+						  	<span>Unit : <?= $this->session->userdata('unit_nama'); ?></span>
+						  </li>
 			              <li class="dropdown notifications-menu">
 			                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
 			                  <i class="fa fa-bell-o"></i>
@@ -169,11 +182,31 @@
  ?>">
 							<a href="<?=base_url('kuratif/antrian'); ?>"> <i class="fa fa-users"></i> <span>Antrian</span> </a>
 						</li>
-						<li class="<?php
-							if (@$page_name == 'farmasi') { echo 'active';
+						<li class="treeview <?php
+							if (@$page_name == 'farmasi' or @$page_name == 'obat' or @$page_name == 'kategori-obat') { echo 'active';
 							}
  ?>">
-							<a href="<?=base_url('farmasi'); ?>"> <i class="fa fa-medkit"></i> <span>Farmasi</span> </a>
+							<a href="#"> <i class="fa fa-medkit"></i> <span>Farmasi</span> <i class="fa fa-angle-left pull-right"></i> </a>
+							<ul class="treeview-menu">
+								<li class="<?php
+								if (@$page_name == 'kategori-obat') { echo 'active';
+								}
+ ?>">
+									<a href="<?=base_url('farmasi/kategori_obat') ?>"><i class="fa fa-circle-o"></i> Kategori Obat</a>
+								</li>
+								<li class="<?php
+									if (@$page_name == 'obat') { echo 'active';
+									}
+ ?>">
+									<a href="<?=base_url('farmasi/obat') ?>"><i class="fa fa-circle-o"></i> Obat</a>
+								</li>
+								<li class="<?php
+									if (@$page_name == 'farmasi') { echo 'active';
+									}
+ ?>">
+									<a href="<?=base_url('farmasi') ?>"><i class="fa fa-circle-o"></i> History Penggunaan Obat</a>
+								</li>
+							</ul>
 						</li>
 						<li class="<?php
 							if (@$page_name == 'industrial') { echo 'active';
@@ -191,23 +224,17 @@
 							if (@$page_name == 'pasien') { echo 'active';
 							}
  ?>">
-							<a href="<?=base_url('master/pasien'); ?>"><i class="fa fa-user-md"></i>Rekam Medis</a>
+							<a href="<?=base_url('master/pasien'); ?>"><i class="fa fa-user-md"></i><span>Rekam Medis</span></a>
 						</li>
 						<li class="header">
 							MASTER DATA
 						</li>
 						<li class="treeview <?php
-							if (@$page_name == 'obat' or @$page_name == 'anamnesa' or @$page_name == 'pf' or @$page_name == 'rujukan' or @$page_name == 'diagnosa' or @$page_name == 'dokter' or @$page_name == 'unit') { echo 'active';
+							if (@$page_name == 'anamnesa' or @$page_name == 'pf' or @$page_name == 'rujukan' or @$page_name == 'diagnosa' or @$page_name == 'dokter' or @$page_name == 'unit') { echo 'active';
 							}
  ?>">
 							<a href="#"> <i class="fa fa-database"></i> <span>Master Data</span> <i class="fa fa-angle-left pull-right"></i> </a>
 							<ul class="treeview-menu">
-								<li class="<?php
-								if (@$page_name == 'obat') { echo 'active';
-								}
- ?>">
-									<a href="<?=base_url('master/obat'); ?>"><i class="fa fa-circle-o"></i> Obat Obatan</a>
-								</li>
 								<li class="<?php
 									if (@$page_name == 'anamnesa') { echo 'active';
 									}

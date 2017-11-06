@@ -42,4 +42,79 @@ class farmasi extends MY_Controller {
 		}
 	}
 
+	public function obat()
+	{
+		$this->data['page_name'] = "obat";
+		$kategori = $this->mfarmasi->getAllKategoriObat()->result();
+		$this->data['kategori'] = $kategori;
+		foreach ($kategori as $val) {
+			$obat[$val->id] = $this->mfarmasi->getObatByKat($val->id)->result_array();
+		}
+		$this->data['obat'] = $obat;
+		// print_r($this->data['obat']);
+		$this->template->load('template_home','farmasi/obat',$this->data);
+	}
+
+	public function add_obat(){
+		$param = $this->input->post();
+		$param['unit'] = $this->session->userdata('unit');
+
+		$query = $this->mfarmasi->InsertObat($param);
+		redirect('farmasi/obat');
+	}
+
+	public function edit_obat(){
+		$param = $this->input->post();
+
+		$query = $this->mfarmasi->UpdateObat($param);
+		redirect('farmasi/obat');
+	}
+
+	public function delete_obat(){
+		$param = $this->input->get('id_obat');
+
+		$query = $this->mfarmasi->DeleteObat($param);
+		redirect('farmasi/obat');
+	}
+
+	public function kategori_obat()
+	{
+		$this->data['page_name'] = "kategori-obat";
+		$this->data['kategori'] = $this->mfarmasi->getKategori();
+		$this->template->load('template_home','farmasi/kategori',$this->data);
+	}
+	public function add_kategori()
+	{
+		$data = $this->input->post();
+		$hasil = $this->mfarmasi->AddKategori($data);
+		if ($hasil) {
+			redirect('farmasi/kategori_obat','refresh');
+		} else {
+			echo "<script>window.alert('Gagal !');
+				window.history.back()</script>";
+		}
+	}
+	public function edit_kategori($id)
+	{
+		$data = $this->input->post();
+		$hasil = $this->mfarmasi->EditKategori($id,$data);
+		if ($hasil) {
+			redirect('farmasi/kategori_obat','refresh');
+		} else {
+			echo "<script>window.alert('Gagal !');
+				window.history.back()</script>";
+		}
+	}
+	public function delete_kategori($id)
+	{
+		$hasil = $this->mfarmasi->DeleteKategori($id);
+		if ($hasil) {
+			redirect('farmasi/kategori_obat','refresh');
+		} else {
+			echo "<script>window.alert('Gagal !');
+				window.history.back()</script>";
+		}
+	}
+
+
 }
