@@ -56,8 +56,9 @@
                   }
                 ?>
               </td>
-              <td>
-                <a href="" class="btn btn-xs btn-success btn-flat"><i class="fa fa-refresh"></i> Lanjutkan</a>
+              <td>  
+                <a href="<?=base_url('antrian/lanjutan/'.$dt->idkuratif)?>" class="btn btn-xs btn-success btn-flat"><i class="fa fa-refresh"></i> Lanjutkan</a>
+                <a href="<?=base_url('antrian/delete/'.$dt->idkuratif)?>" class="btn btn-xs btn-danger btn-flat" onclick="return confirm('Delete <?=$dt->nama_pasien;?> ?')"><i class="fa fa-trash" ></i> Hapus</a>
               </td>
             </tr>
             <?php $i++; } ?>

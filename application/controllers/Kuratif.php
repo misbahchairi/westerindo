@@ -22,63 +22,14 @@ class kuratif extends MY_Controller {
 		$this->data['obat'] = $this->mmaster->getObat();
 		$this->template->load('template_home','kuratif/pengobatan',$this->data);
 	}
-	public function antrian()
-	{
-		$this->data['page_name'] = "antrian";
-		$this->data['antrian'] = $this->mkuratif->getAntrian();
-		$this->template->load('template_home','kuratif/antrian',$this->data);
-	}
 	public function resume(){
 		$this->data['page_name'] = "kuratif";
 
-		$this->data['nama'] = $this->input->post('nama');
-		$this->data['perihal'] = $this->input->post('perihal');
-		$this->data['mcu'] = $this->input->post('mcu');
-		$this->data['tanda_vital'] = $this->input->post('tanda_vital');
-		$this->data['nadi'] = $this->input->post('nadi');
-		$this->data['suhu'] = $this->input->post('suhu');
-		$this->data['pernafasan'] = $this->input->post('pernafasan');
-		$this->data['kesadaran_g'] = $this->input->post('kesadaran_g');
-		$this->data['kesadaran_c'] = $this->input->post('kesadaran_c');
-		$this->data['kesadaran_s'] = $this->input->post('kesadaran_s');
-		$this->data['kepala'] = $this->input->post('kepala');
-		$this->data['mata'] = $this->input->post('mata');
-		$this->data['telinga'] = $this->input->post('telinga');
-		$this->data['hidung'] = $this->input->post('hidung');
-		$this->data['tenggorokan'] = $this->input->post('tenggorokan');
-		$this->data['dada'] = $this->input->post('dada');
-		$this->data['paru'] = $this->input->post('paru');
-		$this->data['jantung'] = $this->input->post('jantung');
-		$this->data['abdomen'] = $this->input->post('abdomen');
-		$this->data['liver'] = $this->input->post('liver');
-		$this->data['maag'] = $this->input->post('maag');
-		$this->data['usus_besar'] = $this->input->post('usus_besar');
-		$this->data['appendix'] = $this->input->post('appendix');
-		$this->data['genital'] = $this->input->post('genital');
-		$this->data['extremitas_atas'] = $this->input->post('extremitas_atas');
-		$this->data['extremitas_bawah'] = $this->input->post('extremitas_bawah');
-		$this->data['punggung'] = $this->input->post('punggung');
-		$this->data['pinggang'] = $this->input->post('pinggang');
-		$this->data['bokong'] = $this->input->post('bokong');
-		$this->data['is_kontrol'] = $this->input->post('is_kontrol');
+		$idkuratif = $this->session->userdata('s_idkuratif');
 
-		$this->data['count_anamnesa'] = count($this->input->post('anamnesa'));
-		for($i=0; $i < $this->data['count_anamnesa']; $i++) {
-	        $this->data['anamnesa'.$i] = $this->input->post('anamnesa')[$i];
-	        $this->data['anamnesa_durasi'.$i] = $this->input->post('anamnesa_durasi')[$i];
-	    }
-
-		$this->data['count_diagnosa'] = count($this->input->post('diagnosa'));
-		for($i=0; $i < $this->data['count_diagnosa']; $i++) {
-	        $this->data['diagnosa'.$i] = $this->input->post('diagnosa')[$i];
-	        $this->data['keterangan_diagnosa'.$i] = $this->input->post('keterangan_diagnosa')[$i];
-	    }
-
-		$this->data['count_obat'] = count($this->input->post('obat'));
-		for($i=0; $i < $this->data['count_obat']; $i++) {
-	        $this->data['obat'.$i] = $this->input->post('obat')[$i];
-	        $this->data['keterangan_obat'.$i] = $this->input->post('keterangan_obat')[$i];
-	    }
+		$this->data['temuan'] = $this->mkuratif->getTemuanByid($idkuratif)->result();
+		$this->data['tindakan'] = $this->mkuratif->getTindakanByid($idkuratif)->result();
+		$this->data['data'] = $this->mkuratif->getLanjutan($idkuratif)->row();
 
 		$this->template->load('template_home','kuratif/resume',$this->data);
 	}
@@ -171,6 +122,9 @@ class kuratif extends MY_Controller {
 
     }
     public function ajaxriwayat(){
+		$idkuratif = $this->session->userdata('s_idkuratif');
+		$this->mkuratif->deleteRiwayat($idkuratif);
+
     	$array = array(
 			'rp_idpasien' => $this ->input->post('idpasien2'),
 			'rp_status' => $this ->input->post('status'),
@@ -178,7 +132,6 @@ class kuratif extends MY_Controller {
 		);
 		$this->mkuratif->addRiwayat($array);
 
-		$idkuratif = $this->session->userdata('s_idkuratif');
 		$array2 = array(
 			'ku_state' => 'riwayat'
 		);
@@ -206,4 +159,187 @@ class kuratif extends MY_Controller {
 		$this->mkuratif->updateKuratif($array2,$idkuratif);
     }
 
+    public function ajaxtemuanpf(){
+		$idkuratif = $this->session->userdata('s_idkuratif');
+		$this->mkuratif->deleteTemuanPF($idkuratif);
+
+		for ($i=1; $i < 20 ; $i++) { 
+			$this->data['pf-'.$i] = $this->input->post('pf-'.$i);
+
+			if($i==1) { $bagian = 'Kepala'; }
+			if($i==2) { $bagian = 'Mata'; }
+			if($i==3) { $bagian = 'Telinga'; }
+			if($i==4) { $bagian = 'Hidung'; }
+			if($i==5) { $bagian = 'Tenggorokan,Mulut,Geligi'; }
+			if($i==6) { $bagian = 'Dada'; }
+			if($i==7) { $bagian = 'Paru'; }
+			if($i==8) { $bagian = 'Jantung'; }
+			if($i==9) { $bagian = 'Abdomen'; }
+			if($i==10) { $bagian = 'Liver'; }
+			if($i==11) { $bagian = 'Maag'; }
+			if($i==12) { $bagian = 'Usus Besar'; }
+			if($i==13) { $bagian = 'Appendix'; }
+			if($i==14) { $bagian = 'Genital'; }
+			if($i==15) { $bagian = 'Extremitas Atas'; }
+			if($i==16) { $bagian = 'Extremitas Bawah'; }
+			if($i==17) { $bagian = 'Punggung'; }
+			if($i==18) { $bagian = 'Pinggang'; }
+			if($i==19) { $bagian = 'Bokong'; }
+
+	    	if ($this->data['pf-'.$i]!="") {
+
+	    		$array[$i] = array(
+					'pf_idkuratif' => $idkuratif ,
+					'pf_bagian' => $bagian ,
+					'pf_temuan' => $this->data['pf-'.$i] ,
+					'pf_nomer' => $i,
+				);
+				$this->mkuratif->addTemuanPF($array[$i]);
+	    	}
+		}
+
+		$arraydata = array(
+			'ku_state' => 'temuan'
+		);
+		$this->mkuratif->updateKuratif($arraydata,$idkuratif);
+    }
+
+    public function ajaxpenunjang(){
+		$idkuratif = $this->session->userdata('s_idkuratif');
+
+		unset($config);
+        $config['upload_path'] = './uploads/';
+        $config['allowed_types'] = 'png|jpg|pdf';
+        $config['max_size']    = 0;
+    	$config['overwrite'] = false;
+        $this->load->library('upload');
+        $this->upload->initialize($config);
+
+		if ($_FILES['file']['name']!="") {
+    		$this->upload->do_upload('file');
+	        $upload_data1 = $this->upload->data();
+	        $file_data = $upload_data1['file_name']; 
+    	}
+
+		$array2 = array(
+			'ku_penunjang_medis' => $this ->input->post('kategori'),
+			'ku_penunjang_medis_file' => $file_data,
+			'ku_state' => 'penunjang_medis'
+		);
+		$this->mkuratif->updateKuratif($array2,$idkuratif);
+    }
+
+    public function ajaxdiagnosa(){
+		$idkuratif = $this->session->userdata('s_idkuratif');
+
+		$array2 = array(
+			'ku_iddiagnosa' => $this ->input->post('diagnosa') ,
+			'ku_state' => 'diagnosa'
+		);
+		$this->mkuratif->updateKuratif($array2,$idkuratif);
+    }
+
+    public function ajaxtindakan(){
+		$idkuratif = $this->session->userdata('s_idkuratif');
+		$this->mkuratif->deleteTindakan($idkuratif);
+
+		$jumlah = count($this ->input->post('jumlah')) + 1;
+
+		$arrayitem = array();
+
+		for ($i=1; $i < $jumlah ; $i++) {
+
+			// oral
+			if($this->input->post('jenis'.$i) == 'oral'){
+
+				if ($this->input->post('oral-tipe'.$i) == 'tablet') {
+					$tindakan[$i] = array(
+						'jenis' => $this->input->post('jenis'.$i) , 
+						'tipe' => $this->input->post('oral-tipe'.$i) ,
+						'pemakaian' => $this->input->post('oral-minum'.$i) ,
+					);
+				} 
+				if ($this->input->post('oral-tipe'.$i) == 'sirup') {
+					$tindakan[$i] = array(
+						'jenis' => $this->input->post('jenis'.$i) , 
+						'tipe' => $this->input->post('oral-tipe'.$i) ,
+						'pemakaian' => $this->input->post('oral-sendok'.$i) .' , '. $this->input->post('oral-minum'.$i) 
+					);
+				}
+				$this->data['jumlah'.$i] = $this->input->post('jml-minum'.$i);
+
+			} 
+
+			// topikal
+			if ($this->input->post('jenis'.$i) == 'topikal') {
+
+				if ($this->input->post('topikal-tipe'.$i) == 'oles') {
+					$tindakan[$i] = array(
+						'jenis' => $this->input->post('jenis'.$i) , 
+						'tipe' => $this->input->post('topikal-tipe'.$i) ,
+						'pemakaian' => $this->input->post('topikal-pakai'.$i) ,
+					);
+				}
+				if ($this->input->post('topikal-tipe'.$i) == 'tetes') {
+					$tindakan[$i] = array(
+						'jenis' => $this->input->post('jenis'.$i) , 
+						'tipe' => $this->input->post('topikal-tipe'.$i) ,
+						'pemakaian' => $this->input->post('topikal-letak-pakai'.$i).' '.$this->input->post('topikal-letak-spesifik'.$i).' '.$this->input->post('topikal-pakai-tetes'.$i).' , '.$this->input->post('topikal-pakai'.$i) ,
+					);
+				}
+				$this->data['jumlah'.$i] = $this->input->post('jml-topikal'.$i);
+
+			} 
+
+			// suntikan
+			if ($this->input->post('jenis'.$i) == 'suntikan') {
+
+				$tindakan[$i] = array(
+					'jenis' => $this->input->post('jenis'.$i) , 
+					'tipe' => $this->input->post('suntikan-tipe'.$i) ,
+					'pemakaian' => '' ,
+				);
+				$this->data['jumlah'.$i] = $this->input->post('jml-suntikan'.$i);
+
+			} 
+
+			// rectum
+			if ($this->input->post('jenis'.$i) == 'rectum') {
+
+				$tindakan[$i] = array(
+					'jenis' => $this->input->post('jenis'.$i) , 
+					'tipe' => $this->input->post('rectum-tipe'.$i) ,
+					'pemakaian' => '' ,
+				);
+				$this->data['jumlah'.$i] = $this->input->post('jml-rectum'.$i);
+
+			}
+
+			array_push($arrayitem, $tindakan[$i]);
+    		$arraytindakan[$i] = array(
+				'td_idkuratif' => $idkuratif ,
+				'td_idobat' => $this->input->post('obat'.$i) ,
+				'td_carapenggunaan' => json_encode($tindakan[$i]) ,
+				'td_jumlahobat' => $this->data['jumlah'.$i] ,
+			);
+			$this->mkuratif->addTindakan($arraytindakan[$i]);
+
+		}
+
+		if($this ->input->post('is_kontrol')!=''){
+			$kontrol = 1;
+		} else {
+			$kontrol = 0;
+		}
+
+		$array2 = array(
+			'ku_iskontrol' => $kontrol ,
+			'ku_created_by' => '' ,
+			'ku_created_at' => '' ,
+			'ku_state' => 'tindakan'
+		);
+		$this->mkuratif->updateKuratif($array2,$idkuratif);
+    }
+
 }
+

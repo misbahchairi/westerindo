@@ -23,188 +23,58 @@
                   <tr>
                     <td>Nama</td>
                     <td>:</td>
-                    <td><?=$nama?></td>
+                    <td><?=$data->nama_pasien?></td>
                   </tr>
                   <tr>
                     <td>Input Perihal</td>
                     <td>:</td>
-                    <td><?=$perihal?></td>
+                    <td><?=$data->ku_perihal?></td>
                   </tr>
-                  <?php for ($i=0; $i < $count_anamnesa ; $i++) { 
-                  $anamnesa = 'anamnesa'.$i ;
-                  $anamnesa_durasi = 'anamnesa_durasi'.$i ;
-                  ?>
+                  <?php foreach ($temuan as $temuan) { ?>
                   <tr>
-                    <td>Keluhan <?=$i+1?></td>
+                    <td>Temuan PF <br> <small>Di <?=$temuan->pf_bagian?></small></td>
                     <td>:</td>
-                    <td><?=$this->mmaster->getAnamnesaByid($$anamnesa)->row()->nama;?> <br> <?=$$anamnesa_durasi?></td>
-                  </tr>
-                  <?php } ?>
-                  <?php if ($kepala!="") {?>
-                  <tr>
-                    <td>Temuan PF <br> <small>Di kepala</small></td>
-                    <td>:</td>
-                    <td><?=$kepala?></td>
-                  </tr>
-                  <?php } ?>
-                  <?php if ($mata!="") {?>
-                  <tr>
-                    <td>Temuan PF <br> <small>Di mata</small></td>
-                    <td>:</td>
-                    <td><?=$mata?></td>
-                  </tr>
-                  <?php } ?>
-                  <?php if ($telinga!="") {?>
-                  <tr>
-                    <td>Temuan PF <br> <small>Di telinga</small></td>
-                    <td>:</td>
-                    <td><?=$telinga?></td>
-                  </tr>
-                  <?php } ?>
-                  <?php if ($hidung!="") {?>
-                  <tr>
-                    <td>Temuan PF <br> <small>Di hidung</small></td>
-                    <td>:</td>
-                    <td><?=$hidung?></td>
-                  </tr>
-                  <?php } ?>
-                  <?php if ($tenggorokan!="") {?>
-                  <tr>
-                    <td>Temuan PF <br> <small>Di tenggorokan,mulut,geligi</small></td>
-                    <td>:</td>
-                    <td><?=$tenggorokan?></td>
-                  </tr>
-                  <?php } ?>
-                  <?php if ($dada!="") {?>
-                  <tr>
-                    <td>Temuan PF <br> <small>Di dada</small></td>
-                    <td>:</td>
-                    <td><?=$dada?></td>
-                  </tr>
-                  <?php } ?>
-                  <?php if ($paru!="") {?>
-                  <tr>
-                    <td>Temuan PF <br> <small>Di paru</small></td>
-                    <td>:</td>
-                    <td><?=$paru?></td>
-                  </tr>
-                  <?php } ?>
-                  <?php if ($jantung!="") {?>
-                  <tr>
-                    <td>Temuan PF <br> <small>Di jantung</small></td>
-                    <td>:</td>
-                    <td><?=$jantung?></td>
-                  </tr>
-                  <?php } ?>
-                  <?php if ($abdomen!="") {?>
-                  <tr>
-                    <td>Temuan PF <br> <small>Di abdomen</small></td>
-                    <td>:</td>
-                    <td><?=$abdomen?></td>
-                  </tr>
-                  <?php } ?>
-                  <?php if ($liver!="") {?>
-                  <tr>
-                    <td>Temuan PF <br> <small>Di liver</small></td>
-                    <td>:</td>
-                    <td><?=$liver?></td>
-                  </tr>
-                  <?php } ?>
-                  <?php if ($maag!="") {?>
-                  <tr>
-                    <td>Temuan PF <br> <small>Di maag</small></td>
-                    <td>:</td>
-                    <td><?=$maag?></td>
-                  </tr>
-                  <?php } ?>
-                  <?php if ($usus_besar!="") {?>
-                  <tr>
-                    <td>Temuan PF <br> <small>Di usus besar</small></td>
-                    <td>:</td>
-                    <td><?=$usus_besar?></td>
-                  </tr>
-                  <?php } ?>
-                  <?php if ($appendix!="") {?>
-                  <tr>
-                    <td>Temuan PF <br> <small>Di appendix</small></td>
-                    <td>:</td>
-                    <td><?=$appendix?></td>
-                  </tr>
-                  <?php } ?>
-                  <?php if ($genital!="") {?>
-                  <tr>
-                    <td>Temuan PF <br> <small>Di genital</small></td>
-                    <td>:</td>
-                    <td><?=$genital?></td>
-                  </tr>
-                  <?php } ?>
-                  <?php if ($extremitas_atas!="") {?>
-                  <tr>
-                    <td>Temuan PF <br> <small>Di extremitas atas</small></td>
-                    <td>:</td>
-                    <td><?=$extremitas_atas?></td>
-                  </tr>
-                  <?php } ?>
-                  <?php if ($extremitas_bawah!="") {?>
-                  <tr>
-                    <td>Temuan PF <br> <small>Di extremitas bawah</small></td>
-                    <td>:</td>
-                    <td><?=$extremitas_bawah?></td>
-                  </tr>
-                  <?php } ?>
-                  <?php if ($punggung!="") {?>
-                  <tr>
-                    <td>Temuan PF <br> <small>Di punggung</small></td>
-                    <td>:</td>
-                    <td><?=$punggung?></td>
-                  </tr>
-                  <?php } ?>
-                  <?php if ($pinggang!="") {?>
-                  <tr>
-                    <td>Temuan PF <br> <small>Di pinggang</small></td>
-                    <td>:</td>
-                    <td><?=$pinggang?></td>
-                  </tr>
-                  <?php } ?>
-                  <?php if ($bokong!="") {?>
-                  <tr>
-                    <td>Temuan PF <br> <small>Di bokong</small></td>
-                    <td>:</td>
-                    <td><?=$bokong?></td>
+                    <td><?=$temuan->pf_temuan?></td>
                   </tr>
                   <?php } ?>
                   <tr>
                     <td>Hasil Lab</td>
                     <td>:</td>
                     <td>
-                      Tanda vital <span style="text-transform: uppercase;"><?=$tanda_vital?></span> <br>
-                      Nadi <u><?=$nadi?> /menit</u> , Suhu <u><?=$suhu?> &#8451;</u> , Pernafasan <u><?=$pernafasan?> /menit</u> <br>
-                      Kesadaran G <u><?=$kesadaran_g?></u> C <u><?=$kesadaran_c?></u> S <u><?=$kesadaran_s?></u>
+                      Tanda vital <span style="text-transform: uppercase;"><?=$data->tv_tandavital?></span> <br>
+                      Nadi <u> <?=$data->tv_nadi?> /menit</u> , Suhu <u> <?=$data->tv_suhu?> &#8451;</u> , Pernafasan <u> <?=$data->tv_pernafasan?> /menit</u> <br>
+                      Kesadaran G : <u> <?=$data->tv_kesadarang?> </u>, C : <u> <?=$data->tv_kesadaranc?> </u> , S : <u> <?=$data->tv_kesadarans?> </u>
                     </td>
                   </tr>
-                  <?php for ($i=0; $i < $count_diagnosa ; $i++) { 
-                  $diagnosa = 'diagnosa'.$i ;
-                  $keterangan_diagnosa = 'keterangan_diagnosa'.$i ;
-                  ?>
                   <tr>
-                    <td>Diagnosa <?=$i+1?></td>
+                    <td>Diagnosa</td>
                     <td>:</td>
-                    <td><?=$this->mmaster->getDiagnosaByid($$diagnosa)->row()->nama;?> <br> <?=$$keterangan_diagnosa?></td>
+                    <td><?=$data->nama_diagnosa?> <br> <small><?=$data->ket_diagnosa?></small></td>
                   </tr>
-                  <?php } ?>
-                  <?php for ($i=0; $i < $count_obat ; $i++) { 
-                  $obat = 'obat'.$i ;
-                  $keterangan_obat = 'keterangan_obat'.$i ;
-                  ?>
+                  <?php $i=1; foreach ($tindakan as $tindakan) { ?>
+                    <?php 
+                      $json = $tindakan->td_carapenggunaan;
+                      $cara = json_decode($json, true);
+                    ?>
                   <tr>
-                    <td>Tindakan <?=$i+1?></td>
+                    <td>Tindakan <?=$i;?></td>
                     <td>:</td>
-                    <td><?=$this->mmaster->getObatByid($$obat)->row()->nama_obat;?> <br> <?=$$keterangan_obat?></td>
+                    <td>
+                      <?=$tindakan->nama_obat?>
+                      <br>
+                      Jenis Obat : <?=$cara['jenis']?>
+                      <br>
+                      Tipe Obat : <?=$cara['tipe']?>
+                      <br>
+                      <?php if ($cara['pemakaian'] != '') { ?>
+                      Cara Pemakaian : <?=$cara['pemakaian']?>
+                      <?php } ?>
+                    </td>
                   </tr>
-                  <?php } ?>
+                  <?php $i++; } ?>
                   <tr>
                     <td colspan="3">
-                      <label><input type="checkbox" <?php if($is_kontrol!=NULL)echo "checked='checked'"; ?>> Apakah harus kontrol kembali 3 hari ?</label>
+                      <label><input type="checkbox" <?php if($data->ku_iskontrol=='1'){echo'checked';} ?>> Apakah harus kontrol kembali 3 hari ?</label>
                     </td>
                   </tr>
                 </tbody>

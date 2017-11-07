@@ -19,12 +19,16 @@
   }
 
 </style>
+<?php 
+  foreach ($lanjutan->result() as $dt) { 
+  $state = $dt->ku_state;
+?>
   <div class="content-wrapper">
   
   <section class="content-header">
     <h1>
       Kuratif
-      <small>pengobatan</small>
+      <small>pengobatan</small> 
     </h1>
     <ol class="breadcrumb">
       <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -34,7 +38,7 @@
 
   <!-- Main content -->
   <section class="content">
-    <div class="box box-success hide" id="riwayat-pasien">
+    <div class="box box-success">
       <div class="box-header with-border">
         <h3 class="box-title">Info Pasien</h3>
       </div>
@@ -42,6 +46,7 @@
         <div class="row">
           <div class="col-md-3">
             <div class="img-pasien" id="img-pasien">
+              <img src="<?=base_url($dt->foto)?>" alt="">
             </div>
           </div>
           <div class="col-md-9">
@@ -68,35 +73,35 @@
               <div class="connecting-line"></div>
               <ul class="nav nav-tabs" role="tablist">
 
-                  <li role="presentation" class="active">
+                  <li role="presentation" class="<?php if($state == 'perihal'){echo'active';}else{echo'disabled';} ?>">
                       <a href="#step1" data-toggle="tab" aria-controls="step1" role="tab" title="Perihal">
                           <span class="round-tab">
                               Perihal
                           </span>
                       </a>
                   </li>
-                  <li role="presentation" class="disabled">
+                  <li role="presentation" class="<?php if($state == 'riwayat'){echo'active';}else{echo'disabled';} ?>">
                       <a href="#step2" data-toggle="tab" aria-controls="step2" role="tab" title="Riwayat Penyakit">
                           <span class="round-tab">
                               Riwayat Penyakit
                           </span>
                       </a>
                   </li>
-                  <li role="presentation" class="disabled">
+                  <li role="presentation" class="<?php if($state == 'tanda_vital'){echo'active';}else{echo'disabled';} ?>">
                       <a href="#step3" data-toggle="tab" aria-controls="complete" role="tab" title="Tanda Vital">
                           <span class="round-tab">
                               Tanda Vital
                           </span>
                       </a>
                   </li>
-                  <li role="presentation" class="disabled">
+                  <li role="presentation" class="<?php if($state == 'temuan'){echo'active';}else{echo'disabled';} ?>">
                       <a href="#step4" data-toggle="tab" aria-controls="step3" role="tab" title="Temuan PF">
                           <span class="round-tab">
                               Temuan PF
                           </span>
                       </a>
                   </li>
-                  <li role="presentation" class="disabled">
+                  <li role="presentation" class="<?php if($state == 'penunjang_medis'){echo'active';}else{echo'disabled';} ?>">
                       <a href="#step5" data-toggle="tab" aria-controls="complete" role="tab" title="Penunjang Medis">
                           <span class="round-tab">
                               Penunjang Medis
@@ -105,7 +110,7 @@
                   </li>
 
 
-                  <li role="presentation" class="disabled">
+                  <li role="presentation" class="<?php if($state == 'diagnosa'){echo'active';}else{echo'disabled';} ?>">
                       <a href="#step6" data-toggle="tab" aria-controls="complete" role="tab" title="Diagnosa">
                           <span class="round-tab">
                               Diagnosa
@@ -113,7 +118,7 @@
                       </a>
                   </li>
 
-                  <li role="presentation" class="disabled">
+                  <li role="presentation" class="<?php if($state == 'tindakan'){echo'active';}else{echo'disabled';} ?>">
                       <a href="#step7" data-toggle="tab" aria-controls="complete" role="tab" title="Tindakan">
                           <span class="round-tab">
                               Tindakan
@@ -124,7 +129,7 @@
           </div>
 
               <div class="tab-content">
-                  <div class="tab-pane active" role="tabpanel" id="step1">
+                  <div class="tab-pane" role="tabpanel" id="step1">
                     <form method="post" class="form-perihal">
                       <h3>Perihal</h3>
                       <div class="row">
@@ -133,18 +138,11 @@
                           <div class="form-group" style="overflow:hidden;">
                             <label class="control-label col-sm-2">Nama :</label>
                             <div class="col-sm-10">
-                              <div class="input-group">
-                                <input type="text" id="nama" class="form-control" placeholder="Isi Dengan Nama atau NIP" name="nama">
-                                <input type="hidden" name="nik" id="nik">
-                                <input type="hidden" name="idpasien" id="idpasien">
-                                <div class="input-group-btn">
-                                  <button type="button" class="btn btn-default btn-flat" id="proses-riwayat">Proses</button>
-                                </div>
-                              </div>
+                                <input type="text" id="nama" class="form-control" placeholder="Isi Dengan Nama atau NIP" name="nama" value="<?=$dt->nama_pasien?>">
                             </div>
                           </div>
                           <div class="form-group">
-                            <label class="control-label col-sm-2">Input Perihal :</label>
+                            <label class="control-label col-sm-2">Perihal :</label>
                             <div class="col-sm-10">
                               <select name="perihal" class="form-control select2" id="perihal">
                                 <option value="Berobat Karena Sakit">Berobat Karena Sakit</option>
@@ -163,11 +161,11 @@
                         </div>
                       </div>
                       <div class="ktk-abu">
-                        <button type="button" class="btn btn-primary btn-flat next-step perihal-next" id="btn-next" disabled="true">Next <i class="fa fa-long-arrow-right"></i></button>
+                        <button type="button" class="btn btn-primary btn-flat next-step perihal-next" id="btn-next">Next <i class="fa fa-long-arrow-right"></i></button>
                       </div>
                     </form>
                   </div>
-                  <div class="tab-pane" role="tabpanel" id="step2">
+                  <div class="tab-pane <?php if($state=='riwayat')echo'active'; ?>" role="tabpanel" id="step2">
                     <form method="post" class="form-riwayat">
                       <h3>Riwayat Penyakit</h3>
                       <div class="row">
@@ -192,12 +190,14 @@
                         </div>
                       </div>
                       <div class="ktk-abu">
-                        <button type="button" class="btn btn-warning btn-flat pull-left prev-step"><i class="fa fa-long-arrow-left"></i> Previous</button>
+                        <?php if ($state!='riwayat'): ?>
+                          <button type="button" class="btn btn-warning btn-flat pull-left prev-step"><i class="fa fa-long-arrow-left"></i> Previous</button>
+                        <?php endif ?>
                         <button type="button" class="btn btn-primary btn-flat next-step riwayat-next">Next <i class="fa fa-long-arrow-right"></i></button>
                       </div>
                     </form>
                   </div>
-                  <div class="tab-pane" role="tabpanel" id="step3">
+                  <div class="tab-pane <?php if($state=='tanda_vital')echo'active'; ?>" role="tabpanel" id="step3">
                     <form method="post" class="form-vital">
                       <h3>Tanda Vital</h3>
                       <div class="row">
@@ -207,10 +207,10 @@
                             <label class="control-label col-sm-3">Tanda-Tanda Vital :</label>
                             <div class="col-sm-9">
                               <select name="tanda_vital" class="form-control">
-                                <option value="TD">TD</option>
-                                <option value="N">N</option>
-                                <option value="S">S</option>
-                                <option value="RR">RR</option>
+                                <option value="TD" <?php if($dt->tv_tandavital=='TD')echo'selected'; ?> >TD</option>
+                                <option value="N" <?php if($dt->tv_tandavital=='N')echo'selected'; ?>>N</option>
+                                <option value="S" <?php if($dt->tv_tandavital=='S')echo'selected'; ?>>S</option>
+                                <option value="RR" <?php if($dt->tv_tandavital=='RR')echo'selected'; ?>>RR</option>
                               </select>
                             </div>
                           </div>
@@ -218,19 +218,19 @@
                             <label class="control-label col-sm-3">Tekanan Darah :</label>
                             <div class="col-sm-3">
                               <div class="input-group">
-                                <input type="text" class="form-control" name="nadi" placeholder="Nadi">
+                                <input type="text" class="form-control" name="nadi" placeholder="Nadi" value="<?=$dt->tv_nadi?>">
                                 <span class="input-group-addon">/menit</span>
                               </div>
                             </div>
                             <div class="col-sm-3">
                               <div class="input-group">
-                                <input type="text" class="form-control" name="suhu" placeholder="Suhu">
+                                <input type="text" class="form-control" name="suhu" placeholder="Suhu" value="<?=$dt->tv_suhu?>">
                                 <span class="input-group-addon">&#8451;</span>
                               </div>
                             </div>
                             <div class="col-sm-3">
                               <div class="input-group">
-                                <input type="text" class="form-control" name="pernafasan" placeholder="Pernafasan">
+                                <input type="text" class="form-control" name="pernafasan" placeholder="Pernafasan" value="<?=$dt->tv_pernafasan?>">
                                 <span class="input-group-addon">/menit</span>
                               </div>
                             </div>
@@ -240,31 +240,33 @@
                             <div class="col-sm-3">
                               <div class="input-group">
                                 <span class="input-group-addon">G</span>
-                                <input type="text" class="form-control" name="kesadaran_g" placeholder="">
+                                <input type="text" class="form-control" name="kesadaran_g" placeholder="" value="<?=$dt->tv_kesadarang?>">
                               </div>
                             </div>
                             <div class="col-sm-3">
                               <div class="input-group">
                                 <span class="input-group-addon">C</span>
-                                <input type="text" class="form-control" name="kesadaran_c" placeholder="">
+                                <input type="text" class="form-control" name="kesadaran_c" placeholder="" value="<?=$dt->tv_kesadaranc?>">
                               </div>
                             </div>
                             <div class="col-sm-3">
                               <div class="input-group">
                                 <span class="input-group-addon">S</span>
-                                <input type="text" class="form-control" name="kesadaran_s" placeholder="">
+                                <input type="text" class="form-control" name="kesadaran_s" placeholder="" value="<?=$dt->tv_kesadarans?>">
                               </div>
                             </div>
                           </div>
                         </div>
                       </div>
                       <div class="ktk-abu">
-                        <button type="button" class="btn btn-warning btn-flat pull-left prev-step"><i class="fa fa-long-arrow-left"></i> Previous</button>
+                        <?php if ($state!='tanda_vital'): ?>
+                          <button type="button" class="btn btn-warning btn-flat pull-left prev-step"><i class="fa fa-long-arrow-left"></i> Previous</button>
+                        <?php endif ?>
                         <button type="button" class="btn btn-primary btn-flat next-step vital-next">Next <i class="fa fa-long-arrow-right"></i></button>
                       </div>
                     </form>
                   </div>
-                  <div class="tab-pane" role="tabpanel" id="step4">
+                  <div class="tab-pane <?php if($state=='temuan')echo'active'; ?>" role="tabpanel" id="step4">
                       <h3>Temuan PF</h3>
                         <center>
                       <div class="pf">
@@ -303,7 +305,7 @@
                             </div>
                           </div>
                       </div>
-                        </center>
+                     </center>
 
                      <form method="post" class="form-temuanpf">
                         <?php for ($i=1; $i < 20 ; $i++) { ?>
@@ -338,7 +340,7 @@
                                 <div class="col-md-12">
                                   <div class="form-group">
                                     <label>Keterangan</label>
-                                    <textarea name="<?php if($i==1) { echo 'pf-'.$i;  } elseif($i==2) { echo 'pf-'.$i; } elseif($i==3) { echo 'pf-'.$i; } elseif($i==4) { echo 'pf-'.$i; } elseif($i==5) { echo 'pf-'.$i; } elseif($i==6) { echo 'pf-'.$i; } elseif($i==7) { echo 'pf-'.$i; } elseif($i==8) { echo 'pf-'.$i; } elseif($i==9) { echo 'pf-'.$i; } elseif($i==10) { echo 'pf-'.$i; } elseif($i==11) { echo 'pf-'.$i; } elseif($i==12) { echo 'pf-'.$i; } elseif($i==13) { echo 'pf-'.$i; } elseif($i==14) { echo 'pf-'.$i; } elseif($i==15) { echo 'pf-'.$i; } elseif($i==16) { echo 'pf-'.$i; } elseif($i==17) { echo 'pf-'.$i; } elseif($i==18) { echo 'pf-'.$i; } elseif($i==19) { echo 'pf-'.$i; } ?>"  class="form-control"></textarea>
+                                    <textarea name="<?php if($i==1) { echo 'pf-'.$i;  } elseif($i==2) { echo 'pf-'.$i; } elseif($i==3) { echo 'pf-'.$i; } elseif($i==4) { echo 'pf-'.$i; } elseif($i==5) { echo 'pf-'.$i; } elseif($i==6) { echo 'pf-'.$i; } elseif($i==7) { echo 'pf-'.$i; } elseif($i==8) { echo 'pf-'.$i; } elseif($i==9) { echo 'pf-'.$i; } elseif($i==10) { echo 'pf-'.$i; } elseif($i==11) { echo 'pf-'.$i; } elseif($i==12) { echo 'pf-'.$i; } elseif($i==13) { echo 'pf-'.$i; } elseif($i==14) { echo 'pf-'.$i; } elseif($i==15) { echo 'pf-'.$i; } elseif($i==16) { echo 'pf-'.$i; } elseif($i==17) { echo 'pf-'.$i; } elseif($i==18) { echo 'pf-'.$i; } elseif($i==19) { echo 'pf-'.$i; } ?>"  class="form-control"><?php foreach ($temuan as $dttemuan ) { if($dttemuan->pf_nomer==$i) { echo $dttemuan->pf_temuan;  } } ?></textarea>
                                   </div>
                                 </div>
                               </div>
@@ -351,12 +353,14 @@
                         </div>
                         <?php } ?>
                       <div class="ktk-abu">
-                        <button type="button" class="btn btn-warning btn-flat pull-left prev-step"><i class="fa fa-long-arrow-left"></i> Previous</button>
+                        <?php if ($state!='temuan'): ?>
+                          <button type="button" class="btn btn-warning btn-flat pull-left prev-step"><i class="fa fa-long-arrow-left"></i> Previous</button>
+                        <?php endif ?>
                         <button type="button" class="btn btn-primary btn-flat next-step temuanpf-next">Next <i class="fa fa-long-arrow-right"></i></button>
                       </div>
                     </form>
                   </div>
-                  <div class="tab-pane" role="tabpanel" id="step5">
+                  <div class="tab-pane <?php if($state=='penunjang_medis')echo'active'; ?>" role="tabpanel" id="step5">
                     <form method="post" class="form-penunjang" enctype="multipart/form-data">
                       <h3>Penunjang Medis</h3>
                       <div class="row">
@@ -366,9 +370,9 @@
                             <label class="control-label col-sm-2">Kategori :</label>
                             <div class="col-sm-10">
                               <select class="form-control" name="kategori" id="kat_penunjang">
-                                <option value="Lab">Lab</option>
-                                <option value="Exray">Exray</option>
-                                <option value="Electro Medis">Electro Medis</option>
+                                <option value="Lab" <?php if($dt->ku_penunjangmedis=='Lab'){echo'selected';} ?> >Lab</option>
+                                <option value="Exray" <?php if($dt->ku_penunjangmedis=='Exray'){echo'selected';} ?> >Exray</option>
+                                <option value="Electro Medis" <?php if($dt->ku_penunjangmedis=='Electro Medis'){echo'selected';} ?> >Electro Medis</option>
                               </select>
                             </div>
                           </div>
@@ -381,12 +385,14 @@
                         </div>
                       </div>
                       <div class="ktk-abu">
-                        <button type="button" class="btn btn-warning btn-flat pull-left prev-step"><i class="fa fa-long-arrow-left"></i> Previous</button>
+                        <?php if ($state!='penunjang_medis'): ?>
+                          <button type="button" class="btn btn-warning btn-flat pull-left prev-step"><i class="fa fa-long-arrow-left"></i> Previous</button>
+                        <?php endif ?>
                         <button type="button" class="btn btn-primary btn-flat next-step penunjang-next">Next <i class="fa fa-long-arrow-right"></i></button>
-                      </div>6
+                      </div>
                     </form>
                   </div>
-                  <div class="tab-pane" role="tabpanel" id="step6">
+                  <div class="tab-pane <?php if($state=='diagnosa')echo'active'; ?>" role="tabpanel" id="step6">
                     <form method="post" class="form-diagnosa">
                       <h3>Diagnosa</h3>
                       <div class="row">
@@ -399,7 +405,7 @@
                                 <div class="col-md-10">
                                   <select name="diagnosa" class="form-control select2" style="margin-bottom: 10px;width: 377px;" id="diagnosa">
                                     <?php foreach ($diagnosa->result() as $dt_diag): ?>
-                                    <option value="<?=$dt_diag->id_diagnosa?>"><?=$dt_diag->nama?></option>
+                                    <option value="<?=$dt_diag->id_diagnosa?>" <?php if($dt->ku_iddiagnosa==$dt_diag->id_diagnosa) echo'selected'; ?> ><?=$dt_diag->nama?></option>
                                     <?php endforeach ?>
                                   </select>
                                 </div>
@@ -411,12 +417,14 @@
                         </div>
                       </div>
                       <div class="ktk-abu">
-                        <button type="button" class="btn btn-warning btn-flat pull-left prev-step"><i class="fa fa-long-arrow-left"></i> Previous</button>
+                        <?php if ($state!='diagnosa'): ?>
+                          <button type="button" class="btn btn-warning btn-flat pull-left prev-step"><i class="fa fa-long-arrow-left"></i> Previous</button>
+                        <?php endif ?>
                         <button type="button" class="btn btn-primary btn-flat next-step diagnosa-next">Next <i class="fa fa-long-arrow-right"></i></button>
                       </div>
                     </form>
                   </div>
-                  <div class="tab-pane" role="tabpanel" id="step7">
+                  <div class="tab-pane <?php if($state=='tindakan')echo'active'; ?>" role="tabpanel" id="step7">
                     <form method="post" class="form-tindakan">
                       <h3>Tindakan</h3>
                       <div class="row">
@@ -530,7 +538,9 @@
                         </div>
                       </div>
                       <div class="ktk-abu">
-                        <button type="button" class="btn btn-warning btn-flat pull-left prev-step"><i class="fa fa-long-arrow-left"></i> Previous</button>
+                        <?php if ($state!='tindakan'): ?>
+                          <button type="button" class="btn btn-warning btn-flat pull-left prev-step"><i class="fa fa-long-arrow-left"></i> Previous</button>
+                        <?php endif ?>
                         <button type="button" class="btn btn-primary btn-flat tindakan-next"><i class="fa fa-save"></i> Simpan</button>
                       </div>
                   </div>
@@ -680,7 +690,6 @@
       $("button.tindakan-next").click(function(){
         var data = $('.form-tindakan').serialize();
         var link="<?= base_url('kuratif/ajaxtindakan') ?>"
-        var links="<?= base_url('kuratif/resume') ?>"
         $.ajax({
           type: 'POST',
           url: link,
@@ -691,9 +700,9 @@
           },
           complete: function(){
             $('#loader').hide();
-            window.location.href = links;
           },
           success: function(){  
+
           }
         });
       });
@@ -756,26 +765,6 @@
     $('.rectum'+id).hide();
    }
   }
-  $('#proses-riwayat').click(function(){
-    var nik = $('input[name="nik"]').val();
-    if (nik != "") {
-      var nama = $('input[name="nama"]').val();
-
-      $.ajax({ 
-          url: '<?= base_url(); ?>kuratif/prosesriwayat',
-          data: {"nama": nama,"nik": nik},
-          cache: false,
-          type: 'post',
-          success: function(result){
-            $('#riwayat-pasien').removeClass('hide');
-            $("#img-pasien").html(result);
-            $('#btn-next').prop('disabled', false);
-          }
-      });
-    } else {
-      alert("Pastikan anda isi Nama / Nik dengan benar");
-    }
-  });
 
   var rowCount = 2;
   $('.add-obat').click(function() {
@@ -856,20 +845,6 @@
       $(elem).prev().find('a[data-toggle="tab"]').click();
   }
 </script>
+<?php } ?>
 <script src="<?=base_url()?>assets/plugins/jQueryUI/jquery-ui.js" type="text/javascript"></script>
 <script src="<?=base_url('assets'); ?>/plugins/jQueryUI/jquery-ui.min.js"></script>
-    <script>
-     $(function () {
-        $("#nama").autocomplete({    //id kode sebagai key autocomplete yang akan dibawa ke source url
-            minLength:0,
-            delay:0,
-            source:'<?=base_url('kuratif/getRekamMedis')?>',   //nama source kita ambil langsung memangil fungsi get_allkota
-            select:function(event, ui){
-                $('#nama').val(ui.item.nama);
-                $('#nik').val(ui.item.nik);
-                $('#idpasien').val(ui.item.idpasien);
-                $('#idpasien2').val(ui.item.idpasien);
-                }
-            });
-        });
-    </script>
