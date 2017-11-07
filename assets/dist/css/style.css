@@ -302,6 +302,13 @@
     border-bottom-color: transparent;
 }
 
+.wizard .nav-tabs > li.aktip > a, .wizard .nav-tabs > li.aktip > a:hover, .wizard .nav-tabs > li.aktip > a:focus {
+    color: #555555;
+    cursor: default;
+    border: 0;
+    border-bottom-color: transparent;
+}
+
 span.round-tab {
     width: 130px;
     /* height: 70px; */
@@ -321,13 +328,13 @@ span.round-tab {
 span.round-tab i{
     color:#555555;
 }
-.wizard li.active span.round-tab {
+.wizard li.active span.round-tab , .wizard li.aktip span.round-tab {
     background: #fff;
     border: 2px solid #5bc0de;
     color: #5bc0de !important;
     
 }
-.wizard li.active span.round-tab i{
+.wizard li.active span.round-tab i , .wizard li.aktip span.round-tab i{
     color: #5bc0de;
 }
 
@@ -352,7 +359,7 @@ span.round-tab:hover {
     transition: 0.1s ease-in-out;
 }
 
-.wizard li.active:after {
+.wizard li.active:after , .wizard li.aktip:after {
     content: " ";
     position: absolute;
     left: 46%;
@@ -405,7 +412,7 @@ span.round-tab:hover {
         line-height: 50px;
     }
 
-    .wizard li.active:after {
+    .wizard li.active:after , .wizard li.aktip:after {
         content: " ";
         position: absolute;
         left: 35%;

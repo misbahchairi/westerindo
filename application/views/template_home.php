@@ -34,6 +34,13 @@
 
 		
 	</head>
+	<style type="text/css">
+		.user {
+		    margin-right: 50px;
+		    margin-top: 15px;
+		    color: #fff;
+		}
+	</style>
 	<body class="hold-transition skin-blue sidebar-mini">
 		<!-- jQuery 2.1.4 -->
 		<script src="<?=base_url('assets'); ?>/plugins/jQuery/jQuery-2.1.4.min.js"></script>
@@ -49,6 +56,12 @@
 					<a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </a>
 					<div class="navbar-custom-menu">
 						<ul class="nav navbar-nav">
+						  <li class="user">
+						  	<span>Nama : <?= $this->session->userdata('nama'); ?></span>
+						  </li>
+						  <li class="user">
+						  	<span>Unit : <?= $this->session->userdata('unit_nama'); ?></span>
+						  </li>
 			              <li class="dropdown notifications-menu">
 			                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
 			                  <i class="fa fa-bell-o"></i>
@@ -96,214 +109,144 @@
 						<li class="header">
 							MAIN NAVIGATION
 						</li>
-						<li class="<?php
-							if (@$page_name == 'dashboard') { echo 'active';
-							}
- 							?>">
+						<li class="<?php if (@$page_name == 'dashboard') { echo 'active'; } ?>">
 							<a href="<?=base_url(); ?>"> <i class="fa fa-dashboard"></i> <span>Dashboard</span> </a>
 						</li>
 						<!-- <li class="header">
 							PROGRAM K3
 						</li> -->
-						<li class="treeview <?php
-							if (@$page_name == 'promotif' or @$page_name == 'k-promotif' or @$page_name == 't-promotif') { echo 'active';
-							}
- ?>">
+						<li class="treeview <?php if (@$page_name == 'promotif' or @$page_name == 'k-promotif' or @$page_name == 't-promotif') { echo 'active'; } ?>">
 							<a href="#"> <i class="fa fa-calendar-check-o"></i> <span>Promotif</span> <i class="fa fa-angle-left pull-right"></i> </a>
 							<ul class="treeview-menu">
-								<li class="<?php
-								if (@$page_name == 'promotif') { echo 'active';
-								}
- ?>">
+								<li class="<?php if (@$page_name == 'promotif') { echo 'active'; } ?>">
 									<a href="<?=base_url('promotif') ?>"><i class="fa fa-circle-o"></i> Semua Kegiatan</a>
 								</li>
-								<li class="<?php
-									if (@$page_name == 't-promotif') { echo 'active';
-									}
- ?>">
+								<li class="<?php if (@$page_name == 't-promotif') { echo 'active'; } ?>">
 									<a href="<?=base_url('promotif/add') ?>"><i class="fa fa-circle-o"></i> Tambah Kegiatan</a>
 								</li>
-								<li class="<?php
-									if (@$page_name == 'k-promotif') { echo 'active';
-									}
- ?>">
+								<li class="<?php if (@$page_name == 'k-promotif') { echo 'active'; } ?>">
 									<a href="<?=base_url('promotif/kalender') ?>"><i class="fa fa-circle-o"></i> Kalender Kegiatan</a>
 								</li>
 							</ul>
 						</li>
-						<li class="treeview <?php
-							if (@$page_name == 'preventif' or @$page_name == 'k-preventif' or @$page_name == 't-preventif') { echo 'active';
-							}
- ?>">
+						<li class="treeview <?php if (@$page_name == 'preventif' or @$page_name == 'k-preventif' or @$page_name == 't-preventif') { echo 'active'; } ?>">
 							<a href="#"> <i class="fa fa-calendar-plus-o"></i> <span>Preventif</span> <i class="fa fa-angle-left pull-right"></i> </a>
 							<ul class="treeview-menu">
-								<li class="<?php
-								if (@$page_name == 'preventif') { echo 'active';
-								}
- ?>">
+								<li class="<?php if (@$page_name == 'preventif') { echo 'active'; } ?>">
 									<a href="<?=base_url('preventif') ?>"><i class="fa fa-circle-o"></i> Semua Kegiatan</a>
 								</li>
-								<li class="<?php
-									if (@$page_name == 't-preventif') { echo 'active';
-									}
- ?>">
+								<li class="<?php if (@$page_name == 't-preventif') { echo 'active'; } ?>">
 									<a href="<?=base_url('preventif/add') ?>"><i class="fa fa-circle-o"></i> Tambah Kegiatan</a>
 								</li>
-								<li class="<?php
-									if (@$page_name == 'k-preventif') { echo 'active';
-									}
- ?>">
+								<li class="<?php if (@$page_name == 'k-preventif') { echo 'active'; } ?>">
 									<a href="<?=base_url('preventif/kalender') ?>"><i class="fa fa-circle-o"></i> Kalender Kegiatan</a>
 								</li>
 							</ul>
 						</li>
-						<li class="<?php
-							if (@$page_name == 'kuratif') { echo 'active';
-							}
- ?>">
+						<li class="<?php if (@$page_name == 'kuratif') { echo 'active'; } ?>">
 							<a href="<?=base_url('kuratif'); ?>"> <i class="fa fa-stethoscope"></i> <span>Kuratif</span> </a>
 						</li>
-						<li class="<?php
-							if (@$page_name == 'antrian') { echo 'active';
-							}
- ?>">
-							<a href="<?=base_url('kuratif/antrian'); ?>"> <i class="fa fa-users"></i> <span>Antrian</span> </a>
+						<li class="<?php if (@$page_name == 'antrian') { echo 'active'; } ?>">
+							<a href="<?=base_url('antrian'); ?>"> <i class="fa fa-users"></i> <span>Antrian</span>  <small class="label pull-right bg-yellow"><?=count($this->mkuratif->getAntrian()->result())?></small> </a>
 						</li>
-						<li class="<?php
-							if (@$page_name == 'farmasi') { echo 'active';
+						<li class="treeview <?php
+							if (@$page_name == 'farmasi' or @$page_name == 'obat' or @$page_name == 'kategori-obat') { echo 'active';
 							}
  ?>">
-							<a href="<?=base_url('farmasi'); ?>"> <i class="fa fa-medkit"></i> <span>Farmasi</span> </a>
+							<a href="#"> <i class="fa fa-medkit"></i> <span>Farmasi</span> <i class="fa fa-angle-left pull-right"></i> </a>
+							<ul class="treeview-menu">
+								<li class="<?php
+								if (@$page_name == 'kategori-obat') { echo 'active';
+								}
+ ?>">
+									<a href="<?=base_url('farmasi/kategori_obat') ?>"><i class="fa fa-circle-o"></i> Kategori Obat</a>
+								</li>
+								<li class="<?php
+									if (@$page_name == 'obat') { echo 'active';
+									}
+ ?>">
+									<a href="<?=base_url('farmasi/obat') ?>"><i class="fa fa-circle-o"></i> Obat</a>
+								</li>
+								<li class="<?php
+									if (@$page_name == 'farmasi') { echo 'active';
+									}
+ ?>">
+									<a href="<?=base_url('farmasi') ?>"><i class="fa fa-circle-o"></i> History Penggunaan Obat</a>
+								</li>
+							</ul>
 						</li>
-						<li class="<?php
-							if (@$page_name == 'industrial') { echo 'active';
-							}
- ?>">
+						<li class="<?php if (@$page_name == 'industrial') { echo 'active'; } ?>">
 							<a href="<?=base_url('industrial'); ?>"> <i class="fa fa-industry"></i> <span>Industrial Hygiene</span> </a>
 						</li>
-						<li class="<?php
-							if (@$page_name == 'hra') { echo 'active';
-							}
- ?>">
+						<li class="<?php if (@$page_name == 'hra') { echo 'active'; } ?>">
 							<a href="<?=base_url('hra'); ?>"> <i class="fa fa-wheelchair"></i> <span>Health Risk Assessment</span> </a>
 						</li>
 						<li class="<?php
 							if (@$page_name == 'pasien') { echo 'active';
 							}
  ?>">
-							<a href="<?=base_url('master/pasien'); ?>"><i class="fa fa-user-md"></i>Rekam Medis</a>
+							<a href="<?=base_url('master/pasien'); ?>"><i class="fa fa-user-md"></i><span>Rekam Medis</span></a>
 						</li>
 						<li class="header">
 							MASTER DATA
 						</li>
 						<li class="treeview <?php
-							if (@$page_name == 'obat' or @$page_name == 'anamnesa' or @$page_name == 'pf' or @$page_name == 'rujukan' or @$page_name == 'diagnosa' or @$page_name == 'dokter' or @$page_name == 'unit') { echo 'active';
+							if (@$page_name == 'anamnesa' or @$page_name == 'pf' or @$page_name == 'rujukan' or @$page_name == 'diagnosa' or @$page_name == 'dokter' or @$page_name == 'unit') { echo 'active';
 							}
  ?>">
 							<a href="#"> <i class="fa fa-database"></i> <span>Master Data</span> <i class="fa fa-angle-left pull-right"></i> </a>
 							<ul class="treeview-menu">
-								<li class="<?php
-								if (@$page_name == 'obat') { echo 'active';
-								}
- ?>">
-									<a href="<?=base_url('master/obat'); ?>"><i class="fa fa-circle-o"></i> Obat Obatan</a>
-								</li>
 								<li class="<?php
 									if (@$page_name == 'anamnesa') { echo 'active';
 									}
  ?>">
 									<a href="<?=base_url('master/anamnesa'); ?>"><i class="fa fa-circle-o"></i> Anamnesa</a>
 								</li>
-								<li class="<?php
-									if (@$page_name == 'pf') { echo 'active';
-									}
- ?>">
+								<li class="<?php if (@$page_name == 'pf') { echo 'active'; } ?>">
 									<a href="<?=base_url('master/pf'); ?>"><i class="fa fa-circle-o"></i> PF</a>
 								</li>
-								<li class="<?php
-									if (@$page_name == 'rujukan') { echo 'active';
-									}
- ?>">
+								<li class="<?php if (@$page_name == 'rujukan') { echo 'active'; } ?>">
 									<a href="<?=base_url('master/rujukan'); ?>"><i class="fa fa-circle-o"></i> Rujukan</a>
 								</li>
-								<li class="<?php
-									if (@$page_name == 'diagnosa') { echo 'active';
-									}
- ?>">
+								<li class="<?php if (@$page_name == 'diagnosa') { echo 'active'; } ?>">
 									<a href="<?=base_url('master/diagnosa'); ?>"><i class="fa fa-circle-o"></i> Diagnosa</a>
 								</li>
-								<li class="<?php
-									if (@$page_name == 'dokter') { echo 'active';
-									}
- ?>">
+								<li class="<?php if (@$page_name == 'dokter') { echo 'active'; } ?>">
 									<a href="<?=base_url('master/dokter'); ?>"><i class="fa fa-circle-o"></i> Dokter</a>
 								</li>
-								<li class="<?php
-									if (@$page_name == 'unit') { echo 'active';
-									}
- ?>">
+								<li class="<?php if (@$page_name == 'unit') { echo 'active'; } ?>">
 									<a href="<?=base_url('master/unit'); ?>"><i class="fa fa-circle-o"></i> Unit</a>
 								</li>
-								<li class="<?php
-									if (@$page_name == 'kategori') { echo 'active';
-									}
- ?>">
+								<li class="<?php if (@$page_name == 'kategori') { echo 'active'; } ?>">
 									<a href="<?=base_url('master/kategori'); ?>"><i class="fa fa-circle-o"></i> Kategori</a>
 								</li>
-								<li class="<?php
-									if (@$page_name == 'user') { echo 'active';
-									}
- ?>">
+								<li class="<?php if (@$page_name == 'user') { echo 'active'; } ?>">
 									<a href="<?=base_url('master/user'); ?>"><i class="fa fa-circle-o"></i> User</a>
 								</li>
 							</ul>
 						</li>
-						<li class="treeview <?php
-							if (@$page_name == 'rekap_harian' or @$page_name == 'surat_rujukan' or @$page_name == 'surat_sakit' or @$page_name == 'kunjungan_by_jam' or @$page_name == 'penggunaan_obat' or @$page_name == 'penyakit' or @$page_name == 'penyakit_by_departement') { echo 'active';
-							}
- ?>">
+						<li class="treeview <?php if (@$page_name == 'rekap_harian' or @$page_name == 'surat_rujukan' or @$page_name == 'surat_sakit' or @$page_name == 'kunjungan_by_jam' or @$page_name == 'penggunaan_obat' or @$page_name == 'penyakit' or @$page_name == 'penyakit_by_departement') { echo 'active'; } ?>">
 							<a href="#"> <i class="fa fa-file-pdf-o"></i> <span>Laporan</span> <i class="fa fa-angle-left pull-right"></i> </a>
 							<ul class="treeview-menu">
-								<li class="<?php
-								if (@$page_name == 'rekap_harian') { echo 'active';
-								}
- ?>">
+								<li class="<?php if (@$page_name == 'rekap_harian') { echo 'active'; } ?>">
 									<a href="<?=base_url('laporan/rekap_harian') ?>"><i class="fa fa-circle-o"></i> Laporan Rekap Harian</a>
 								</li>
-								<li class="<?php
-									if (@$page_name == 'surat_rujukan') { echo 'active';
-									}
- ?>">
+								<li class="<?php if (@$page_name == 'surat_rujukan') { echo 'active'; } ?>">
 									<a href="<?=base_url('laporan/surat_rujukan') ?>"><i class="fa fa-circle-o"></i> Laporan Surat Rujukan</a>
 								</li>
-								<li class="<?php
-									if (@$page_name == 'surat_sakit') { echo 'active';
-									}
- ?>">
+								<li class="<?php if (@$page_name == 'surat_sakit') { echo 'active'; } ?>">
 									<a href="<?=base_url('laporan/surat_sakit') ?>"><i class="fa fa-circle-o"></i> Laporan Surat Sakit</a>
 								</li>
-								<li class="<?php
-									if (@$page_name == 'kunjungan_by_jam') { echo 'active';
-									}
- ?>">
+								<li class="<?php if (@$page_name == 'kunjungan_by_jam') { echo 'active'; } ?>">
 									<a href="<?=base_url('laporan/kunjungan_by_jam') ?>"><i class="fa fa-circle-o"></i> Laporan Kunjungan By Jam</a>
 								</li>
-								<li class="<?php
-									if (@$page_name == 'penggunaan_obat') { echo 'active';
-									}
- ?>">
+								<li class="<?php if (@$page_name == 'penggunaan_obat') { echo 'active'; } ?>">
 									<a href="<?=base_url('laporan/penggunaan_obat') ?>"><i class="fa fa-circle-o"></i> Laporan Penggunaan Obat</a>
 								</li>
-								<li class="<?php
-									if (@$page_name == 'penyakit') { echo 'active';
-									}
- ?>">
+								<li class="<?php if (@$page_name == 'penyakit') { echo 'active'; } ?>">
 									<a href="<?=base_url('laporan/penyakit') ?>"><i class="fa fa-circle-o"></i> Laporan Penyakit</a>
 								</li>
-								<li class="<?php
-									if (@$page_name == 'penyakit_by_departement') { echo 'active';
-									}
- ?>">
+								<li class="<?php if (@$page_name == 'penyakit_by_departement') { echo 'active'; } ?>">
 									<a href="<?=base_url('laporan/penyakit_by_departement') ?>"><i class="fa fa-circle-o"></i> <span style="font-size: 12px;">Laporan Penyakit By Departement</span></a>
 								</li>
 							</ul>

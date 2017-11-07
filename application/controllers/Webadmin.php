@@ -32,8 +32,9 @@ class Webadmin extends MY_Controller {
 
             //jika user ditemukan
 			if ($query -> num_rows() >= 1) {
-
 				$arryauser=$query->row();
+				$unit = $this->mmaster->cekUnit($arryauser->unit)->row();
+
 				$param = array(
 					'user_id' => $arryauser->user_id,
 					'nama' => $arryauser->nama,
@@ -41,6 +42,7 @@ class Webadmin extends MY_Controller {
 					'email' => $arryauser->email,
 					'role' => $arryauser->role,
 					'unit' => $arryauser->unit,
+					'unit_nama' => $unit->nama,
 					);
 				
                 //simpan data user ke session

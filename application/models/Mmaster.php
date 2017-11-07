@@ -339,4 +339,9 @@ class mmaster extends CI_Model {
         $query = $this->db->get('m_user');
         return $query;
     }
+
+    public function cekUnit($id){
+        $this->db->where('id_unit',$id);
+        return $this->db->get('m_unit');
+    }
 }
