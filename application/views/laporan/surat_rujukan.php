@@ -14,6 +14,18 @@
   <section class="content">
     <div class="box box-primary">
       <div class="box-body">
+        <form method="get" action="<?= base_url('laporan/surat_rujukan/') ?>">
+        <div class="row">
+            <div class="col-md-2 form-group">
+                <label class="control-label">Filter Tanggal :</label>
+                <input type="text" name="tanggal" class="form-control tgl" readonly="" style="background-color: #fff" value="<?= @$_GET['tanggal'] ?>">
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-info" style="margin-top: 25px;">Filter</button>
+            </div>
+        </div>
+        </form>
+        <br>
         <div class="table-responsive">
           <table class="table table-bordered table-hover table-laporan">
             <thead>
@@ -30,19 +42,19 @@
               </tr>
             </thead>
             <tbody>
-              <?php for ($i=1; $i < 10 ; $i++) { ?>
+              <?php $i=1; foreach ($rujukan->result() as $val) {?>
               <tr>
                   <td><?=$i?></td>
-                  <td>05 Apr 16</td>
-                  <td>RINI LISTYANINGTYAS</td>
-                  <td>125999</td>
-                  <td>34</td>
-                  <td>F</td>
-                  <td>Produksi</td>
-                  <td>RS.ROYAL SURABAYA</td>
-                  <td></td>
+                  <td><?= date('d-m-Y',strtotime($val->r_created_at)) ?></td>
+                  <td><?= ucwords($val->nama) ?></td>
+                  <td><?= $val->nik ?></td>
+                  <td><?= $val->umur ?></td>
+                  <td><?= ucwords($val->sex) ?></td>
+                  <td><?= ucwords($val->separtment) ?></td>
+                  <td><?= strtoupper($val->nama_rs) ?></td>
+                  <td><?= $val->r_keterangan ?></td>
               </tr>
-              <?php } ?>
+              <?php $i++; } ?>
             </tbody>
           </table>
         </div>
@@ -52,3 +64,13 @@
   <!-- /.content -->
 
 </div><!-- /.content-wrapper -->
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.tgl').datepicker({
+            format : 'yyyy-mm-dd',
+            autoclose : 'true',
+        });
+    });
+    
+</script>

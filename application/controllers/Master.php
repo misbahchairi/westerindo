@@ -81,6 +81,31 @@ class master extends MY_Controller {
 		redirect('master/anamnesa','refresh');
 	}
 
+	// department
+	public function department()
+	{
+		$this->data['page_name'] = "department";
+		$this->data['department'] = $this->mmaster->getDepartment();
+		$this->template->load('template_home','master/department',$this->data);
+	}
+	public function department_add()
+	{
+		$data = $this->input->post();
+		$this->mmaster->AddDepartment($data);
+		redirect('master/department','refresh');
+	}
+	public function department_edit($id)
+	{
+		$data = $this->input->post();
+		$this->mmaster->EditDepartment($id,$data);
+		redirect('master/department','refresh');
+	}
+	public function department_delete($id)
+	{
+		$this->mmaster->DeleteDepartment($id);
+		redirect('master/department','refresh');
+	}
+
 	// PF
 	public function pf()
 	{

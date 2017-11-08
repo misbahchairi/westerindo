@@ -14,6 +14,7 @@ class farmasi extends MY_Controller {
 		$data = $this->input->post();
 		$hasil = $this->mfarmasi->AddFarmasi($data);
 		if ($hasil) {
+			$this->session->set_flashdata('message', '<div class="flash-success"><b>SUCCESS !! </b> Data berhasil diproses</div>');
 			redirect('farmasi','refresh');
 		} else {
 			echo "<script>window.alert('Gagal !');
@@ -25,6 +26,7 @@ class farmasi extends MY_Controller {
 		$data = $this->input->post();
 		$hasil = $this->mfarmasi->EditFarmasi($id,$data);
 		if ($hasil) {
+			$this->session->set_flashdata('message', '<div class="flash-success"><b>SUCCESS !! </b> Data berhasil diproses</div>');
 			redirect('farmasi','refresh');
 		} else {
 			echo "<script>window.alert('Gagal !');
@@ -35,6 +37,7 @@ class farmasi extends MY_Controller {
 	{
 		$hasil = $this->mfarmasi->DeleteFarmasi($id);
 		if ($hasil) {
+			$this->session->set_flashdata('message', '<div class="flash-success"><b>SUCCESS !! </b> Data berhasil diproses</div>');
 			redirect('farmasi','refresh');
 		} else {
 			echo "<script>window.alert('Gagal !');
@@ -60,13 +63,26 @@ class farmasi extends MY_Controller {
 		$param['unit'] = $this->session->userdata('unit');
 
 		$query = $this->mfarmasi->InsertObat($param);
-		redirect('farmasi/obat');
+		if ($query) {
+			$this->session->set_flashdata('message', '<div class="flash-success"><b>SUCCESS !! </b> Data berhasil diproses</div>');
+			redirect('farmasi/obat');
+		} else {
+			echo "<script>window.alert('Gagal !');
+				window.history.back()</script>";
+		}
+		
 	}
 
 	public function edit_obat(){
 		$param = $this->input->post();
 
 		$query = $this->mfarmasi->UpdateObat($param);
+		if ($query) {
+			$this->session->set_flashdata('message', '<div class="flash-success"><b>SUCCESS !! </b> Data berhasil diproses</div>');
+		} else {
+			echo "<script>window.alert('Gagal !');
+				window.history.back()</script>";
+		}
 		redirect('farmasi/obat');
 	}
 
@@ -74,6 +90,12 @@ class farmasi extends MY_Controller {
 		$param = $this->input->get('id_obat');
 
 		$query = $this->mfarmasi->DeleteObat($param);
+		if ($query) {
+			$this->session->set_flashdata('message', '<div class="flash-success"><b>SUCCESS !! </b> Data berhasil diproses</div>');
+		} else {
+			echo "<script>window.alert('Gagal !');
+				window.history.back()</script>";
+		}
 		redirect('farmasi/obat');
 	}
 
@@ -88,6 +110,7 @@ class farmasi extends MY_Controller {
 		$data = $this->input->post();
 		$hasil = $this->mfarmasi->AddKategori($data);
 		if ($hasil) {
+			$this->session->set_flashdata('message', '<div class="flash-success"><b>SUCCESS !! </b> Data berhasil diproses</div>');
 			redirect('farmasi/kategori_obat','refresh');
 		} else {
 			echo "<script>window.alert('Gagal !');
@@ -99,6 +122,7 @@ class farmasi extends MY_Controller {
 		$data = $this->input->post();
 		$hasil = $this->mfarmasi->EditKategori($id,$data);
 		if ($hasil) {
+			$this->session->set_flashdata('message', '<div class="flash-success"><b>SUCCESS !! </b> Data berhasil diproses</div>');
 			redirect('farmasi/kategori_obat','refresh');
 		} else {
 			echo "<script>window.alert('Gagal !');
@@ -109,6 +133,7 @@ class farmasi extends MY_Controller {
 	{
 		$hasil = $this->mfarmasi->DeleteKategori($id);
 		if ($hasil) {
+			$this->session->set_flashdata('message', '<div class="flash-success"><b>SUCCESS !! </b> Data berhasil diproses</div>');
 			redirect('farmasi/kategori_obat','refresh');
 		} else {
 			echo "<script>window.alert('Gagal !');

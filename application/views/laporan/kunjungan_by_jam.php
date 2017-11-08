@@ -17,6 +17,18 @@
     <div class="box box-primary">
       <div class="box-body">
         <div class="row">
+         <form method="get" action="<?= base_url('laporan/kunjungan_by_jam/') ?>">
+          <div class="col-md-2 form-group">
+              <label class="control-label">Filter Tanggal :</label>
+              <input type="text" name="tanggal" class="form-control tgl" readonly="" style="background-color: #fff" value="<?= @$_GET['tanggal'] ?>">
+          </div>
+          <div class="col-md-2">
+              <button type="submit" class="btn btn-info" style="margin-top: 25px;">Filter</button>
+          </div>
+          </form>
+          </div>
+          <br>
+          <div class="row">
           <div class="col-md-6">
             <table class="table table-bordered table-laporan">
               <thead>
@@ -31,231 +43,19 @@
                 </tr>
               </thead>
               <tbody>
+              <?php $d=7; for ($i=0; $i < 24 ; $i++) {?>
+              <?php if ($d==24) {$d=0;} 
+              $m=str_pad(($d), 2, "0", STR_PAD_LEFT);?>
                 <tr>
-                  <td>07.00-07.59</td>
-                  <td>37</td>
-                  <td>2</td>
-                  <td>9</td>
+                  <td><?= $m.".00-".$m.".59" ?></td>
+                  <td><?= $kunjungan[$i][0] ?></td>
+                  <td><?= $kunjungan[$i][1] ?></td>
                   <td>0</td>
                   <td>0</td>
-                  <td>48</td>
+                  <td>0</td>
+                  <td><?= $kunjungan[$i][0]+$kunjungan[$i][1] ?></td>
                 </tr>
-                <tr>
-                  <td>08.00-08.59</td>
-                  <td>30</td>
-                  <td>6</td>
-                  <td>3</td>
-                  <td>0</td>
-                  <td>10</td>
-                  <td>49</td>
-                </tr>
-                <tr>
-                  <td>09.00-09.59</td>
-                  <td>14</td>
-                  <td>2</td>
-                  <td>3</td>
-                  <td>0</td>
-                  <td>20</td>
-                  <td>39</td>
-                </tr>
-                <tr>
-                  <td>10.00-10.59</td>
-                  <td>21</td>
-                  <td>4</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>20</td>
-                  <td>45</td>
-                </tr>
-                <tr>
-                  <td>11.00-11.59</td>
-                  <td>11</td>
-                  <td>5</td>
-                  <td>2</td>
-                  <td>0</td>
-                  <td>2</td>
-                  <td>20</td>
-                </tr>
-                <tr>
-                  <td>12.00-12.59</td>
-                  <td>16</td>
-                  <td>6</td>
-                  <td>4</td>
-                  <td>0</td>
-                  <td>14</td>
-                  <td>40</td>
-                </tr>
-                <tr>
-                  <td>13.00-13.59</td>
-                  <td>12</td>
-                  <td>3</td>
-                  <td>3</td>
-                  <td>0</td>
-                  <td>4</td>
-                  <td>22</td>
-                </tr>
-                <tr>
-                  <td>14.00-14.59</td>
-                  <td>41</td>
-                  <td>11</td>
-                  <td>1</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>53</td>
-                </tr>
-                <tr>
-                  <td>15.00-15.59</td>
-                  <td>51</td>
-                  <td>9</td>
-                  <td>1</td>
-                  <td>0</td>
-                  <td>2</td>
-                  <td>63</td>
-                </tr>
-                <tr>
-                  <td>16.00-16.59</td>
-                  <td>31</td>
-                  <td>6</td>
-                  <td>2</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>39</td>
-                </tr>
-                <tr>
-                  <td>17.00-17.59</td>
-                  <td>18</td>
-                  <td>4</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>22</td>
-                </tr>
-                <tr>
-                  <td>18.00-18.59</td>
-                  <td>25</td>
-                  <td>13</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>38</td>
-                </tr>
-                <tr>
-                  <td>19.00-19.59</td>
-                  <td>25</td>
-                  <td>11</td>
-                  <td>2</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>38</td>
-                </tr>
-                <tr>
-                  <td>20.00-20.59</td>
-                  <td>17</td>
-                  <td>12</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>29</td>
-                </tr>
-                <tr>
-                  <td>21.00-21.59</td>
-                  <td>14</td>
-                  <td>1</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>15</td>
-                </tr>
-                <tr>
-                  <td>22.00-22.59</td>
-                  <td>56</td>
-                  <td>12</td>
-                  <td>1</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>69</td>
-                </tr>
-                <tr>
-                  <td>23.00-23.59</td>
-                  <td>23</td>
-                  <td>10</td>
-                  <td>3</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>36</td>
-                </tr>
-                <tr>
-                  <td>00.00-00.59</td>
-                  <td>6</td>
-                  <td>7</td>
-                  <td>1</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>14</td>
-                </tr>
-                <tr>
-                  <td>01.00-01.59</td>
-                  <td>7</td>
-                  <td>5</td>
-                  <td>2</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>14</td>
-                </tr>
-                <tr>
-                  <td>02.00-02.59</td>
-                  <td>6</td>
-                  <td>3</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>9</td>
-                </tr>
-                <tr>
-                  <td>03.00-03.59</td>
-                  <td>5</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>5</td>
-                </tr>
-                <tr>
-                  <td>04.00-04.59</td>
-                  <td>7</td>
-                  <td>2</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>9</td>
-                </tr>
-                <tr>
-                  <td>05.00-05.59</td>
-                  <td>6</td>
-                  <td>3</td>
-                  <td>1</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>10</td>
-                </tr>
-                <tr>
-                  <td>06.00-06.59</td>
-                  <td>31</td>
-                  <td>3</td>
-                  <td>1</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>35</td>
-                </tr>
-                <tr>
-                  <td></td>
-                  <td>510</td>
-                  <td>147</td>
-                  <td>32</td>
-                  <td>0</td>
-                  <td>72</td>
-                  <td>761</td>
-                </tr>
+                <?php $d++;} ?>
               </tbody>
             </table>
           </div>
@@ -277,7 +77,7 @@
         
 
         var ChartData = {
-          labels: ["07.00-07.59", "10.00-10.59", "13.00-13.59", "16.00-16.59", "19.00-19.59", "22.00-22.59", "01.00-01.59", "04.00-04.59"],
+          labels: ["07.00-07.59","08.00-08.59","09.00-09.59", "10.00-10.59","11.00-11.59","12.00-12.59", "13.00-13.59", "16.00-16.59", "19.00-19.59", "22.00-22.59", "01.00-01.59", "04.00-04.59"],
           datasets: [
             {
               label: "Karyawan Tetap SCJMS",
@@ -287,7 +87,7 @@
               pointStrokeColor: "#c1c7d1",
               pointHighlightFill: "#fff",
               pointHighlightStroke: "rgba(220,220,220,1)",
-              data: [37, 21, 12, 25, 56, 55, 40,12]
+              data: [<?= $kunjungan[0][0] ?>, <?= $kunjungan[1][0] ?>, <?= $kunjungan[2][0] ?>, <?= $kunjungan[3][0] ?>, <?= $kunjungan[4][0] ?>, <?= $kunjungan[5][0] ?>, <?= $kunjungan[6][0] ?>,<?= $kunjungan[7][0] ?>,<?= $kunjungan[8][0] ?>,<?= $kunjungan[9][0] ?>,<?= $kunjungan[10][0] ?>]
             },
             {
               label: "Karyawan Contract Direct SCJMS",
@@ -375,4 +175,13 @@
         barChart.Bar(barChartData, barChartOptions);
 
       });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.tgl').datepicker({
+                format : 'yyyy-mm-dd',
+                autoclose : 'true',
+            });
+        });
+        
     </script>

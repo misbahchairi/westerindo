@@ -14,6 +14,18 @@
   <section class="content">
     <div class="box box-primary">
       <div class="box-body">
+        <form method="get" action="<?= base_url('laporan/surat_sakit/') ?>">
+        <div class="row">
+            <div class="col-md-2 form-group">
+                <label class="control-label">Filter Tanggal :</label>
+                <input type="text" name="tanggal" class="form-control tgl" readonly="" style="background-color: #fff" value="<?= @$_GET['tanggal'] ?>">
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-info" style="margin-top: 25px;">Filter</button>
+            </div>
+        </div>
+        </form>
+        <br>
         <div class="table-responsive">
           <table class="table table-bordered table-hover table-laporan">
             <thead>
@@ -33,22 +45,22 @@
               </tr>
             </thead>
             <tbody>
-              <?php for ($i=1; $i < 10 ; $i++) { ?>
+              <?php $i=1; foreach ($surat->result() as $val) {?>
               <tr>
                   <td><?=$i?></td>
-                  <td>05 Apr 16</td>
-                  <td>RINI LISTYANINGTYAS</td>
-                  <td>125999</td>
-                  <td>34</td>
-                  <td>F</td>
-                  <td>Produksi</td>
-                  <td>PT.SCJMS</td>
-                  <td>Dada Terasa Seksak 2 Hari Ini</td>
-                  <td>Bronchitis</td>
-                  <td>O2</td>
-                  <td>SI : 1 Hari</td>
+                  <td><?= date('d-m-Y',strtotime($val->ss_created_at)) ?></td>
+                  <td><?= ucwords($val->nama) ?></td>
+                  <td><?= $val->nik ?></td>
+                  <td><?= $val->umur ?></td>
+                  <td><?= ucwords($val->sex) ?></td>
+                  <td><?= ucwords($val->separtment) ?></td>
+                  <td><?= $val->pers1 ?></td>
+                  <td><?= ucfirst($val->ss_anamnesa) ?></td>
+                  <td><?= ucwords($val->ss_diagnosa) ?></td>
+                  <td><?= ucwords($val->ss_terapi) ?></td>
+                  <td><?= $val->ss_mark ?></td>
               </tr>
-              <?php } ?>
+              <?php $i++;} ?>
             </tbody>
           </table>
         </div>
@@ -58,3 +70,12 @@
   <!-- /.content -->
 
 </div><!-- /.content-wrapper -->
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.tgl').datepicker({
+            format : 'yyyy-mm-dd',
+            autoclose : 'true',
+        });
+    });
+    
+</script>

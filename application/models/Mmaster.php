@@ -100,6 +100,36 @@ class mmaster extends CI_Model {
         return $query;
     }
 
+    // anamnesa
+    function getDepartment()
+    {
+        $query = $this->db->get('m_department');
+        return $query;
+    }
+    function getDepartmentByid($id)
+    {
+        $this->db->where('id_department',$id);
+        $query = $this->db->get('m_department');
+        return $query;
+    }
+    function AddDepartment($data)
+    {
+        $query = $this->db->insert('m_department',$data);
+        return $query;
+    }
+    function EditDepartment($id,$data)
+    {
+        $this->db->where('id_department',$id);
+        $query = $this->db->update('m_department',$data);
+        return $query;
+    }
+    function DeleteDepartment($id)
+    {   
+        $this->db->where('id_department',$id);
+        $query = $this->db->delete('m_department');
+        return $query;
+    }
+
     // pf
     function getPf()
     {

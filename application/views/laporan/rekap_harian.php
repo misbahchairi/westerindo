@@ -14,6 +14,18 @@
   <section class="content">
     <div class="box box-primary">
       <div class="box-body">
+        <form method="get" action="<?= base_url('laporan/rekap_harian/') ?>">
+        <div class="row">
+            <div class="col-md-2 form-group">
+                <label class="control-label">Filter Tanggal :</label>
+                <input type="text" name="tanggal" class="form-control tgl" readonly="" style="background-color: #fff" value="<?= @$_GET['tanggal'] ?>">
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-info" style="margin-top: 25px;">Filter</button>
+            </div>
+        </div>
+        </form>
+        <br>
         <div class="table-responsive">
           <table class="table table-bordered table-hover table-laporan table-harian">
             <thead>
@@ -78,23 +90,24 @@
               </tr>
             </thead>
             <tbody>
-              <?php for ($i=1; $i < 10 ; $i++) { ?>
+              <?php for ($i=1; $i < 2 ; $i++) { ?>
+              <?php foreach ($rekap->result() as $data) {?>
               <tr>
                 <td>1</td>
-                <td>1</td>
-                <td>8,50</td>
+                <td><?= @date('d-m-Y',strtotime($data->ku_created_at)) ?></td>
+                <td><?= @date('h:i',strtotime($data->ku_created_at)) ?></td>
                 <td>B</td>
                 <td></td>
                 <td>1</td>
-                <td>-</td>
-                <td>Herlina</td>
-                <td>24</td>
-                <td>F</td>
-                <td>PO</td>
-                <td>PROD</td>
-                <td>-</td>
-                <td></td>
-                <td>C</td>
+                <td><?= $data->nik ?></td>
+                <td><?= ucfirst($data->nama) ?></td>
+                <td><?= $data->umur ?></td>
+                <td><?= ucfirst($data->sex) ?></td>
+                <td><?= ucfirst($data->separtment) ?></td>
+                <td><?= ucfirst($data->department) ?></td>
+                <td><?= ucfirst($data->group) ?></td>
+                <td><?= ($data->status_pgw == "tetap")?"P":""; ?></td>
+                <td><?= ($data->status_pgw == "kontrak")?"C":""; ?></td>
                 <td>PT.SCJMS</td>
                 <td></td>
                 <td></td>
@@ -105,10 +118,10 @@
                 <td>MCU Pre Employee</td>
                 <td>120/80</td>
                 <td>61</td>
-                <td>86</td>
-                <td>36,7</td>
+                <td><?= $data->tv_nadi ?></td>
+                <td><?= $data->tv_suhu ?></td>
                 <td>3404</td>
-                <td>MCU</td>
+                <td><?= ucfirst($data->nama_diagnosa) ?></td>
                 <td>-</td>
                 <td>-</td>
                 <td></td>
@@ -116,9 +129,10 @@
                 <td>Morning</td>
                 <td></td>
                 <td></td>
-                <td>TIM</td>
-                <td>DR. Warda</td>
+                <td><?= ucfirst($data->nama_perawat) ?></td>
+                <td><?= ucfirst($data->nama_dokter) ?></td>
               </tr>
+              <?php } ?>
               <?php } ?>
             </tbody>
           </table>
@@ -129,3 +143,13 @@
   <!-- /.content -->
 
 </div><!-- /.content-wrapper -->
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.tgl').datepicker({
+            format : 'yyyy-mm-dd',
+            autoclose : 'true',
+        });
+    });
+    
+</script>
