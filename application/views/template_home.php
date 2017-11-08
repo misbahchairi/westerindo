@@ -32,6 +32,9 @@
 		<link rel="stylesheet" href="<?=base_url('assets'); ?>/dist/css/style.css">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.min.css">
 
+		<!-- Datereange -->
+		<link rel="stylesheet" href="<?= base_url('assets') ?>/plugins/daterangepicker/daterangepicker.css">
+
 		
 	</head>
 	<style type="text/css">
@@ -283,6 +286,12 @@
  ?>">
 									<a href="<?=base_url('master/user'); ?>"><i class="fa fa-circle-o"></i> User</a>
 								</li>
+								<li class="<?php
+									if (@$page_name == 'department') { echo 'active';
+									}
+ ?>">
+									<a href="<?=base_url('master/department'); ?>"><i class="fa fa-circle-o"></i> Department</a>
+								</li>
 							</ul>
 						</li>
 						<li class="treeview <?php
@@ -295,37 +304,37 @@
 								if (@$page_name == 'rekap_harian') { echo 'active';
 								}
  ?>">
-									<a href="<?=base_url('laporan/rekap_harian') ?>"><i class="fa fa-circle-o"></i> Laporan Rekap Harian</a>
+									<a href="<?=base_url('laporan/rekap_harian/?tanggal='.date('Y-m-d')) ?>"><i class="fa fa-circle-o"></i> Laporan Rekap Harian</a>
 								</li>
 								<li class="<?php
 									if (@$page_name == 'surat_rujukan') { echo 'active';
 									}
  ?>">
-									<a href="<?=base_url('laporan/surat_rujukan') ?>"><i class="fa fa-circle-o"></i> Laporan Surat Rujukan</a>
+									<a href="<?=base_url('laporan/surat_rujukan/?tanggal='.date('Y-m-d')) ?>"><i class="fa fa-circle-o"></i> Laporan Surat Rujukan</a>
 								</li>
 								<li class="<?php
 									if (@$page_name == 'surat_sakit') { echo 'active';
 									}
  ?>">
-									<a href="<?=base_url('laporan/surat_sakit') ?>"><i class="fa fa-circle-o"></i> Laporan Surat Sakit</a>
+									<a href="<?=base_url('laporan/surat_sakit/?tanggal='.date('Y-m-d')) ?>"><i class="fa fa-circle-o"></i> Laporan Surat Sakit</a>
 								</li>
 								<li class="<?php
 									if (@$page_name == 'kunjungan_by_jam') { echo 'active';
 									}
  ?>">
-									<a href="<?=base_url('laporan/kunjungan_by_jam') ?>"><i class="fa fa-circle-o"></i> Laporan Kunjungan By Jam</a>
+									<a href="<?=base_url('laporan/kunjungan_by_jam/?tanggal='.date('Y-m-d')) ?>"><i class="fa fa-circle-o"></i> Laporan Kunjungan By Jam</a>
 								</li>
 								<li class="<?php
 									if (@$page_name == 'penggunaan_obat') { echo 'active';
 									}
  ?>">
-									<a href="<?=base_url('laporan/penggunaan_obat') ?>"><i class="fa fa-circle-o"></i> Laporan Penggunaan Obat</a>
+									<a href="<?=base_url('laporan/penggunaan_obat/?start='.date('Y-m-d').'&end='.date('Y-m-d')) ?>"><i class="fa fa-circle-o"></i> Laporan Penggunaan Obat</a>
 								</li>
 								<li class="<?php
 									if (@$page_name == 'penyakit') { echo 'active';
 									}
  ?>">
-									<a href="<?=base_url('laporan/penyakit') ?>"><i class="fa fa-circle-o"></i> Laporan Penyakit</a>
+									<a href="<?=base_url('laporan/penyakit/?start='.date('Y-m-d').'&end='.date('Y-m-d')) ?>"><i class="fa fa-circle-o"></i> Laporan Penyakit</a>
 								</li>
 								<li class="<?php
 									if (@$page_name == 'penyakit_by_departement') { echo 'active';
@@ -353,7 +362,23 @@
 			immediately after the control sidebar -->
 			<div class="control-sidebar-bg"></div>
 		</div><!-- ./wrapper -->
+		<div class="confirm-div-mob" style="z-index:999999999999999999999999999999999999"></div>
+		<script>
+			// assumes you're using jQuery
+			$(document).ready(function() {
+				<?php if($this->session->flashdata('message')){ ?>
+					$('.confirm-div-mob').delay(200).fadeIn('normal', function() {
+						$('.confirm-div-mob').html('<?php echo $this->session->flashdata('message'); ?>').show();
+						$(this).delay(5800).fadeOut();
+					});
+					<?php } ?>
+				});
 
+			jQuery(document).on('click', '.mega-dropdown', function(e) {
+				e.stopPropagation()
+			});
+
+		</script>
 		<script>
 			$(document).ready(function() {
 				$('[data-toggle="tooltip"]').tooltip();
@@ -421,5 +446,10 @@
 				autoclose : 'true',
 			});
 		</script>
+
+		<!-- Moment -->
+		<script src="<?= base_url('assets') ?>/plugins/daterangepicker/moment.min.js"></script>
+		<script src="<?= base_url('assets') ?>/plugins/daterangepicker/daterangepicker.js"></script>
+		
 	</body>
 </html>
