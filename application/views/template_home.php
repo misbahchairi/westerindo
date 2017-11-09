@@ -32,6 +32,11 @@
 		<link rel="stylesheet" href="<?=base_url('assets'); ?>/dist/css/style.css">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.min.css">
 
+		<!-- Datereange -->
+		<link rel="stylesheet" href="<?= base_url('assets') ?>/plugins/daterangepicker/daterangepicker.css">
+
+
+
 		
 	</head>
 	<style type="text/css">
@@ -223,31 +228,58 @@
 								<li class="<?php if (@$page_name == 'user') { echo 'active'; } ?>">
 									<a href="<?=base_url('master/user'); ?>"><i class="fa fa-circle-o"></i> User</a>
 								</li>
+								<li class="<?php
+									if (@$page_name == 'department') { echo 'active';
+									}
+ ?>">
+									<a href="<?=base_url('master/department'); ?>"><i class="fa fa-circle-o"></i> Department</a>
+								</li>
 							</ul>
 						</li>
 						<li class="treeview <?php if (@$page_name == 'rekap_harian' or @$page_name == 'surat_rujukan' or @$page_name == 'surat_sakit' or @$page_name == 'kunjungan_by_jam' or @$page_name == 'penggunaan_obat' or @$page_name == 'penyakit' or @$page_name == 'penyakit_by_departement') { echo 'active'; } ?>">
 							<a href="#"> <i class="fa fa-file-pdf-o"></i> <span>Laporan</span> <i class="fa fa-angle-left pull-right"></i> </a>
 							<ul class="treeview-menu">
-								<li class="<?php if (@$page_name == 'rekap_harian') { echo 'active'; } ?>">
-									<a href="<?=base_url('laporan/rekap_harian') ?>"><i class="fa fa-circle-o"></i> Laporan Rekap Harian</a>
+								<li class="<?php
+								if (@$page_name == 'rekap_harian') { echo 'active';
+								}
+ ?>">
+									<a href="<?=base_url('laporan/rekap_harian/?tanggal='.date('Y-m-d')) ?>"><i class="fa fa-circle-o"></i>Rekap Harian</a>
 								</li>
-								<li class="<?php if (@$page_name == 'surat_rujukan') { echo 'active'; } ?>">
-									<a href="<?=base_url('laporan/surat_rujukan') ?>"><i class="fa fa-circle-o"></i> Laporan Surat Rujukan</a>
+								<li class="<?php
+									if (@$page_name == 'surat_rujukan') { echo 'active';
+									}
+ ?>">
+									<a href="<?=base_url('laporan/surat_rujukan/?start='.date('Y-m-d').'&end='.date('Y-m-d')) ?>"><i class="fa fa-circle-o"></i>Surat Rujukan</a>
 								</li>
-								<li class="<?php if (@$page_name == 'surat_sakit') { echo 'active'; } ?>">
-									<a href="<?=base_url('laporan/surat_sakit') ?>"><i class="fa fa-circle-o"></i> Laporan Surat Sakit</a>
+								<li class="<?php
+									if (@$page_name == 'surat_sakit') { echo 'active';
+									}
+ ?>">
+									<a href="<?=base_url('laporan/surat_sakit/?start='.date('Y-m-d').'&end='.date('Y-m-d')) ?>"><i class="fa fa-circle-o"></i>Surat Sakit</a>
 								</li>
-								<li class="<?php if (@$page_name == 'kunjungan_by_jam') { echo 'active'; } ?>">
-									<a href="<?=base_url('laporan/kunjungan_by_jam') ?>"><i class="fa fa-circle-o"></i> Laporan Kunjungan By Jam</a>
+								<li class="<?php
+									if (@$page_name == 'kunjungan_by_jam') { echo 'active';
+									}
+ ?>">
+									<a href="<?=base_url('laporan/kunjungan_by_jam/?start='.date('Y-m-d').'&end='.date('Y-m-d')) ?>"><i class="fa fa-circle-o"></i>Kunjungan By Jam</a>
 								</li>
-								<li class="<?php if (@$page_name == 'penggunaan_obat') { echo 'active'; } ?>">
-									<a href="<?=base_url('laporan/penggunaan_obat') ?>"><i class="fa fa-circle-o"></i> Laporan Penggunaan Obat</a>
+								<li class="<?php
+									if (@$page_name == 'penggunaan_obat') { echo 'active';
+									}
+ ?>">
+									<a href="<?=base_url('laporan/penggunaan_obat/?start='.date('Y-m-d').'&end='.date('Y-m-d')) ?>"><i class="fa fa-circle-o"></i>Penggunaan Obat</a>
 								</li>
-								<li class="<?php if (@$page_name == 'penyakit') { echo 'active'; } ?>">
-									<a href="<?=base_url('laporan/penyakit') ?>"><i class="fa fa-circle-o"></i> Laporan Penyakit</a>
+								<li class="hide <?php
+									if (@$page_name == 'penyakit') { echo 'active';
+									}
+ ?>">
+									<a href="<?=base_url('laporan/penyakit/?start='.date('Y-m-d').'&end='.date('Y-m-d')) ?>"><i class="fa fa-circle-o"></i>Penyakit</a>
 								</li>
-								<li class="<?php if (@$page_name == 'penyakit_by_departement') { echo 'active'; } ?>">
-									<a href="<?=base_url('laporan/penyakit_by_departement') ?>"><i class="fa fa-circle-o"></i> <span style="font-size: 12px;">Laporan Penyakit By Departement</span></a>
+								<li class="<?php
+									if (@$page_name == 'penyakit_by_departement') { echo 'active';
+									}
+ ?>">
+									<a href="<?=base_url('laporan/penyakit_by_departement?start='.date('Y-m-d').'&end='.date('Y-m-d')) ?>"><i class="fa fa-circle-o"></i>Penyakit By Departement</a>
 								</li>
 							</ul>
 						</li>
@@ -269,7 +301,23 @@
 			immediately after the control sidebar -->
 			<div class="control-sidebar-bg"></div>
 		</div><!-- ./wrapper -->
+		<div class="confirm-div-mob" style="z-index:999999999999999999999999999999999999"></div>
+		<script>
+			// assumes you're using jQuery
+			$(document).ready(function() {
+				<?php if($this->session->flashdata('message')){ ?>
+					$('.confirm-div-mob').delay(200).fadeIn('normal', function() {
+						$('.confirm-div-mob').html('<?php echo $this->session->flashdata('message'); ?>').show();
+						$(this).delay(5800).fadeOut();
+					});
+					<?php } ?>
+				});
 
+			jQuery(document).on('click', '.mega-dropdown', function(e) {
+				e.stopPropagation()
+			});
+
+		</script>
 		<script>
 			$(document).ready(function() {
 				$('[data-toggle="tooltip"]').tooltip();
@@ -281,6 +329,15 @@
 		<!-- DataTables -->
 		<script src="<?=base_url('assets'); ?>/plugins/datatables/jquery.dataTables.min.js"></script>
 		<script src="<?=base_url('assets'); ?>/plugins/datatables/dataTables.bootstrap.min.js"></script>
+		<!-- datatable -->
+		<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.1.0/css/buttons.dataTables.min.css">
+		<script src="https://cdn.datatables.net/buttons/1.1.0/js/dataTables.buttons.min.js"></script>
+		<script src="//cdn.datatables.net/buttons/1.1.0/js/buttons.flash.min.js"></script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+		<script src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
+		<script src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
+		<script src="//cdn.datatables.net/buttons/1.1.0/js/buttons.html5.min.js"></script>
+		<script src="//cdn.datatables.net/buttons/1.1.0/js/buttons.print.min.js"></script>
 		<script>
 			$.fn.dataTable.ext.errMode = 'none';
 			$(function() {
@@ -306,6 +363,20 @@
 						leftColumns : 1,
 						rightColumns : 1
 					}
+				});
+				$('#laporan').DataTable({
+					"paging" : false,
+					"lengthChange" : false,
+					"searching" : true,
+					"ordering" : false,
+					"info" : false,
+					"autoWidth" : true,
+					"scrollX" : true,
+					"scrollCollapse" : false,
+					"dom" : 'Bfrtip',
+					"buttons" : [
+			    	'excel'
+			    	]
 				});
 				$('#example4').DataTable({
 					"ordering" : false
@@ -337,5 +408,10 @@
 				autoclose : 'true',
 			});
 		</script>
+
+		<!-- Moment -->
+		<script src="<?= base_url('assets') ?>/plugins/daterangepicker/moment.min.js"></script>
+		<script src="<?= base_url('assets') ?>/plugins/daterangepicker/daterangepicker.js"></script>
+		
 	</body>
 </html>

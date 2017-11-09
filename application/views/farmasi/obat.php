@@ -27,14 +27,14 @@
         <a data-toggle="modal" href='#tambah' class="btn btn-primary btn-flat"><i class="fa fa-plus"></i> Tambah Farmasi</a>
         <hr class="garis"></hr>
         <div class="">
-          <table class="table table-bordered table-hover table-farmasi">
+          <table class="table table-bordered table-hover table-farmasi table-condensed">
             <thead>
               <tr style="background: #0db7c4; color: #fff;">
                 <th style="text-align:center;">No</th>
                 <th style="text-align:center;">Nama</th>
                 <th style="text-align:center;">Harga</th>
                 <th style="text-align:center;">Jumlah</th>
-                <th style="text-align:center;">Aksi</th>
+                <th style="text-align:center; width: 90px;">Aksi</th>
               </tr> 
             </thead>
             <tbody>

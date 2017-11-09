@@ -1,4 +1,10 @@
 <script src="<?=base_url('assets');?>/plugins/chartjs/Chart.min.js"></script>
+<style type="text/css">
+  table.dataTable.table-condensed thead > tr > th {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+</style>
 <div class="content-wrapper">
   
   <section class="content-header">
@@ -15,47 +21,77 @@
   <section class="content">
     <div class="box box-primary">
       <div class="box-body">
+      <div class="row">
+          <form method="get" action="<?=base_url('laporan/penyakit_by_departement')?>" role="form">
+            <div class="form-group col-md-4 col-sm-4 col-xs-12">
+              <label>Filter tanggal :</label>
+              <div id="dtrg" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
+                <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp;
+                <span id="tgl"></span> <i class="fa fa-caret-square-o-down pull-right" style=" margin-top: 3px;"></i>
+              </div>
+            </div>
+            <input type="hidden" name="end" id="end" value="">
+            <input type="hidden" name="start" id="start" value="">
+            <?php if ($this->session->userdata('role')==0): ?>
+            <div class="col-md-3">
+              <label>Unit :</label>
+              <select name="unit" class="form-control" >
+              <?php foreach ($unit as $unit) { ?>
+                <option value="<?= $unit->id_unit ?>" <?= (@$_GET['unit'] == $unit->id_unit)?"selected":""; ?>><?= $unit->nama ?></option>
+              <?php } ?>
+              </select>
+            </div>  
+            <?php endif ?>
+            <div class="col-md-2">
+              <button type="submit" class="btn btn-info" style="margin-top: 25px;">Filter</button>
+            </div>
+          </form>
+        </div>
+        <br>
         <div class="table-responsive">
-          <table class="table table-bordered table-hover table-laporan">
+          <table class="table table-bordered table-hover table-laporan table-condensed" id="laporan">
             <thead>
               <tr>
                   <th>No</th>
                   <th>Penyakit</th>
-                  <th class="produksi">Produksi</th>
-                  <th class="she">She</th>
-                  <th class="maintenance">Maintenance</th>
-                  <th class="qc">QC Lab</th>
-                  <th class="logistik">Logistik</th>
-                  <th class="hrd">HRD</th>
-                  <th class="fad">FAD</th>
-                  <th class="engineering">Engineering</th>
-                  <th class="gs">GS</th>
-                  <th class="plant">Plant Manager</th>
-                  <th class="kontraktor">Kontraktor</th>
-                  <th class="others">Others</th>
-                  <th class="total">Total</th>
+                  <th>Produksi</th>
+                  <th>She</th>
+                  <th>Maintenance</th>
+                  <th>QC Lab</th>
+                  <th>Logistik</th>
+                  <th>HRD</th>
+                  <th>FAD</th>
+                  <th>Engineering</th>
+                  <th>GS</th>
+                  <th>Plant Manager</th>
+                  <th>Kontraktor</th>
+                  <th>Others</th>
+                  <th>Total</th>
               </tr>
             </thead>
             <tbody>
-              <?php for ($i=1; $i < 10 ; $i++) { ?>
+              <?php $i=1; foreach ($diagnosa as $val) { ?>
+              <?php $total=0; for ($d=0; $d < 12 ; $d++) { 
+                $total = $total + $laporan[$val->id_diagnosa][$d];
+              } ?>
               <tr>
                   <td><?=$i?></td>
-                  <td>ISPA</td>
-                  <td class="produksi-t">138</td>
-                  <td class="she-t">4</td>
-                  <td class="maintenance-t">0</td>
-                  <td class="qc-t">5</td>
-                  <td class="logistik-t">9</td>
-                  <td class="hrd-t">0</td>
-                  <td class="fad-t">0</td>
-                  <td class="engineering-t">7</td>
-                  <td class="gs-t">9</td>
-                  <td class="plant-t">0</td>
-                  <td class="kontraktor-t">0</td>
-                  <td class="others-t">6</td>
-                  <td class="total-t">178</td>
+                  <td><?= $val->nama ?></td>
+                  <td><?= $laporan[$val->id_diagnosa][0] ?></td>
+                  <td><?= $laporan[$val->id_diagnosa][1] ?></td>
+                  <td><?= $laporan[$val->id_diagnosa][2] ?></td>
+                  <td><?= $laporan[$val->id_diagnosa][3] ?></td>
+                  <td><?= $laporan[$val->id_diagnosa][4] ?></td>
+                  <td><?= $laporan[$val->id_diagnosa][5] ?></td>
+                  <td><?= $laporan[$val->id_diagnosa][6] ?></td>
+                  <td><?= $laporan[$val->id_diagnosa][7] ?></td>
+                  <td><?= $laporan[$val->id_diagnosa][8] ?></td>
+                  <td><?= $laporan[$val->id_diagnosa][9] ?></td>
+                  <td><?= $laporan[$val->id_diagnosa][10] ?></td>
+                  <td><?= $laporan[$val->id_diagnosa][11] ?></td>
+                  <td><?= $total ?></td>
               </tr>
-              <?php } ?>
+              <?php $i++;} ?>
             </tbody>
           </table>
         </div>
@@ -68,7 +104,23 @@
     </div>
   </section>
   <!-- /.content -->
-
+<?php $grafik="";foreach ($diagnosa as $diag) {
+  $warna = '#' . dechex(rand(256,16777215));
+  $grafik = $grafik."{
+  label: '".$diag->nama."',
+  fillColor: '".$warna."',
+  strokeColor: '".$warna."',
+  pointColor: '".$warna."',
+  pointStrokeColor: 'rgba(60,141,188,1)',
+  pointHighlightFill: '#fff',
+  pointHighlightStroke: 'rgba(60,141,188,1)',
+  data: [  
+  ";for ($dk=0; $dk < 11 ; $dk++){
+    $grafik = $grafik.$laporan[$diag->id_diagnosa][$dk].",";
+  }  
+  $grafik = $grafik."]
+  },";
+} ?>
 </div><!-- /.content-wrapper -->
     <script>
       $(function () {
@@ -77,106 +129,7 @@
         var ChartData = {
           labels: ["PRODUKSI", "SHE", "MAINTENANCE", "QC LAB", "LOGISTIK", "HRD", "FAD", "ENGINEERING", "GS", "PLANT MANAGER", "KONTRAKTOR", "OTHERS"],
           datasets: [
-            {
-              label: "ISPA",
-              fillColor: "#C5EFF7",
-              strokeColor: "#C5EFF7",
-              pointColor: "#C5EFF7",
-              pointStrokeColor: "#c1c7d1",
-              pointHighlightFill: "#fff",
-              pointHighlightStroke: "rgba(220,220,220,1)",
-              data: [37, 21, 12, 25, 56, 55, 40,12 ,33,12,39,55]
-            },
-            {
-              label: "CEPHALGIA",
-              fillColor: "#DCC6E0",
-              strokeColor: "#DCC6E0",
-              pointColor: "#DCC6E0",
-              pointStrokeColor: "rgba(60,141,188,1)",
-              pointHighlightFill: "#fff",
-              pointHighlightStroke: "rgba(60,141,188,1)",
-              data: [9, 4, 40, 6, 86, 27, 90,4 ,53,29,79,18]
-            },
-            {
-              label: "MYALGIA",
-              fillColor: "#FDE3A7",
-              strokeColor: "#FDE3A7",
-              pointColor: "#FDE3A7",
-              pointStrokeColor: "rgba(60,141,188,1)",
-              pointHighlightFill: "#fff",
-              pointHighlightStroke: "rgba(60,141,188,1)",
-              data: [2, 0, 40, 2, 86, 27, 90,10 ,31,22,40,55]
-            },
-            {
-              label: "CONJUNGITIVITIS",
-              fillColor: "#F5D76E",
-              strokeColor: "#F5D76E",
-              pointColor: "#F5D76E",
-              pointStrokeColor: "rgba(60,141,188,1)",
-              pointHighlightFill: "#fff",
-              pointHighlightStroke: "rgba(60,141,188,1)",
-              data: [0, 0, 40, 0, 86, 27, 90,20 ,0,0,0,0]
-            },
-            {
-              label: "GE",
-              fillColor: "#C8F7C5",
-              strokeColor: "#C8F7C5",
-              pointColor: "#C8F7C5",
-              pointStrokeColor: "rgba(60,141,188,1)",
-              pointHighlightFill: "#fff",
-              pointHighlightStroke: "rgba(60,141,188,1)",
-              data: [0, 20, 40, 0, 86, 27, 90,0 ,28,77,49,10]
-            },
-            {
-              label: "DYSPEPSIA",
-              fillColor: "#ECF0F1",
-              strokeColor: "#ECF0F1",
-              pointColor: "#ECF0F1",
-              pointStrokeColor: "rgba(60,141,188,1)",
-              pointHighlightFill: "#fff",
-              pointHighlightStroke: "rgba(60,141,188,1)",
-              data: [0, 20, 40, 0, 86, 27, 90,0 ,12,28,66,53]
-            },
-            {
-              label: "DERMATITIS",
-              fillColor: "#F1A9A0",
-              strokeColor: "#F1A9A0",
-              pointColor: "#F1A9A0",
-              pointStrokeColor: "rgba(60,141,188,1)",
-              pointHighlightFill: "#fff",
-              pointHighlightStroke: "rgba(60,141,188,1)",
-              data: [0, 20, 40, 0, 86, 27, 90,0,20,76,30,52]
-            },
-            {
-              label: "DENTAL SICK",
-              fillColor: "#89C4F4",
-              strokeColor: "#89C4F4",
-              pointColor: "#89C4F4",
-              pointStrokeColor: "rgba(60,141,188,1)",
-              pointHighlightFill: "#fff",
-              pointHighlightStroke: "rgba(60,141,188,1)",
-              data: [0, 20, 40, 0, 86, 27, 90,0,14,55,21,33]
-            },
-            {
-              label: "OBS.FEBRIS",
-              fillColor: "#BE90D4",
-              strokeColor: "#BE90D4",
-              pointColor: "#BE90D4",
-              pointStrokeColor: "rgba(60,141,188,1)",
-              pointHighlightFill: "#fff",
-              pointHighlightStroke: "rgba(60,141,188,1)",
-              data: [0, 20, 40, 0, 86, 27, 90,0,13,55,77,12]
-            },
-            {
-              label: "TFA",
-              fillColor: "#F9BF3B",
-              strokeColor: "#F9BF3B",
-              pointColor: "#F9BF3B",
-              pointStrokeColor: "rgba(60,141,188,1)",
-              pointHighlightFill: "#fff",
-              pointHighlightStroke: "rgba(60,141,188,1)",
-              data: [0, 20, 40, 0, 86, 27, 90,0,23,11,67,74]
-            }
+          <?= $grafik ?>
           ]
         };
         //-------------
@@ -224,3 +177,43 @@
 
       });
     </script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+          $('#dtrg').daterangepicker(
+             {
+                startDate: moment().subtract('days', 29),
+                endDate: moment(),
+                minDate: '12/31/2014',
+                dateLimit: { days: 60 },
+                showDropdowns: true,
+                showWeekNumbers: true,
+                timePicker: false,
+                timePickerIncrement: 1,
+                timePicker12Hour: true,
+                ranges: {
+                   'Today': [moment(), moment()],
+                   'Yesterday': [moment().subtract('days', 1), moment().subtract('days', 1)],
+                   'Last 7 Days': [moment().subtract('days', 6), moment()],
+                   'Last 30 Days': [moment().subtract('days', 29), moment()],
+                   'This Month': [moment().startOf('month'), moment().endOf('month')],
+                   'Last Month': [moment().subtract('month', 1).startOf('month'), moment().subtract('month', 1).endOf('month')]
+                },
+                opens: 'right',
+                format: 'DD MMMM YYYY',
+                separator: ' - ',
+             },
+             function(start, end) {
+              $('#dtrg span').html(start.format('DD MMMM YYYY') + ' - ' + end.format('DD MMMM YYYY'));
+              $('#start').val(start.format('YYYY-MM-DD'));
+              $('#end').val(end.format('YYYY-MM-DD'));
+             }
+          );
+          //Set the initial state of the picker label
+          $('#dtrg span').html(moment().subtract('days', 29).format('DD MMMM YYYY') + ' - ' + moment().format('DD MMMM YYYY'));
+          $('#start').val(moment().subtract('days', 29).format('YYYY-MM-DD'));
+          $('#end').val(moment().format('YYYY-MM-DD'));
+          $(".daterangepicker_start_input").hide();
+          $(".daterangepicker_end_input").hide();
+       });
+
+    </script>   

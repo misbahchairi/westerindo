@@ -1,3 +1,33 @@
+.confirm-div-mob{
+  position: fixed;
+  background-color: #D2D7D3;
+  color: #fff;
+  border: solid 1px #rgba(31, 31, 31, 0.74);
+  width: 50%;
+  height: 35px;
+  vertical-align: middle;
+  text-align: center;
+  padding: 8px;
+  left: 30%;
+  bottom: 10px;
+  display: none;
+  border-radius: 20px;
+  opacity: 0.8;
+}
+
+.flash-success{
+  color: green;
+}
+.flash-failed{
+  color: red;
+}
+.confirm-div-mob span{
+  color: #fff !important; 
+}
+
+.daterangepicker .ranges, .daterangepicker .calendar {
+    float: right !important;
+}
 .garis{
     border-color: #ccc;
     border-style: dashed;
@@ -569,15 +599,15 @@ table.table-farmasi.dataTable tbody > tr > td{
     width: 2400px;
 }
 .table-laporan .maroon{
-    background: #bd2e24;
+    background: #CF000F;
     color: #fdd96c;
 }
 .table-laporan .merah{
-    background: #f44336;
-    color: #246ca5;
+    background: #F22613;
+    color: #fff;
 }
 .table-laporan .oren{
-    background: #ffc107;
+    background: #F89406;
     color: #246ca5;
 }
 .table-laporan .putih{
@@ -585,27 +615,27 @@ table.table-farmasi.dataTable tbody > tr > td{
     color: #246ca5;
 }
 .table-laporan .krem{
-    background: #fff2ca;
+    background: #FDE3A7;
     color: #246ca5;
 }
 .table-laporan .hijau{
-    background: #8bc34a;
+    background: #00B16A;
     color: #246ca5;
 }
 .table-laporan .kuning{
-    background: #ffeb3b;
+    background: #F9BF3B;
     color: #246ca5;
 }
 .table-laporan .biru{
-    background: #00bcd4;
+    background: #4183D7;
     color: #fdd96c;
 }
 .table-laporan .ungu{
-    background: #8252d8;
+    background: #9A12B3;
     color: #fdd96c;
 }
 .table-laporan .pink{
-    background: #e91e63;
+    background: #F62459;
     color: #fff;
 }
 .table-laporan .hijau_m{
@@ -613,7 +643,7 @@ table.table-farmasi.dataTable tbody > tr > td{
     color: #fdd96c;
 }
 .table-laporan .abu{
-    background: #9e9e9e;
+    background: #BFBFBF;
     color: #fff;
 }
 .table-laporan .produksi{

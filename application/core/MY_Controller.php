@@ -9,6 +9,7 @@ abstract class MY_Controller extends CI_Controller{
 		$this -> load -> model('mpreventif');
 		$this -> load -> model('mmaster');
 		$this -> load -> model('mfarmasi');
+		$this -> load -> model('mlaporan');
 		$this -> load -> model('mkuratif');
 
 		date_default_timezone_set("Asia/Jakarta");
