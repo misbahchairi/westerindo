@@ -59,16 +59,17 @@ class mkuratif extends CI_Model {
     {
         $this->db->where('idkuratif' , $idkuratif);
         $query = $this->db->delete('kuratif');
+
         return $query;
     }
     function addRiwayat($data)
     {
         return $this->db->insert('kuratif_riwayat',$data);
     }
-    function deleteRiwayat($id)
+    function getRiwayatByid($id)
     {
-        $this->db->where('pf_idkuratif',$id);
-        return $this->db->delete('kuratif_temuanpf');
+        $this->db->where('rp_idpasien',$id);
+        return $this->db->get('kuratif_riwayat');
     }
     function addVital($data)
     {
@@ -121,12 +122,15 @@ class mkuratif extends CI_Model {
         $sql = "SELECT ktf.* , 
                        usr.nama as nama_perawat ,
                        psn.nama as nama_pasien ,
-                       usr.nama as nama_dokter ,
-                       unt.nama as nama_unit 
+                       dkr.nama as nama_dokter ,
+                       unt.nama as nama_unit ,
+                       udkr.nama as nama_unit_dokter 
                 FROM kuratif ktf
-                LEFT JOIN m_user usr ON ktf.ku_idperawat = usr.user_id OR ktf.ku_iddokter = usr.user_id
+                LEFT JOIN m_user usr ON ktf.ku_idperawat = usr.user_id
+                LEFT JOIN m_user dkr ON ktf.ku_iddokter = dkr.user_id
                 LEFT JOIN m_pasien psn ON  ktf.ku_idpasien = psn.id_pasien
                 LEFT JOIN m_unit unt ON  usr.unit = unt.id_unit
+                LEFT JOIN m_unit udkr ON  dkr.unit = udkr.id_unit
                 WHERE NOT ktf.ku_state = 'tindakan'
                 ;";
         $query = $this->db->query($sql);
@@ -141,21 +145,42 @@ class mkuratif extends CI_Model {
     function getLanjutan($id)
     {
         $sql = "SELECT ktf.* , 
-                       usr.nama as nama_perawat ,
-                       psn.nama as nama_pasien ,
-                       usr.nama as nama_dokter ,
+                       psn.nama as nama_pasien , psn.* ,
                        psn.foto ,
                        dgs.nama as nama_diagnosa, dgs.keterangan as ket_diagnosa,
-                       tv.*
+                       tv.* 
                 FROM kuratif ktf
-                LEFT JOIN m_user usr ON ktf.ku_idperawat = usr.user_id OR ktf.ku_iddokter = usr.user_id
                 LEFT JOIN m_pasien psn ON  ktf.ku_idpasien = psn.id_pasien
                 LEFT JOIN kuratif_tandavital tv ON  tv.tv_idkuratif = ktf.idkuratif
                 LEFT JOIN m_diagnosa dgs ON ktf.ku_iddiagnosa = dgs.id_diagnosa
-                WHERE ktf.idkuratif = '".$id."'
+                WHERE ktf.idkuratif = '".$id."' GROUP BY ktf.idkuratif
                 ;";
         $query = $this->db->query($sql);
         return $query;
+    }
+    function getRiwayatPasien($id)
+    {
+        $sql = "SELECT ktf.* , 
+                       psn.nama as nama_pasien , psn.* ,
+                       psn.foto ,
+                       dgs.nama as nama_diagnosa, dgs.keterangan as ket_diagnosa,
+                       tv.*,
+                       drjk.nama_rs , drjk.nama_dr 
+                FROM kuratif ktf
+                LEFT JOIN m_pasien psn ON  ktf.ku_idpasien = psn.id_pasien
+                LEFT JOIN kuratif_tandavital tv ON  tv.tv_idkuratif = ktf.idkuratif
+                LEFT JOIN m_diagnosa dgs ON ktf.ku_iddiagnosa = dgs.id_diagnosa
+                LEFT JOIN m_rujukan drjk ON ktf.ku_idrujukan = drjk.id_rujukan
+                WHERE ktf.ku_idpasien = '".$id."' 
+                ;";
+        $query = $this->db->query($sql);
+        return $query;
+    }
+
+    function addRujukan($data)
+    {
+        $this->db->insert('m_rujukan',$data);
+        return $this->db->insert_id();
     }
 
 

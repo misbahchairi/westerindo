@@ -18,6 +18,7 @@ class antrian extends MY_Controller {
 		$this->data['obat'] = $this->mmaster->getObat();
 		$this->data['temuan'] = $this->mkuratif->getTemuanByid($id)->result();
 		$this->data['tindakan'] = $this->mkuratif->getTindakanByid($id)->result();
+		$this->data['riwayat'] = $this->mkuratif->getRiwayatByid($this->data['lanjutan']->row()->ku_idpasien)->result();
 		$this->template->load('template_home','antrian/lanjutan',$this->data);
 
 		$data = array(
@@ -31,6 +32,14 @@ class antrian extends MY_Controller {
 		$this->mkuratif->deleteTemuanPF($id);
 		$this->mkuratif->deleteTindakan($id);
 		$hasil = $this->mkuratif->deleteKuratif($id);
+
+		if ($hasil==1)  {
+			$this->session->set_flashdata('message', 'Data berhasil di hapus');
+		}
+		else { 
+			$this->session->set_flashdata('message', 'Data gagal di hapus');
+		}
+		redirect('antrian');
 
 	}
 

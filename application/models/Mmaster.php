@@ -189,6 +189,9 @@ class mmaster extends CI_Model {
     }
     function getDokterByid($id)
     {   
+        $this->db->select('m_user.*, m_unit.nama as nama_unit');
+        $this->db->join('m_unit','id_unit = unit');
+        $this->db->where('role', 1);
         $this->db->where('user_id',$id);
         $query = $this->db->get('m_user');
         return $query;
@@ -207,7 +210,7 @@ class mmaster extends CI_Model {
     function DeleteDokter($id)
     {   
         $this->db->where('user_id ',$id);
-        $query = $this->db->delete('m_user  ');
+        $query = $this->db->delete('m_user');
         return $query;
     }
 

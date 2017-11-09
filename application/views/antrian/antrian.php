@@ -33,7 +33,15 @@
             <tr>
               <td><?=$i;?></td>
               <td><?=$dt->nama_pasien?></td>
-              <td><?=$dt->nama_unit?></td>
+              <td>
+                <?php if ($dt->nama_unit!='') {
+                  echo $dt->nama_unit;
+                } elseif ($dt->nama_unit_dokter!='') {
+                  echo $dt->nama_unit_dokter;
+                } elseif ($dt->nama_unit!='' & $dt->nama_unit_dokter!='') {
+                  echo $dt->nama_unit;
+                } ?>
+              </td>
               <td><?=$dt->nama_perawat?></td>
               <td><?=$dt->nama_dokter?></td>
               <td><?=$dt->ku_perihal?></td>

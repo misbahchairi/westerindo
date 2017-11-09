@@ -13,10 +13,14 @@
     height: 36px;
 }
 .mg-5{
-    margin-left: -5px;
-    margin-right: -5px;
+    margin-left: -5px !important;
+    margin-right: -5px !important;
 }
 .mg-5>.col-md-5ths,.mg-5>.col-md-1,.mg-5>.col-md-2,.mg-5>.col-md-3,.mg-5>.col-md-4,.mg-5>.col-md-5,.mg-5>.col-md-6,.mg-5>.col-md-7,.mg-5>.col-md-8,.mg-5>.col-md-9,.mg-5>.col-md-10,.mg-5>.col-md-11,.mg-5>.col-md-12,{
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+}
+.mg-5>.col-md-3 , .mg-5>.col-md-9 , .mg-5>.col-md-6, .mg-5>.col-md-2, .mg-5>.col-md-5{
     padding-left: 5px !important;
     padding-right: 5px !important;
 }
@@ -450,12 +454,13 @@ span.round-tab:hover {
 }
 .ktk-btn-resume{
     text-align: center;
-    margin-top: 20%;
+    margin-bottom: 10px;
+    margin-top: 10px;
 }
 .ktk-btn-resume .btn{
     display: inline-block;
-    margin: 5px;
-    width: 250px;
+    margin: 0px;
+    width: 100%;
 }
 .ktk-btn-resume .btn i{
     float: right;
@@ -466,7 +471,12 @@ span.round-tab:hover {
     text-align: justify;
 }
 .bwh-ketsa input{
-    margin-bottom: 9px;
+    margin-bottom: 10px !important;
+}
+.form-suratsakit{
+    text-align: justify;
+}
+.form-suratsakit input{
 }
 .ktk-ketsa .control-label{
     text-align: left;
@@ -758,4 +768,16 @@ table.table-farmasi.dataTable tbody > tr > td{
             transform: translateX(-50%) translateY(-50%);
     top: 50%;
     position: absolute;
+}
+.table-riwayat{
+    height: 224px;
+    overflow-y: auto;
+    border: 1px solid #f4f4f4;
+    border-top: 0px;
+}
+.table-riwayat table{
+    border-bottom: 1px solid #f4f4f4;
+}
+.table-riwayat label{
+    margin-top: 5px;
 }

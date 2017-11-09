@@ -38,23 +38,8 @@
       <div class="box-header with-border">
         <h3 class="box-title">Info Pasien</h3>
       </div>
-      <div class="box-body">
-        <div class="row">
-          <div class="col-md-3">
-            <div class="img-pasien" id="img-pasien">
-            </div>
-          </div>
-          <div class="col-md-9">
-            <div class="riwayat-pasien">
-              <h3>Riwayat Pasien</h3>
-              <ul>
-                <li>Demam 3 Hari 3 Malam</li>
-                <li>Batuk Berdahak</li>
-                <li>Usus Buntu</li>
-              </ul>
-            </div>
-          </div>
-        </div>
+      <div class="box-body" id="img-pasien">
+
       </div>
     </div>
     <div class="box box-primary">
@@ -187,6 +172,7 @@
                             <label class="control-label col-sm-2">Penjelasan :</label>
                             <div class="col-sm-10">
                               <textarea name="penjelasan" class="form-control"></textarea>
+                              <label class="control-label"><input type="checkbox" name="is_riwayat" value="1"> *centang jika ingin mengisi riwayat penyakit</label>
                             </div>
                           </div>
                         </div>
@@ -376,6 +362,7 @@
                             <label class="control-label col-sm-2">File Upload :</label>
                             <div class="col-sm-10">
                               <input type="file" name="file" value="" placeholder="" class="form-control" id="file_penunjang">
+                              <label class="control-label"><input type="checkbox" name="is_penunjang" value="1"> *centang jika ingin mengisi penunjang medis</label>
                             </div>
                           </div>
                         </div>
@@ -633,9 +620,9 @@
         var file_data = $("#file_penunjang").prop("files")[0];   // Getting the properties of file from file field
         var form_data = new FormData();  
         var other_data = $('.form-penunjang').serializeArray();
-          $.each(other_data,function(key,input){
-              form_data.append(input.name,input.value);
-          });
+        $.each(other_data,function(key,input){
+            form_data.append(input.name,input.value);
+        });
         form_data.append("file", file_data);  
         $.ajax({
           url: link,
@@ -679,8 +666,8 @@
 
       $("button.tindakan-next").click(function(){
         var data = $('.form-tindakan').serialize();
-        var link="<?= base_url('kuratif/ajaxtindakan') ?>"
-        var links="<?= base_url('kuratif/resume') ?>"
+        var link="<?= base_url('kuratif/ajaxtindakan') ?>";
+        var links="<?= base_url('kuratif/resume') ?>";
         $.ajax({
           type: 'POST',
           url: link,
@@ -795,7 +782,7 @@
                 '<?php } ?>'+
                 '</select>'+
               '</div>'+
-              '<div class="row"><div class="aturan-pakai"><select name="jenis'+rowCount+'" id="inputJenis'+rowCount+'" class="form-control" onchange="obat('+rowCount+')"  style="margin-top: 10px;"><option value="">Pilih Jenis Obat</option><option value="oral">Per Oral</option><option value="topikal">Topikal</option><option value="suntikan">Suntikan</option><option value="rectum">Per anus / rectum</option></select><div class="oral'+rowCount+'" style="display: none;"><div class="radio" id="oral-tipe'+rowCount+'" onclick="oraltipe('+rowCount+')"><label class="radio-inline"><input type="radio" class="oral-tipe'+rowCount+'" name="oral-tipe'+rowCount+'" value="tablet" checked="true">Tablet/Kaplet/Kapsul</label><label class="radio-inline"><input type="radio" class="oral-tipe'+rowCount+'" name="oral-tipe'+rowCount+'" value="sirup">Syrup/Liquid</label></div><div class="radio" id="oral-minum"><label class="radio-inline"><input type="radio" name="oral-minum'+rowCount+'" checked="true" value="1X Sehari">1x Sehari</label><label class="radio-inline"><input type="radio" name="oral-minum'+rowCount+'" value="2X Sehari">2x Sehari</label><label class="radio-inline"><input type="radio" name="oral-minum'+rowCount+'" value="3X Sehari">3x Sehari</label></div><div class="radio" id="oral-sendok'+rowCount+'" style="display: none;"><label class="radio-inline"><input type="radio" name="oral-sendok'+rowCount+'" checked="true" value="1sdm">1sdm</label><label class="radio-inline"><input type="radio" name="oral-sendok'+rowCount+'" value="2sdt">2sdt</label><label class="radio-inline"><input type="radio" name="oral-sendok'+rowCount+'" value="3ml">3ml</label></div><input type="text" value="0" required="required" name="jml-minum'+rowCount+'" id="inputjml-minum" class="form-control"  placeholder="Jumlah" style="margin-top: 5px;"></div><div class="topikal'+rowCount+'" style="display: none;"><div class="radio" id="topikal-tipe" onclick="topikaltipe('+rowCount+')"><label class="radio-inline"><input type="radio" class="topikal-tipe'+rowCount+'" name="topikal-tipe'+rowCount+'" value="oles" checked="true">Oleskan</label><label class="radio-inline"><input type="radio" class="topikal-tipe'+rowCount+'" name="topikal-tipe'+rowCount+'" value="tetes">Teteskan</label></div><div class="radio" id="topikal-letak-pakai'+rowCount+'" style="display: none;"><label class="radio-inline"><input type="radio" name="topikal-letak-pakai'+rowCount+'" checked="true" value="Mata">Mata</label><label class="radio-inline"><input type="radio" name="topikal-letak-pakai'+rowCount+'" value="Hidung">Hidung</label><label class="radio-inline"><input type="radio" name="topikal-letak-pakai'+rowCount+'" value="Telinga">Telinga</label></div><div class="radio" id="topikal-letak-spesifik'+rowCount+'" style="display: none;"><label class="radio-inline"><input type="radio" name="topikal-letak-spesifik'+rowCount+'" checked="true" value="Kiri">Kiri</label><label class="radio-inline"><input type="radio" name="topikal-letak-spesifik'+rowCount+'" value="Kanan">Kanan</label></div><div class="radio" id="topikal-pakai"><label class="radio-inline"><input type="radio" name="topikal-pakai'+rowCount+'" checked="true" value="1x Sehari">1x Sehari</label><label class="radio-inline"><input type="radio" name="topikal-pakai'+rowCount+'" value="2x Sehari">2x Sehari</label><label class="radio-inline"><input type="radio" name="topikal-pakai'+rowCount+'" value="3x Sehari">3x Sehari</label></div><div class="radio" id="topikal-pakai-tetes'+rowCount+'" style="display: none;"><label class="radio-inline"><input type="radio" name="topikal-pakai-tetes'+rowCount+'" checked="true">1x Tetes</label><label class="radio-inline"><input type="radio" name="topikal-pakai-tetes'+rowCount+'">2x Tetes</label><label class="radio-inline"><input type="radio" name="topikal-pakai-tetes'+rowCount+'">3x Tetes</label></div><input type="text" value="0" required="required" name="jml-topikal'+rowCount+'" id="inputjml-topikal" class="form-control"  placeholder="Jumlah" style="margin-top: 5px;"></div><div class="suntikan'+rowCount+'" style="display: none;"><div class="radio" id="suntikan-tipe"><label class="radio-inline"><input type="radio" name="suntikan-tipe'+rowCount+'" checked="true" value="IM">IM</label><label class="radio-inline"><input type="radio" name="suntikan-tipe'+rowCount+'" value="IV">IV</label><label class="radio-inline"><input type="radio" name="suntikan-tipe'+rowCount+'" value="Subcutan">Subcutan</label><label class="radio-inline"><input type="radio" name="suntikan-tipe'+rowCount+'" value="Intracutan">Intracutan</label></div><div class="input-group" style="margin-top: 5px;"><input type="text" value="0" required="required" name="jml-suntikan'+rowCount+'" id="inputjml-rectum" class="form-control"  placeholder="Ampul" ><span class="input-group-addon">Ampul</span></div></div><div class="rectum'+rowCount+'" style="display: none;"><div class="radio" id="rectum-tipe"><label class="radio-inline"><input type="radio" name="rectum-tipe'+rowCount+'" value="p.r.n" checked="true">p.r.n</label><label class="radio-inline"><input type="radio" name="rectum-tipe'+rowCount+'" value="Lain - lain">Lain - lain</label></div><input type="text" value="0" required="required" name="jml-rectum'+rowCount+'" id="inputjml-rectum" class="form-control"  placeholder="PCS" style="margin-top: 5px;"></div></div></div>'+
+              '<div class="row"><div class="aturan-pakai"><select name="jenis'+rowCount+'" id="inputJenis'+rowCount+'" class="form-control" onchange="obat('+rowCount+')"  style="margin-top: 10px;"><option value="">Pilih Jenis Obat</option><option value="oral">Per Oral</option><option value="topikal">Topikal</option><option value="suntikan">Suntikan</option><option value="rectum">Per anus / rectum</option></select><div class="oral'+rowCount+'" style="display: none;"><div class="radio" id="oral-tipe'+rowCount+'" onclick="oraltipe('+rowCount+')"><label class="radio-inline"><input type="radio" class="oral-tipe'+rowCount+'" name="oral-tipe'+rowCount+'" value="tablet" checked="true">Tablet/Kaplet/Kapsul</label><label class="radio-inline"><input type="radio" class="oral-tipe'+rowCount+'" name="oral-tipe'+rowCount+'" value="sirup">Syrup/Liquid</label></div><div class="radio" id="oral-minum"><label class="radio-inline"><input type="radio" name="oral-minum'+rowCount+'" checked="true" value="1X Sehari">1x Sehari</label><label class="radio-inline"><input type="radio" name="oral-minum'+rowCount+'" value="2X Sehari">2x Sehari</label><label class="radio-inline"><input type="radio" name="oral-minum'+rowCount+'" value="3X Sehari">3x Sehari</label></div><div class="radio" id="oral-sendok'+rowCount+'" style="display: none;"><label class="radio-inline"><input type="radio" name="oral-sendok'+rowCount+'" checked="true" value="1sdm">1sdm</label><label class="radio-inline"><input type="radio" name="oral-sendok'+rowCount+'" value="2sdt">2sdt</label><label class="radio-inline"><input type="radio" name="oral-sendok'+rowCount+'" value="3ml">3ml</label></div><input type="text" value="0" required="required" name="jml-minum'+rowCount+'" id="inputjml-minum" class="form-control"  placeholder="Jumlah" style="margin-top: 5px;"></div><div class="topikal'+rowCount+'" style="display: none;"><div class="radio" id="topikal-tipe" onclick="topikaltipe('+rowCount+')"><label class="radio-inline"><input type="radio" class="topikal-tipe'+rowCount+'" name="topikal-tipe'+rowCount+'" value="oles" checked="true">Oleskan</label><label class="radio-inline"><input type="radio" class="topikal-tipe'+rowCount+'" name="topikal-tipe'+rowCount+'" value="tetes">Teteskan</label></div><div class="radio" id="topikal-letak-pakai'+rowCount+'" style="display: none;"><label class="radio-inline"><input type="radio" name="topikal-letak-pakai'+rowCount+'" checked="true" value="Mata">Mata</label><label class="radio-inline"><input type="radio" name="topikal-letak-pakai'+rowCount+'" value="Hidung">Hidung</label><label class="radio-inline"><input type="radio" name="topikal-letak-pakai'+rowCount+'" value="Telinga">Telinga</label></div><div class="radio" id="topikal-letak-spesifik'+rowCount+'" style="display: none;"><label class="radio-inline"><input type="radio" name="topikal-letak-spesifik'+rowCount+'" checked="true" value="Kiri">Kiri</label><label class="radio-inline"><input type="radio" name="topikal-letak-spesifik'+rowCount+'" value="Kanan">Kanan</label></div><div class="radio" id="topikal-pakai"><label class="radio-inline"><input type="radio" name="topikal-pakai'+rowCount+'" checked="true" value="1x Sehari">1x Sehari</label><label class="radio-inline"><input type="radio" name="topikal-pakai'+rowCount+'" value="2x Sehari">2x Sehari</label><label class="radio-inline"><input type="radio" name="topikal-pakai'+rowCount+'" value="3x Sehari">3x Sehari</label></div><div class="radio" id="topikal-pakai-tetes'+rowCount+'" style="display: none;"><label class="radio-inline"><input type="radio" name="topikal-pakai-tetes'+rowCount+'" checked="true" value="1x Tetes">1x Tetes</label><label class="radio-inline"><input type="radio" name="topikal-pakai-tetes'+rowCount+'" value="2x Tetes">2x Tetes</label><label class="radio-inline"><input type="radio" name="topikal-pakai-tetes'+rowCount+'" value="3x Tetes">3x Tetes</label></div><input type="text" value="0" required="required" name="jml-topikal'+rowCount+'" id="inputjml-topikal" class="form-control"  placeholder="Jumlah" style="margin-top: 5px;"></div><div class="suntikan'+rowCount+'" style="display: none;"><div class="radio" id="suntikan-tipe"><label class="radio-inline"><input type="radio" name="suntikan-tipe'+rowCount+'" checked="true" value="IM">IM</label><label class="radio-inline"><input type="radio" name="suntikan-tipe'+rowCount+'" value="IV">IV</label><label class="radio-inline"><input type="radio" name="suntikan-tipe'+rowCount+'" value="Subcutan">Subcutan</label><label class="radio-inline"><input type="radio" name="suntikan-tipe'+rowCount+'" value="Intracutan">Intracutan</label></div><div class="input-group" style="margin-top: 5px;"><input type="text" value="0" required="required" name="jml-suntikan'+rowCount+'" id="inputjml-rectum" class="form-control"  placeholder="Ampul" ><span class="input-group-addon">Ampul</span></div></div><div class="rectum'+rowCount+'" style="display: none;"><div class="radio" id="rectum-tipe"><label class="radio-inline"><input type="radio" name="rectum-tipe'+rowCount+'" value="p.r.n" checked="true">p.r.n</label><label class="radio-inline"><input type="radio" name="rectum-tipe'+rowCount+'" value="Lain - lain">Lain - lain</label></div><input type="text" value="0" required="required" name="jml-rectum'+rowCount+'" id="inputjml-rectum" class="form-control"  placeholder="PCS" style="margin-top: 5px;"></div></div></div>'+
             '</div>'+
             '<div class="col-sm-2">'+
             '<button type="button" class="btn btn-flat btn-danger" id="remove-obat"><i class="fa fa-close"></i></button>'+

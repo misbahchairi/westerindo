@@ -43,20 +43,80 @@
         <h3 class="box-title">Info Pasien</h3>
       </div>
       <div class="box-body">
-        <div class="row">
-          <div class="col-md-3">
+        <div class="row mg-5">
+          <div class="col-md-2">
             <div class="img-pasien" id="img-pasien">
               <img src="<?=base_url($dt->foto)?>" alt="">
             </div>
           </div>
-          <div class="col-md-9">
+          <div class="col-md-5">
             <div class="riwayat-pasien">
-              <h3>Riwayat Pasien</h3>
-              <ul>
-                <li>Demam 3 Hari 3 Malam</li>
-                <li>Batuk Berdahak</li>
-                <li>Usus Buntu</li>
-              </ul>
+              <div class="table-riwayat">
+              <h3 style="margin:0px;padding:5px;font-size:17px;font-weight:bold;border-top: 1px solid #f4f4f4;background: #eee;">Riwayat Pasien</h3>
+                <table class="table table-hover" style="">
+                  <tbody>
+                    <?php 
+                      foreach ($riwayat as $riwayat) { 
+                      if ($riwayat->rp_status=='Gawat') {
+                        $status = 'label-danger';
+                      } elseif ($riwayat->rp_status=='Tidak Gawat') {
+                        $status = 'label-warning';
+                      }
+                    ?>
+                    <tr>
+                      <td><?=$riwayat->rp_penjelasan?> <span class="label <?=$status;?> pull-right"><?=$riwayat->rp_status?></span></td>
+                    </tr>
+                    <?php } ?>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-5">
+            <div class="riwayat-pasien">
+              <div class="table-riwayat">
+              <h3 style="margin:0px;padding:5px;font-size:17px;font-weight:bold;border-top: 1px solid #f4f4f4;background: #eee;">History Pengobatan</h3>
+                  <table class="table table-hover" style="margin-bottom: -1px;">
+                    <tbody>
+                      <tr>
+                        <td style="width: 130px;">Nama</td>
+                        <td>:</td>
+                        <td><?=$dt->nama_pasien?></td>
+                      </tr>
+                      <tr>
+                        <td>Input Perihal</td>
+                        <td>:</td>
+                        <td><?=$dt->ku_perihal?></td>
+                      </tr>
+                      <tr>
+                        <td>Hasil Lab</td>
+                        <td>:</td>
+                        <td>
+                          Tanda vital <span style="text-transform: uppercase;"><?=$dt->tv_tandavital?></span> <br>
+                          Nadi <u> <?=$dt->tv_nadi?> /menit</u> , Suhu <u> <?=$dt->tv_suhu?> &#8451;</u> , Pernafasan <u> <?=$dt->tv_pernafasan?> /menit</u> <br>
+                          Kesadaran G : <u> <?=$dt->tv_kesadarang?> </u>, C : <u> <?=$dt->tv_kesadaranc?> </u> , S : <u> <?=$dt->tv_kesadarans?> </u>
+                        </td>
+                      </tr>
+                      <?php foreach ($temuan as $temuan) { ?>
+                      <tr>
+                        <td>Temuan PF <br> <small>Di <?=$temuan->pf_bagian?></small></td>
+                        <td>:</td>
+                        <td><?=$temuan->pf_temuan?></td>
+                      </tr>
+                      <?php } ?>
+                      <tr>
+                        <td>Penunjang Medis</td>
+                        <td>:</td>
+                        <td><?=$dt->ku_penunjang_medis?></td>
+                      </tr>
+                      <tr>
+                        <td>Diagnosa</td>
+                        <td>:</td>
+                        <td><?=$dt->nama_diagnosa?> <br> <small><?=$dt->ket_diagnosa?></small></td>
+                      </tr>
+                    </tbody>
+                  </table>
+              </div>
             </div>
           </div>
         </div>
@@ -73,35 +133,35 @@
               <div class="connecting-line"></div>
               <ul class="nav nav-tabs" role="tablist">
 
-                  <li role="presentation" class="<?php if($state == 'perihal'){echo'active';}else{echo'disabled';} ?>">
+                  <li role="presentation" class="disabled">
                       <a href="#step1" data-toggle="tab" aria-controls="step1" role="tab" title="Perihal">
                           <span class="round-tab">
                               Perihal
                           </span>
                       </a>
                   </li>
-                  <li role="presentation" class="<?php if($state == 'riwayat'){echo'active';}else{echo'disabled';} ?>">
+                  <li role="presentation" class="<?php if($state == 'perihal'){echo'active';}else{echo'disabled';} ?>">
                       <a href="#step2" data-toggle="tab" aria-controls="step2" role="tab" title="Riwayat Penyakit">
                           <span class="round-tab">
                               Riwayat Penyakit
                           </span>
                       </a>
                   </li>
-                  <li role="presentation" class="<?php if($state == 'tanda_vital'){echo'active';}else{echo'disabled';} ?>">
+                  <li role="presentation" class="<?php if($state == 'riwayat'){echo'active';}else{echo'disabled';} ?>">
                       <a href="#step3" data-toggle="tab" aria-controls="complete" role="tab" title="Tanda Vital">
                           <span class="round-tab">
                               Tanda Vital
                           </span>
                       </a>
                   </li>
-                  <li role="presentation" class="<?php if($state == 'temuan'){echo'active';}else{echo'disabled';} ?>">
+                  <li role="presentation" class="<?php if($state == 'tanda_vital'){echo'active';}else{echo'disabled';} ?>">
                       <a href="#step4" data-toggle="tab" aria-controls="step3" role="tab" title="Temuan PF">
                           <span class="round-tab">
                               Temuan PF
                           </span>
                       </a>
                   </li>
-                  <li role="presentation" class="<?php if($state == 'penunjang_medis'){echo'active';}else{echo'disabled';} ?>">
+                  <li role="presentation" class="<?php if($state == 'temuan'){echo'active';}else{echo'disabled';} ?>">
                       <a href="#step5" data-toggle="tab" aria-controls="complete" role="tab" title="Penunjang Medis">
                           <span class="round-tab">
                               Penunjang Medis
@@ -110,7 +170,7 @@
                   </li>
 
 
-                  <li role="presentation" class="<?php if($state == 'diagnosa'){echo'active';}else{echo'disabled';} ?>">
+                  <li role="presentation" class="<?php if($state == 'penunjang_medis'){echo'active';}else{echo'disabled';} ?>">
                       <a href="#step6" data-toggle="tab" aria-controls="complete" role="tab" title="Diagnosa">
                           <span class="round-tab">
                               Diagnosa
@@ -118,7 +178,7 @@
                       </a>
                   </li>
 
-                  <li role="presentation" class="<?php if($state == 'tindakan'){echo'active';}else{echo'disabled';} ?>">
+                  <li role="presentation" class="<?php if($state == 'diagnosa'){echo'active';}else{echo'disabled';} ?>">
                       <a href="#step7" data-toggle="tab" aria-controls="complete" role="tab" title="Tindakan">
                           <span class="round-tab">
                               Tindakan
@@ -165,7 +225,7 @@
                       </div>
                     </form>
                   </div>
-                  <div class="tab-pane <?php if($state=='riwayat')echo'active'; ?>" role="tabpanel" id="step2">
+                  <div class="tab-pane <?php if($state=='perihal')echo'active'; ?>" role="tabpanel" id="step2">
                     <form method="post" class="form-riwayat">
                       <h3>Riwayat Penyakit</h3>
                       <div class="row">
@@ -185,19 +245,20 @@
                             <label class="control-label col-sm-2">Penjelasan :</label>
                             <div class="col-sm-10">
                               <textarea name="penjelasan" class="form-control"></textarea>
+                                  <label class="control-label"><input type="checkbox" name="is_riwayat" value="1"> *centang jika ingin mengisi riwayat penyakit</label>
                             </div>
                           </div>
                         </div>
                       </div>
                       <div class="ktk-abu">
-                        <?php if ($state!='riwayat'): ?>
+                        <?php if ($state!='perihal'): ?>
                           <button type="button" class="btn btn-warning btn-flat pull-left prev-step"><i class="fa fa-long-arrow-left"></i> Previous</button>
                         <?php endif ?>
                         <button type="button" class="btn btn-primary btn-flat next-step riwayat-next">Next <i class="fa fa-long-arrow-right"></i></button>
                       </div>
                     </form>
                   </div>
-                  <div class="tab-pane <?php if($state=='tanda_vital')echo'active'; ?>" role="tabpanel" id="step3">
+                  <div class="tab-pane <?php if($state=='riwayat')echo'active'; ?>" role="tabpanel" id="step3">
                     <form method="post" class="form-vital">
                       <h3>Tanda Vital</h3>
                       <div class="row">
@@ -259,14 +320,14 @@
                         </div>
                       </div>
                       <div class="ktk-abu">
-                        <?php if ($state!='tanda_vital'): ?>
+                        <?php if ($state!='riwayat'): ?>
                           <button type="button" class="btn btn-warning btn-flat pull-left prev-step"><i class="fa fa-long-arrow-left"></i> Previous</button>
                         <?php endif ?>
                         <button type="button" class="btn btn-primary btn-flat next-step vital-next">Next <i class="fa fa-long-arrow-right"></i></button>
                       </div>
                     </form>
                   </div>
-                  <div class="tab-pane <?php if($state=='temuan')echo'active'; ?>" role="tabpanel" id="step4">
+                  <div class="tab-pane <?php if($state=='tanda_vital')echo'active'; ?>" role="tabpanel" id="step4">
                       <h3>Temuan PF</h3>
                         <center>
                       <div class="pf">
@@ -353,14 +414,14 @@
                         </div>
                         <?php } ?>
                       <div class="ktk-abu">
-                        <?php if ($state!='temuan'): ?>
+                        <?php if ($state!='tanda_vital'): ?>
                           <button type="button" class="btn btn-warning btn-flat pull-left prev-step"><i class="fa fa-long-arrow-left"></i> Previous</button>
                         <?php endif ?>
                         <button type="button" class="btn btn-primary btn-flat next-step temuanpf-next">Next <i class="fa fa-long-arrow-right"></i></button>
                       </div>
                     </form>
                   </div>
-                  <div class="tab-pane <?php if($state=='penunjang_medis')echo'active'; ?>" role="tabpanel" id="step5">
+                  <div class="tab-pane <?php if($state=='temuan')echo'active'; ?>" role="tabpanel" id="step5">
                     <form method="post" class="form-penunjang" enctype="multipart/form-data">
                       <h3>Penunjang Medis</h3>
                       <div class="row">
@@ -370,9 +431,9 @@
                             <label class="control-label col-sm-2">Kategori :</label>
                             <div class="col-sm-10">
                               <select class="form-control" name="kategori" id="kat_penunjang">
-                                <option value="Lab" <?php if($dt->ku_penunjangmedis=='Lab'){echo'selected';} ?> >Lab</option>
-                                <option value="Exray" <?php if($dt->ku_penunjangmedis=='Exray'){echo'selected';} ?> >Exray</option>
-                                <option value="Electro Medis" <?php if($dt->ku_penunjangmedis=='Electro Medis'){echo'selected';} ?> >Electro Medis</option>
+                                <option value="Lab" <?php if($dt->ku_penunjang_medis=='Lab'){echo'selected';} ?> >Lab</option>
+                                <option value="Exray" <?php if($dt->ku_penunjang_medis=='Exray'){echo'selected';} ?> >Exray</option>
+                                <option value="Electro Medis" <?php if($dt->ku_penunjang_medis=='Electro Medis'){echo'selected';} ?> >Electro Medis</option>
                               </select>
                             </div>
                           </div>
@@ -380,19 +441,20 @@
                             <label class="control-label col-sm-2">File Upload :</label>
                             <div class="col-sm-10">
                               <input type="file" name="file" value="" placeholder="" class="form-control" id="file_penunjang">
+                                  <label class="control-label"><input type="checkbox" name="is_penunjang" value="1"> *centang jika ingin mengisi penunjang medis</label>
                             </div>
                           </div>
                         </div>
                       </div>
                       <div class="ktk-abu">
-                        <?php if ($state!='penunjang_medis'): ?>
+                        <?php if ($state!='temuan'): ?>
                           <button type="button" class="btn btn-warning btn-flat pull-left prev-step"><i class="fa fa-long-arrow-left"></i> Previous</button>
                         <?php endif ?>
                         <button type="button" class="btn btn-primary btn-flat next-step penunjang-next">Next <i class="fa fa-long-arrow-right"></i></button>
                       </div>
                     </form>
                   </div>
-                  <div class="tab-pane <?php if($state=='diagnosa')echo'active'; ?>" role="tabpanel" id="step6">
+                  <div class="tab-pane <?php if($state=='penunjang_medis')echo'active'; ?>" role="tabpanel" id="step6">
                     <form method="post" class="form-diagnosa">
                       <h3>Diagnosa</h3>
                       <div class="row">
@@ -417,14 +479,14 @@
                         </div>
                       </div>
                       <div class="ktk-abu">
-                        <?php if ($state!='diagnosa'): ?>
+                        <?php if ($state!='penunjang_medis'): ?>
                           <button type="button" class="btn btn-warning btn-flat pull-left prev-step"><i class="fa fa-long-arrow-left"></i> Previous</button>
                         <?php endif ?>
                         <button type="button" class="btn btn-primary btn-flat next-step diagnosa-next">Next <i class="fa fa-long-arrow-right"></i></button>
                       </div>
                     </form>
                   </div>
-                  <div class="tab-pane <?php if($state=='tindakan')echo'active'; ?>" role="tabpanel" id="step7">
+                  <div class="tab-pane <?php if($state=='diagnosa')echo'active'; ?>" role="tabpanel" id="step7">
                     <form method="post" class="form-tindakan">
                       <h3>Tindakan</h3>
                       <div class="row">
@@ -538,7 +600,7 @@
                         </div>
                       </div>
                       <div class="ktk-abu">
-                        <?php if ($state!='tindakan'): ?>
+                        <?php if ($state!='diagnosa'): ?>
                           <button type="button" class="btn btn-warning btn-flat pull-left prev-step"><i class="fa fa-long-arrow-left"></i> Previous</button>
                         <?php endif ?>
                         <button type="button" class="btn btn-primary btn-flat tindakan-next"><i class="fa fa-save"></i> Simpan</button>
@@ -689,7 +751,8 @@
 
       $("button.tindakan-next").click(function(){
         var data = $('.form-tindakan').serialize();
-        var link="<?= base_url('kuratif/ajaxtindakan') ?>"
+        var link="<?= base_url('kuratif/ajaxtindakan') ?>";
+        var links="<?= base_url('kuratif/resume') ?>";
         $.ajax({
           type: 'POST',
           url: link,
@@ -700,6 +763,7 @@
           },
           complete: function(){
             $('#loader').hide();
+            window.location.href = links;
           },
           success: function(){  
 
@@ -784,7 +848,7 @@
                 '<?php } ?>'+
                 '</select>'+
               '</div>'+
-              '<div class="row"><div class="aturan-pakai"><select name="jenis'+rowCount+'" id="inputJenis'+rowCount+'" class="form-control" onchange="obat('+rowCount+')"  style="margin-top: 10px;"><option value="">Pilih Jenis Obat</option><option value="oral">Per Oral</option><option value="topikal">Topikal</option><option value="suntikan">Suntikan</option><option value="rectum">Per anus / rectum</option></select><div class="oral'+rowCount+'" style="display: none;"><div class="radio" id="oral-tipe'+rowCount+'" onclick="oraltipe('+rowCount+')"><label class="radio-inline"><input type="radio" class="oral-tipe'+rowCount+'" name="oral-tipe'+rowCount+'" value="tablet" checked="true">Tablet/Kaplet/Kapsul</label><label class="radio-inline"><input type="radio" class="oral-tipe'+rowCount+'" name="oral-tipe'+rowCount+'" value="sirup">Syrup/Liquid</label></div><div class="radio" id="oral-minum"><label class="radio-inline"><input type="radio" name="oral-minum'+rowCount+'" checked="true" value="1X Sehari">1x Sehari</label><label class="radio-inline"><input type="radio" name="oral-minum'+rowCount+'" value="2X Sehari">2x Sehari</label><label class="radio-inline"><input type="radio" name="oral-minum'+rowCount+'" value="3X Sehari">3x Sehari</label></div><div class="radio" id="oral-sendok'+rowCount+'" style="display: none;"><label class="radio-inline"><input type="radio" name="oral-sendok'+rowCount+'" checked="true" value="1sdm">1sdm</label><label class="radio-inline"><input type="radio" name="oral-sendok'+rowCount+'" value="2sdt">2sdt</label><label class="radio-inline"><input type="radio" name="oral-sendok'+rowCount+'" value="3ml">3ml</label></div><input type="text" value="0" required="required" name="jml-minum'+rowCount+'" id="inputjml-minum" class="form-control"  placeholder="Jumlah" style="margin-top: 5px;"></div><div class="topikal'+rowCount+'" style="display: none;"><div class="radio" id="topikal-tipe" onclick="topikaltipe('+rowCount+')"><label class="radio-inline"><input type="radio" class="topikal-tipe'+rowCount+'" name="topikal-tipe'+rowCount+'" value="oles" checked="true">Oleskan</label><label class="radio-inline"><input type="radio" class="topikal-tipe'+rowCount+'" name="topikal-tipe'+rowCount+'" value="tetes">Teteskan</label></div><div class="radio" id="topikal-letak-pakai'+rowCount+'" style="display: none;"><label class="radio-inline"><input type="radio" name="topikal-letak-pakai'+rowCount+'" checked="true" value="Mata">Mata</label><label class="radio-inline"><input type="radio" name="topikal-letak-pakai'+rowCount+'" value="Hidung">Hidung</label><label class="radio-inline"><input type="radio" name="topikal-letak-pakai'+rowCount+'" value="Telinga">Telinga</label></div><div class="radio" id="topikal-letak-spesifik'+rowCount+'" style="display: none;"><label class="radio-inline"><input type="radio" name="topikal-letak-spesifik'+rowCount+'" checked="true" value="Kiri">Kiri</label><label class="radio-inline"><input type="radio" name="topikal-letak-spesifik'+rowCount+'" value="Kanan">Kanan</label></div><div class="radio" id="topikal-pakai"><label class="radio-inline"><input type="radio" name="topikal-pakai'+rowCount+'" checked="true" value="1x Sehari">1x Sehari</label><label class="radio-inline"><input type="radio" name="topikal-pakai'+rowCount+'" value="2x Sehari">2x Sehari</label><label class="radio-inline"><input type="radio" name="topikal-pakai'+rowCount+'" value="3x Sehari">3x Sehari</label></div><div class="radio" id="topikal-pakai-tetes'+rowCount+'" style="display: none;"><label class="radio-inline"><input type="radio" name="topikal-pakai-tetes'+rowCount+'" checked="true">1x Tetes</label><label class="radio-inline"><input type="radio" name="topikal-pakai-tetes'+rowCount+'">2x Tetes</label><label class="radio-inline"><input type="radio" name="topikal-pakai-tetes'+rowCount+'">3x Tetes</label></div><input type="text" value="0" required="required" name="jml-topikal'+rowCount+'" id="inputjml-topikal" class="form-control"  placeholder="Jumlah" style="margin-top: 5px;"></div><div class="suntikan'+rowCount+'" style="display: none;"><div class="radio" id="suntikan-tipe"><label class="radio-inline"><input type="radio" name="suntikan-tipe'+rowCount+'" checked="true" value="IM">IM</label><label class="radio-inline"><input type="radio" name="suntikan-tipe'+rowCount+'" value="IV">IV</label><label class="radio-inline"><input type="radio" name="suntikan-tipe'+rowCount+'" value="Subcutan">Subcutan</label><label class="radio-inline"><input type="radio" name="suntikan-tipe'+rowCount+'" value="Intracutan">Intracutan</label></div><div class="input-group" style="margin-top: 5px;"><input type="text" value="0" required="required" name="jml-suntikan'+rowCount+'" id="inputjml-rectum" class="form-control"  placeholder="Ampul" ><span class="input-group-addon">Ampul</span></div></div><div class="rectum'+rowCount+'" style="display: none;"><div class="radio" id="rectum-tipe"><label class="radio-inline"><input type="radio" name="rectum-tipe'+rowCount+'" value="p.r.n" checked="true">p.r.n</label><label class="radio-inline"><input type="radio" name="rectum-tipe'+rowCount+'" value="Lain - lain">Lain - lain</label></div><input type="text" value="0" required="required" name="jml-rectum'+rowCount+'" id="inputjml-rectum" class="form-control"  placeholder="PCS" style="margin-top: 5px;"></div></div></div>'+
+              '<div class="row"><div class="aturan-pakai"><select name="jenis'+rowCount+'" id="inputJenis'+rowCount+'" class="form-control" onchange="obat('+rowCount+')"  style="margin-top: 10px;"><option value="">Pilih Jenis Obat</option><option value="oral">Per Oral</option><option value="topikal">Topikal</option><option value="suntikan">Suntikan</option><option value="rectum">Per anus / rectum</option></select><div class="oral'+rowCount+'" style="display: none;"><div class="radio" id="oral-tipe'+rowCount+'" onclick="oraltipe('+rowCount+')"><label class="radio-inline"><input type="radio" class="oral-tipe'+rowCount+'" name="oral-tipe'+rowCount+'" value="tablet" checked="true">Tablet/Kaplet/Kapsul</label><label class="radio-inline"><input type="radio" class="oral-tipe'+rowCount+'" name="oral-tipe'+rowCount+'" value="sirup">Syrup/Liquid</label></div><div class="radio" id="oral-minum"><label class="radio-inline"><input type="radio" name="oral-minum'+rowCount+'" checked="true" value="1X Sehari">1x Sehari</label><label class="radio-inline"><input type="radio" name="oral-minum'+rowCount+'" value="2X Sehari">2x Sehari</label><label class="radio-inline"><input type="radio" name="oral-minum'+rowCount+'" value="3X Sehari">3x Sehari</label></div><div class="radio" id="oral-sendok'+rowCount+'" style="display: none;"><label class="radio-inline"><input type="radio" name="oral-sendok'+rowCount+'" checked="true" value="1sdm">1sdm</label><label class="radio-inline"><input type="radio" name="oral-sendok'+rowCount+'" value="2sdt">2sdt</label><label class="radio-inline"><input type="radio" name="oral-sendok'+rowCount+'" value="3ml">3ml</label></div><input type="text" value="0" required="required" name="jml-minum'+rowCount+'" id="inputjml-minum" class="form-control"  placeholder="Jumlah" style="margin-top: 5px;"></div><div class="topikal'+rowCount+'" style="display: none;"><div class="radio" id="topikal-tipe" onclick="topikaltipe('+rowCount+')"><label class="radio-inline"><input type="radio" class="topikal-tipe'+rowCount+'" name="topikal-tipe'+rowCount+'" value="oles" checked="true">Oleskan</label><label class="radio-inline"><input type="radio" class="topikal-tipe'+rowCount+'" name="topikal-tipe'+rowCount+'" value="tetes">Teteskan</label></div><div class="radio" id="topikal-letak-pakai'+rowCount+'" style="display: none;"><label class="radio-inline"><input type="radio" name="topikal-letak-pakai'+rowCount+'" checked="true" value="Mata">Mata</label><label class="radio-inline"><input type="radio" name="topikal-letak-pakai'+rowCount+'" value="Hidung">Hidung</label><label class="radio-inline"><input type="radio" name="topikal-letak-pakai'+rowCount+'" value="Telinga">Telinga</label></div><div class="radio" id="topikal-letak-spesifik'+rowCount+'" style="display: none;"><label class="radio-inline"><input type="radio" name="topikal-letak-spesifik'+rowCount+'" checked="true" value="Kiri">Kiri</label><label class="radio-inline"><input type="radio" name="topikal-letak-spesifik'+rowCount+'" value="Kanan">Kanan</label></div><div class="radio" id="topikal-pakai"><label class="radio-inline"><input type="radio" name="topikal-pakai'+rowCount+'" checked="true" value="1x Sehari">1x Sehari</label><label class="radio-inline"><input type="radio" name="topikal-pakai'+rowCount+'" value="2x Sehari">2x Sehari</label><label class="radio-inline"><input type="radio" name="topikal-pakai'+rowCount+'" value="3x Sehari">3x Sehari</label></div><div class="radio" id="topikal-pakai-tetes'+rowCount+'" style="display: none;"><label class="radio-inline"><input type="radio" name="topikal-pakai-tetes'+rowCount+'" checked="true" value="1x Tetes">1x Tetes</label><label class="radio-inline"><input type="radio" name="topikal-pakai-tetes'+rowCount+'" value="2x Tetes">2x Tetes</label><label class="radio-inline"><input type="radio" name="topikal-pakai-tetes'+rowCount+'" value="3x Tetes">3x Tetes</label></div><input type="text" value="0" required="required" name="jml-topikal'+rowCount+'" id="inputjml-topikal" class="form-control"  placeholder="Jumlah" style="margin-top: 5px;"></div><div class="suntikan'+rowCount+'" style="display: none;"><div class="radio" id="suntikan-tipe"><label class="radio-inline"><input type="radio" name="suntikan-tipe'+rowCount+'" checked="true" value="IM">IM</label><label class="radio-inline"><input type="radio" name="suntikan-tipe'+rowCount+'" value="IV">IV</label><label class="radio-inline"><input type="radio" name="suntikan-tipe'+rowCount+'" value="Subcutan">Subcutan</label><label class="radio-inline"><input type="radio" name="suntikan-tipe'+rowCount+'" value="Intracutan">Intracutan</label></div><div class="input-group" style="margin-top: 5px;"><input type="text" value="0" required="required" name="jml-suntikan'+rowCount+'" id="inputjml-rectum" class="form-control"  placeholder="Ampul" ><span class="input-group-addon">Ampul</span></div></div><div class="rectum'+rowCount+'" style="display: none;"><div class="radio" id="rectum-tipe"><label class="radio-inline"><input type="radio" name="rectum-tipe'+rowCount+'" value="p.r.n" checked="true">p.r.n</label><label class="radio-inline"><input type="radio" name="rectum-tipe'+rowCount+'" value="Lain - lain">Lain - lain</label></div><input type="text" value="0" required="required" name="jml-rectum'+rowCount+'" id="inputjml-rectum" class="form-control"  placeholder="PCS" style="margin-top: 5px;"></div></div></div>'+
             '</div>'+
             '<div class="col-sm-2">'+
             '<button type="button" class="btn btn-flat btn-danger" id="remove-obat"><i class="fa fa-close"></i></button>'+

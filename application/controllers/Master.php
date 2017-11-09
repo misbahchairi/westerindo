@@ -502,6 +502,14 @@ class master extends MY_Controller {
 		$this->data['pasien'] = $this->mmaster->getPasien();
 		$this->template->load('template_home','master/pasien',$this->data);
 	}
+	public function pasien_riwayat($id)
+	{
+		$this->data['page_name'] = "pasien";
+		$this->data['riwayat'] = $this->mkuratif->getRiwayatPasien($id);
+
+		$this->template->load('template_home','master/pasien_riwayat',$this->data);
+	}
+
 	public function pasien_add()
 	{
 		$this->load->library('upload');

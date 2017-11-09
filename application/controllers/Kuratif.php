@@ -30,6 +30,7 @@ class kuratif extends MY_Controller {
 		$this->data['temuan'] = $this->mkuratif->getTemuanByid($idkuratif)->result();
 		$this->data['tindakan'] = $this->mkuratif->getTindakanByid($idkuratif)->result();
 		$this->data['data'] = $this->mkuratif->getLanjutan($idkuratif)->row();
+		$this->data['dokter'] = $this->mmaster->getRujukan()->result();
 
 		$this->template->load('template_home','kuratif/resume',$this->data);
 	}
@@ -91,9 +92,44 @@ class kuratif extends MY_Controller {
     public function prosesriwayat(){
     	$nik = $this->input->post('nik');
         $query = $this->mkuratif->getRekamMedisByNIK($nik); //query model
+
+		$getriwayat = $this->mkuratif->getRiwayatByid($query->row()->id_pasien)->result();
+
         if ($query->num_rows() > 0) { 
             foreach ($query->result() as $val) {
-            	?> <img src="<?=base_url()?><?=$val->foto?>" alt=""><?php
+            	?> 
+					<div class="row mg-5">
+				          <div class="col-md-3">
+				            <div class="img-pasien">
+				            	<img src="<?=base_url()?><?=$val->foto?>" alt="">
+				            </div>
+				          </div>
+				          <div class="col-md-9">
+				            <div class="riwayat-pasien">
+				              <h3 style="margin-bottom: 10px;">Riwayat Pasien</h3>
+				              
+				              <div class="table-riwayat">
+				                <table class="table table-hover" style="">
+				                  <tbody>
+				                    <?php 
+				                      foreach ($getriwayat as $riwayat) { 
+				                      if ($riwayat->rp_status=='Gawat') {
+				                        $status = 'label-danger';
+				                      } elseif ($riwayat->rp_status=='Tidak Gawat') {
+				                        $status = 'label-warning';
+				                      }
+				                    ?>
+				                    <tr>
+				                      <td><?=$riwayat->rp_penjelasan?> <span class="label <?=$status;?> pull-right"><?=$riwayat->rp_status?></span></td>
+				                    </tr>
+				                    <?php } ?>
+				                  </tbody>
+				                </table>
+				              </div>
+				            </div>
+				          </div>
+				        </div>
+            	 <?php
             }
         }
     }
@@ -123,14 +159,15 @@ class kuratif extends MY_Controller {
     }
     public function ajaxriwayat(){
 		$idkuratif = $this->session->userdata('s_idkuratif');
-		$this->mkuratif->deleteRiwayat($idkuratif);
 
-    	$array = array(
-			'rp_idpasien' => $this ->input->post('idpasien2'),
-			'rp_status' => $this ->input->post('status'),
-			'rp_penjelasan' => $this ->input->post('penjelasan'),
-		);
-		$this->mkuratif->addRiwayat($array);
+		if (@$this ->input->post('is_riwayat')==1) {
+			$array = array(
+				'rp_idpasien' => $this ->input->post('idpasien2'),
+				'rp_status' => $this ->input->post('status'),
+				'rp_penjelasan' => $this ->input->post('penjelasan'),
+			);
+			$this->mkuratif->addRiwayat($array);
+		}
 
 		$array2 = array(
 			'ku_state' => 'riwayat'
@@ -198,7 +235,14 @@ class kuratif extends MY_Controller {
 	    	}
 		}
 
+		if ($this->session->userdata('role')=='1') {
+			$iddokter = $this->session->userdata('user_id');
+		} else {
+			$iddokter = '';
+		}
+
 		$arraydata = array(
+			'ku_iddokter' => $iddokter,
 			'ku_state' => 'temuan'
 		);
 		$this->mkuratif->updateKuratif($arraydata,$idkuratif);
@@ -207,23 +251,27 @@ class kuratif extends MY_Controller {
     public function ajaxpenunjang(){
 		$idkuratif = $this->session->userdata('s_idkuratif');
 
-		unset($config);
-        $config['upload_path'] = './uploads/';
-        $config['allowed_types'] = 'png|jpg|pdf';
-        $config['max_size']    = 0;
-    	$config['overwrite'] = false;
-        $this->load->library('upload');
-        $this->upload->initialize($config);
+		if (@$this->input->post('is_penunjang')==1) {
+			unset($config);
+	        $config['upload_path'] = './uploads/';
+	        $config['allowed_types'] = 'png|jpg|pdf';
+	        $config['max_size']    = 0;
+	    	$config['overwrite'] = false;
+	        $this->load->library('upload');
+	        $this->upload->initialize($config);
 
-		if ($_FILES['file']['name']!="") {
-    		$this->upload->do_upload('file');
-	        $upload_data1 = $this->upload->data();
-	        $file_data = $upload_data1['file_name']; 
+			if ($_FILES['file']['name']!="") {
+	    		$this->upload->do_upload('file');
+		        $upload_data1 = $this->upload->data();
+		        $file_data = $upload_data1['file_name']; 
+	    	}
+
+	    	$kategori = $this->input->post('kategori');
     	}
 
 		$array2 = array(
-			'ku_penunjang_medis' => $this ->input->post('kategori'),
-			'ku_penunjang_medis_file' => $file_data,
+			'ku_penunjang_medis' => @$kategori,
+			'ku_penunjang_medis_file' => @$file_data,
 			'ku_state' => 'penunjang_medis'
 		);
 		$this->mkuratif->updateKuratif($array2,$idkuratif);
@@ -334,10 +382,42 @@ class kuratif extends MY_Controller {
 
 		$array2 = array(
 			'ku_iskontrol' => $kontrol ,
-			'ku_created_by' => '' ,
-			'ku_created_at' => '' ,
+			'ku_created_by' =>  $this->session->userdata('user_id') ,
+			'ku_created_at' => date('Y-m-d') ,
 			'ku_state' => 'tindakan'
 		);
+		$this->mkuratif->updateKuratif($array2,$idkuratif);
+    }
+
+    public function ajaxsuratsakit(){
+		$idkuratif = $this->session->userdata('s_idkuratif');
+
+		$arrayitem = array();
+
+		$arrayjson = array(
+			'keterangan' => $this->input->post('keterangan') ,
+			'dari' => $this->input->post('dari') ,
+			'sampai' => $this->input->post('sampai') ,
+			'dibuat' => date('Y-m-d')
+		);
+		array_push($arrayitem, $arrayjson);
+
+		$array2 = array(
+			'ku_issurat_sakit' => 1 ,
+			'ku_suratsakit' => json_encode($arrayjson),
+		);
+
+		$this->mkuratif->updateKuratif($array2,$idkuratif);
+    }
+
+    public function ajaxsuratrujukan(){
+		$idkuratif = $this->session->userdata('s_idkuratif');
+
+		$array2 = array(
+			'ku_issurat_rujukan' => 1 ,
+			'ku_idrujukan' => $this->input->post('dokter')
+		);
+		print($array2);
 		$this->mkuratif->updateKuratif($array2,$idkuratif);
     }
 
