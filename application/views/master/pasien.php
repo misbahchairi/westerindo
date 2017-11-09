@@ -25,7 +25,7 @@
               <th>Nama</th>
               <th>Umur</th>
               <th>Sex</th>
-              <th>Separtment</th>
+              <th>Department</th>
               <th>Group</th>
               <th>Status</th>
               <th>Foto</th>
@@ -46,7 +46,7 @@
                   echo 'Wanita';
                 } ?>  
               </td>
-              <td><?=$dt->separtment?></td>
+              <td><?=$dt->d_nama?></td>
               <td><?=$dt->group?></td>
               <td>
                 <?php if ($dt->status_pgw=="tetap") {
@@ -115,8 +115,12 @@
               </select>
             </div>
             <div class="form-group">
-              <label>Separtment</label>
-              <input type="text" name="separtment" value="<?=$dt->separtment?>" placeholder="" class="form-control">
+              <label>Department</label>
+              <select name="p_iddepartment" id="inputP_iddepartment" class="form-control" required="required">
+                <?php foreach ($dept as $a) {?>
+                <option value="<?= $a->id_department ?>" <?= ($dt->p_iddepartment==$a->id_department) ?'selected':''; ?>><?= $a->d_nama ?></option>
+                <?php }  ?>
+              </select>
             </div>
             <div class="form-group">
               <label>Group</label>
@@ -199,8 +203,12 @@
             </select>
           </div>
           <div class="form-group">
-            <label>Separtment</label>
-            <input type="text" name="separtment" value="" placeholder="" class="form-control">
+            <label>Department</label>
+            <select name="p_iddepartment" id="inputP_iddepartment" class="form-control" required="required">
+              <?php foreach ($dept as $b) {?>
+              <option value="<?= $b->id_department ?>" ><?= $b->d_nama ?></option>
+              <?php } ?>
+            </select>
           </div>
           <div class="form-group">
             <label>Group</label>

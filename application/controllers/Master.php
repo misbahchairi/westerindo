@@ -524,7 +524,8 @@ class master extends MY_Controller {
 	public function pasien()
 	{
 		$this->data['page_name'] = "pasien";
-		$this->data['pasien'] = $this->mmaster->getPasien();
+		$this->data['pasien'] = $this->mmaster->getPasienByDept();
+		$this->data['dept'] = $this->mmaster->getDepartment()->result();
 		$this->template->load('template_home','master/pasien',$this->data);
 	}
 	public function pasien_add()

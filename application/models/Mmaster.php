@@ -280,6 +280,11 @@ class mmaster extends CI_Model {
         $query = $this->db->get('m_pasien');
         return $query;
     }
+    function getPasienByDept()
+    {
+        $this->db->join('m_department','id_department = p_iddepartment');
+        return $this->db->get('m_pasien');
+    }
     function AddPasien($data)
     {
         $query = $this->db->insert('m_pasien',$data);
