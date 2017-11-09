@@ -45,7 +45,7 @@
         <div class="row">
           <div class="col-md-4">
             <div class="table-responsive">
-              <table class="table table-bordered table-hover table-laporan">
+              <table class="table table-bordered table-hover table-laporan table-condensed" id="laporan">
                 <thead>
                   <tr style="background: #00bcd4;">
                     <th>No</th>

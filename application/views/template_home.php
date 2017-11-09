@@ -35,6 +35,8 @@
 		<!-- Datereange -->
 		<link rel="stylesheet" href="<?= base_url('assets') ?>/plugins/daterangepicker/daterangepicker.css">
 
+
+
 		
 	</head>
 	<style type="text/css">
@@ -304,43 +306,43 @@
 								if (@$page_name == 'rekap_harian') { echo 'active';
 								}
  ?>">
-									<a href="<?=base_url('laporan/rekap_harian/?tanggal='.date('Y-m-d')) ?>"><i class="fa fa-circle-o"></i> Laporan Rekap Harian</a>
+									<a href="<?=base_url('laporan/rekap_harian/?tanggal='.date('Y-m-d')) ?>"><i class="fa fa-circle-o"></i>Rekap Harian</a>
 								</li>
 								<li class="<?php
 									if (@$page_name == 'surat_rujukan') { echo 'active';
 									}
  ?>">
-									<a href="<?=base_url('laporan/surat_rujukan/?tanggal='.date('Y-m-d')) ?>"><i class="fa fa-circle-o"></i> Laporan Surat Rujukan</a>
+									<a href="<?=base_url('laporan/surat_rujukan/?start='.date('Y-m-d').'&end='.date('Y-m-d')) ?>"><i class="fa fa-circle-o"></i>Surat Rujukan</a>
 								</li>
 								<li class="<?php
 									if (@$page_name == 'surat_sakit') { echo 'active';
 									}
  ?>">
-									<a href="<?=base_url('laporan/surat_sakit/?tanggal='.date('Y-m-d')) ?>"><i class="fa fa-circle-o"></i> Laporan Surat Sakit</a>
+									<a href="<?=base_url('laporan/surat_sakit/?start='.date('Y-m-d').'&end='.date('Y-m-d')) ?>"><i class="fa fa-circle-o"></i>Surat Sakit</a>
 								</li>
 								<li class="<?php
 									if (@$page_name == 'kunjungan_by_jam') { echo 'active';
 									}
  ?>">
-									<a href="<?=base_url('laporan/kunjungan_by_jam/?tanggal='.date('Y-m-d')) ?>"><i class="fa fa-circle-o"></i> Laporan Kunjungan By Jam</a>
+									<a href="<?=base_url('laporan/kunjungan_by_jam/?start='.date('Y-m-d').'&end='.date('Y-m-d')) ?>"><i class="fa fa-circle-o"></i>Kunjungan By Jam</a>
 								</li>
 								<li class="<?php
 									if (@$page_name == 'penggunaan_obat') { echo 'active';
 									}
  ?>">
-									<a href="<?=base_url('laporan/penggunaan_obat/?start='.date('Y-m-d').'&end='.date('Y-m-d')) ?>"><i class="fa fa-circle-o"></i> Laporan Penggunaan Obat</a>
+									<a href="<?=base_url('laporan/penggunaan_obat/?start='.date('Y-m-d').'&end='.date('Y-m-d')) ?>"><i class="fa fa-circle-o"></i>Penggunaan Obat</a>
 								</li>
-								<li class="<?php
+								<li class="hide <?php
 									if (@$page_name == 'penyakit') { echo 'active';
 									}
  ?>">
-									<a href="<?=base_url('laporan/penyakit/?start='.date('Y-m-d').'&end='.date('Y-m-d')) ?>"><i class="fa fa-circle-o"></i> Laporan Penyakit</a>
+									<a href="<?=base_url('laporan/penyakit/?start='.date('Y-m-d').'&end='.date('Y-m-d')) ?>"><i class="fa fa-circle-o"></i>Penyakit</a>
 								</li>
 								<li class="<?php
 									if (@$page_name == 'penyakit_by_departement') { echo 'active';
 									}
  ?>">
-									<a href="<?=base_url('laporan/penyakit_by_departement') ?>"><i class="fa fa-circle-o"></i> <span style="font-size: 12px;">Laporan Penyakit By Departement</span></a>
+									<a href="<?=base_url('laporan/penyakit_by_departement?start='.date('Y-m-d').'&end='.date('Y-m-d')) ?>"><i class="fa fa-circle-o"></i>Penyakit By Departement</a>
 								</li>
 							</ul>
 						</li>
@@ -390,6 +392,15 @@
 		<!-- DataTables -->
 		<script src="<?=base_url('assets'); ?>/plugins/datatables/jquery.dataTables.min.js"></script>
 		<script src="<?=base_url('assets'); ?>/plugins/datatables/dataTables.bootstrap.min.js"></script>
+		<!-- datatable -->
+		<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.1.0/css/buttons.dataTables.min.css">
+		<script src="https://cdn.datatables.net/buttons/1.1.0/js/dataTables.buttons.min.js"></script>
+		<script src="//cdn.datatables.net/buttons/1.1.0/js/buttons.flash.min.js"></script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+		<script src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
+		<script src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
+		<script src="//cdn.datatables.net/buttons/1.1.0/js/buttons.html5.min.js"></script>
+		<script src="//cdn.datatables.net/buttons/1.1.0/js/buttons.print.min.js"></script>
 		<script>
 			$.fn.dataTable.ext.errMode = 'none';
 			$(function() {
@@ -415,6 +426,20 @@
 						leftColumns : 1,
 						rightColumns : 1
 					}
+				});
+				$('#laporan').DataTable({
+					"paging" : false,
+					"lengthChange" : false,
+					"searching" : true,
+					"ordering" : false,
+					"info" : false,
+					"autoWidth" : true,
+					"scrollX" : true,
+					"scrollCollapse" : false,
+					"dom" : 'Bfrtip',
+					"buttons" : [
+			    	'excel'
+			    	]
 				});
 				$('#example4').DataTable({
 					"ordering" : false

@@ -1,3 +1,11 @@
+  <style type="text/css">
+    table.dataTable thead > tr > th {
+        padding-left: 25px;
+        padding-right: 25px;
+    }
+  </style>
+  
+
   <div class="content-wrapper">
   
   <section class="content-header">
@@ -26,8 +34,8 @@
         </div>
         </form>
         <br>
-        <div class="table-responsive">
-          <table class="table table-bordered table-hover table-laporan table-harian">
+        <div class="table">
+          <table class="table table-bordered table-hover table-laporan table-harian" id="laporan">
             <thead>
               <tr class="maroon">
                 <th colspan="6">Data Of Visite</th>
@@ -44,7 +52,7 @@
               </tr>
               <tr>
                 <th class="oren" rowspan="2">No</th>
-                <th class="oren" rowspan="2">Date</th>
+                <th class="oren" rowspan="2" style="width: 32px;">Date</th>
                 <th class="oren" rowspan="2">Hours</th>
                 <th class="putih" colspan="3">State Of Visite</th>
                 <th class="kuning" rowspan="2">NIK</th>
