@@ -147,7 +147,9 @@ class kuratif extends MY_Controller {
     		'ku_idunit' => $this->session->userdata('unit'),
 			'ku_idpasien' => $this ->input->post('idpasien'),
 			'ku_perihal' => $this ->input->post('perihal'),
-			'ku_state' => 'perihal'
+			'ku_state' => 'perihal',
+			'ku_created_by' =>  $this->session->userdata('user_id') ,
+			'ku_created_at' => date('Y-m-d  H:i:s') ,
 		);
 		$getid = $this->mkuratif->addKuratif($array);
 
@@ -382,8 +384,6 @@ class kuratif extends MY_Controller {
 
 		$array2 = array(
 			'ku_iskontrol' => $kontrol ,
-			'ku_created_by' =>  $this->session->userdata('user_id') ,
-			'ku_created_at' => date('Y-m-d') ,
 			'ku_state' => 'tindakan'
 		);
 		$this->mkuratif->updateKuratif($array2,$idkuratif);

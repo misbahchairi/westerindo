@@ -655,7 +655,7 @@
             $('#loader').hide();
           },
           success: function(){  
-
+            window.location.reload();
           }
         });
       });
@@ -675,7 +675,7 @@
             $('#loader').hide();
           },
           success: function(){  
-
+            window.location.reload();
           }
         });
       });
@@ -695,7 +695,7 @@
             $('#loader').hide();
           },
           success: function(){  
-
+            window.location.reload();
           }
         });
       });
@@ -723,7 +723,7 @@
             $('#loader').hide();
           },
           success: function(){  
-
+            window.location.reload();
           }
         });
       });
@@ -742,9 +742,10 @@
           },
           complete: function(){
             $('#loader').hide();
+            window.location.reload();
           },
           success: function(){  
-
+            window.location.reload();
           }
         });
       });

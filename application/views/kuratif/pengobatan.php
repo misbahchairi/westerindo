@@ -747,7 +747,6 @@
     var nik = $('input[name="nik"]').val();
     if (nik != "") {
       var nama = $('input[name="nama"]').val();
-
       $.ajax({ 
           url: '<?= base_url(); ?>kuratif/prosesriwayat',
           data: {"nama": nama,"nik": nik},
