@@ -54,7 +54,7 @@
               <tr>
                   <td><?=$i?></td>
                   <td><?= date('d-m-Y',strtotime($val->ku_created_at)) ?></td>
-                  <td><?= ucwords($val->nama) ?></td>
+                  <td><?= ucwords($val->nama_pasien) ?></td>
                   <td><?= $val->nik ?></td>
                   <td><?= $val->umur ?></td>
                   <td><?= ucwords($val->sex) ?></td>
@@ -63,7 +63,8 @@
                   <td class="hide"></td>
                   <td><?= ucwords($val->nama_diagnosa) ?></td>
                   <td><?= ucwords($val->nama_obat) ?></td>
-                  <td></td>
+                  <?php $surat = json_decode($val->ku_suratsakit,true) ?>
+                  <td><?= $surat['keterangan'] ?></td>
               </tr>
               <?php $i++;} ?>
             </tbody>

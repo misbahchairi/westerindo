@@ -214,6 +214,7 @@ class mmaster extends CI_Model {
         $this->db->select('m_user.*, m_unit.nama as nama_unit');
         $this->db->join('m_unit','id_unit = unit');
         $this->db->where('role', 1);
+        $this->db->where('unit', $this->session->userdata('unit'));
         $query = $this->db->get('m_user');
         return $query;
     }
@@ -250,6 +251,7 @@ class mmaster extends CI_Model {
         $this->db->select('m_user.*, m_unit.nama as nama_unit');
         $this->db->join('m_unit','id_unit = unit');
         $this->db->where('role', 2);
+        $this->db->where('id_unit', $this->session->userdata('unit'));
         $query = $this->db->get('m_user');
         return $query;
     }
@@ -280,21 +282,25 @@ class mmaster extends CI_Model {
     // pasien
     function getPasien()
     {
+        $this->db->where('p_idunit', $this->session->userdata('unit'));
         $query = $this->db->get('m_pasien');
         return $query;
     }
     function getPasienByDept()
     {
+        $this->db->where('p_idunit', $this->session->userdata('unit'));
         $this->db->join('m_department','id_department = p_iddepartment');
         return $this->db->get('m_pasien');
     }
     function AddPasien($data)
     {
+        $data['p_idunit'] = $this->session->userdata('unit');
         $query = $this->db->insert('m_pasien',$data);
         return $query;
     }
     function EditPasien($id,$data)
     {
+        $data['p_idunit'] = $this->session->userdata('unit');
         $this->db->where('id_pasien',$id);
         $query = $this->db->update('m_pasien',$data);
         return $query;

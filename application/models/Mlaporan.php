@@ -17,12 +17,12 @@ class Mlaporan extends CI_Model {
 	}
 
 	public function getLaporanRekapHarianByDate($tanggal){
-		$this->db->select('*,m_diagnosa.nama as nama_diagnosa');
+		$this->db->select('*,m_diagnosa.nama as nama_diagnosa, m_pasien.nama as nama_pasien');
 		$this->db->join('kuratif','ku_idpasien = id_pasien','right');
-		$this->db->join('kuratif_riwayat','rp_idpasien = id_pasien','left');
+		// $this->db->join('kuratif_riwayat','rp_idpasien = id_pasien','left');
 		$this->db->join('kuratif_tandavital','tv_idkuratif = kuratif.idkuratif','left');
 		$this->db->join('kuratif_temuanpf','pf_idkuratif = kuratif.idkuratif','left');
-		$this->db->join('kuratif_tindakan','td_idkuratif = kuratif.idkuratif','left');
+		// $this->db->join('kuratif_tindakan','td_idkuratif = kuratif.idkuratif','left');
 		$this->db->join('m_diagnosa','ku_iddiagnosa = id_diagnosa','left');
 		$this->db->join('dokter','ku_iddokter = iddokter','left');
 		$this->db->join('perawat','ku_idperawat = id_perawat','left');
@@ -39,7 +39,7 @@ class Mlaporan extends CI_Model {
 	}
 
 	public function getLaporanSuratSakit($tanggal){
-		$this->db->select('*, m_diagnosa.nama as nama_diagnosa');
+		$this->db->select('*, m_diagnosa.nama as nama_diagnosa, m_pasien.nama as nama_pasien');
 		$this->db->join('m_pasien','id_pasien = ku_idpasien');
 		$this->db->join('m_diagnosa','id_diagnosa = ku_iddiagnosa');
 		$this->db->join('kuratif_tindakan','td_idkuratif = idkuratif');

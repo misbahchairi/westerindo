@@ -99,16 +99,16 @@
             </thead>
             <tbody>
               <?php for ($i=1; $i < 2 ; $i++) { ?>
-              <?php foreach ($rekap->result() as $data) {?>
+              <?php $dk=1;foreach ($rekap->result() as $data) {?>
               <tr>
-                <td>1</td>
+                <td><?= $dk ?></td>
                 <td><?= @date('d-m-Y',strtotime($data->ku_created_at)) ?></td>
                 <td><?= @date('h:i',strtotime($data->ku_created_at)) ?></td>
                 <td>B</td>
                 <td></td>
                 <td>1</td>
                 <td><?= $data->nik ?></td>
-                <td><?= ucfirst($data->nama) ?></td>
+                <td><?= ucfirst($data->nama_pasien) ?></td>
                 <td><?= $data->umur ?></td>
                 <td><?= ucfirst($data->sex) ?></td>
                 <td><?= ucfirst($data->separtment) ?></td>
@@ -140,7 +140,7 @@
                 <td><?= ucfirst($data->nama_perawat) ?></td>
                 <td><?= ucfirst($data->nama_dokter) ?></td>
               </tr>
-              <?php } ?>
+              <?php $dk++;} ?>
               <?php } ?>
             </tbody>
           </table>

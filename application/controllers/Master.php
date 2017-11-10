@@ -589,7 +589,7 @@ class master extends MY_Controller {
 		}
 
 		$data = $this->input->post();
-		$data['foto'] = $target_file;
+		$data['foto'] = @$target_file;
 		$this->mmaster->AddPasien($data);
 		redirect('master/pasien','refresh');
 	}
@@ -645,7 +645,7 @@ class master extends MY_Controller {
 			}
 		}
 		$data = $this->input->post();
-		$data['foto'] = $target_file;
+		$data['foto'] = @$target_file;
 		$this->mmaster->EditPasien($id,$data);
 		redirect('master/pasien','refresh');
 	}
